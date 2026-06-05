@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TornFin — Finance Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@300;400;500;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-base: #0d0e0f;
+  --bg-surface: #141618;
+  --bg-elevated: #1c1e21;
+  --bg-hover: #222528;
+  --border: rgba(255,255,255,0.06);
+  --border-mid: rgba(255,255,255,0.1);
+  --border-bright: rgba(255,255,255,0.18);
+  --red: #e53935;
+  --red-dim: #3d1211;
+  --red-glow: rgba(229,57,53,0.12);
+  --green: #43a865;
+  --green-dim: #1a3d28;
+  --amber: #d4820a;
+  --amber-bright: #f0a500;
+  --blue: #3a7bd5;
+  --text-primary: #e8e6e0;
+  --text-secondary: #8a8780;
+  --text-muted: #4a4845;
+  --mono: 'Share Tech Mono', monospace;
+  --display: 'Barlow Condensed', sans-serif;
+  --body: 'Barlow', sans-serif;
+  --sidebar-w: 220px;
+}
+
+html, body { height: 100%; background: var(--bg-base); color: var(--text-primary); font-family: var(--body); font-size: 14px; overflow: hidden; }
+
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.025) 2px, rgba(0,0,0,0.025) 4px);
+  pointer-events: none; z-index: 9999;
+}
+
+/* ── VIEWS ── */
+.view { display: none; }
+.view.active { display: flex; }
+
+/* ══════════════════════════════════════
+   LOGIN SCREEN
+══════════════════════════════════════ */
+#view-login {
+  height: 100vh; width: 100vw;
+  align-items: center; justify-content: center;
+  flex-direction: column;
+  background: var(--bg-base);
+}
+
+.login-box {
+  width: 420px;
+  border: 1px solid var(--border-mid);
+  background: var(--bg-surface);
+  padding: 40px;
+  animation: fadeUp 0.5s ease both;
+}
+
+.login-logo-eye { font-family: var(--mono); font-size: 10px; color: var(--red); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 8px; }
+.login-title { font-family: var(--display); font-size: 36px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-primary); line-height: 1; margin-bottom: 4px; }
+.login-title span { color: var(--red); }
+.login-sub { font-family: var(--mono); font-size: 10px; color: var(--text-muted); margin-bottom: 32px; }
+
+.form-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-secondary); display: block; margin-bottom: 8px; }
+
+.form-input {
+  width: 100%; background: var(--bg-elevated); border: 1px solid var(--border-mid);
+  color: var(--text-primary); font-family: var(--mono); font-size: 13px;
+  padding: 11px 14px; outline: none; transition: border-color 0.15s;
+  letter-spacing: 0.05em;
+}
+
+.form-input:focus { border-color: var(--red); }
+.form-input::placeholder { color: var(--text-muted); }
+
+.form-hint { font-family: var(--mono); font-size: 10px; color: var(--text-muted); margin-top: 8px; line-height: 1.6; }
+.form-hint a { color: var(--blue); text-decoration: none; }
+.form-hint a:hover { color: var(--text-primary); }
+
+.btn-primary {
+  width: 100%; margin-top: 24px;
+  background: var(--red); border: none; color: white;
+  font-family: var(--display); font-size: 16px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 13px; cursor: pointer; transition: all 0.15s;
+}
+.btn-primary:hover { background: #c62828; }
+.btn-primary:disabled { background: var(--text-muted); cursor: not-allowed; }
+
+.login-error {
+  margin-top: 14px; padding: 10px 14px;
+  background: var(--red-dim); border: 1px solid rgba(229,57,53,0.3);
+  font-family: var(--mono); font-size: 11px; color: var(--red);
+  display: none;
+}
+
+.login-tos {
+  margin-top: 20px; padding: 14px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+}
+.tos-title { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; }
+.tos-table { width: 100%; border-collapse: collapse; }
+.tos-table td { font-family: var(--mono); font-size: 10px; padding: 3px 0; color: var(--text-secondary); }
+.tos-table td:first-child { color: var(--text-muted); width: 50%; }
+.tos-table .ok { color: var(--green); }
+
+/* ══════════════════════════════════════
+   LOADING SCREEN
+══════════════════════════════════════ */
+#view-loading {
+  height: 100vh; width: 100vw;
+  align-items: center; justify-content: center; flex-direction: column;
+}
+.loading-logo { font-family: var(--display); font-size: 28px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 20px; }
+.loading-logo span { color: var(--red); }
+.loading-bar-track { width: 240px; height: 2px; background: var(--bg-elevated); }
+.loading-bar-fill { height: 100%; background: var(--red); width: 0%; transition: width 0.4s ease; }
+.loading-status { font-family: var(--mono); font-size: 10px; color: var(--text-muted); margin-top: 12px; letter-spacing: 0.08em; }
+
+/* ══════════════════════════════════════
+   MAIN DASHBOARD
+══════════════════════════════════════ */
+#view-dashboard { height: 100vh; width: 100vw; flex-direction: row; }
+
+/* SIDEBAR */
+.sidebar { width: var(--sidebar-w); flex-shrink: 0; background: var(--bg-surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
+.sidebar-logo { padding: 22px 20px 18px; border-bottom: 1px solid var(--border); }
+.logo-eyebrow { font-family: var(--mono); font-size: 9px; color: var(--red); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 4px; }
+.logo-title { font-family: var(--display); font-size: 22px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1; }
+.logo-title span { color: var(--red); }
+.sidebar-player { padding: 14px 20px; border-bottom: 1px solid var(--border); }
+.player-name { font-family: var(--mono); font-size: 12px; color: var(--text-primary); margin-bottom: 4px; }
+.player-meta { font-family: var(--mono); font-size: 10px; color: var(--text-secondary); display: flex; gap: 8px; flex-wrap: wrap; }
+.rank-badge { color: var(--amber-bright); }
+.sidebar-nav { flex: 1; padding: 10px 0; overflow-y: auto; }
+.nav-section { padding: 8px 20px 3px; font-family: var(--mono); font-size: 9px; color: var(--text-muted); letter-spacing: 0.14em; text-transform: uppercase; }
+.nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 20px; cursor: pointer; font-family: var(--display); font-size: 14px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-secondary); transition: all 0.12s; border-left: 2px solid transparent; }
+.nav-item:hover { color: var(--text-primary); background: var(--bg-hover); }
+.nav-item.active { color: var(--text-primary); border-left-color: var(--red); background: var(--red-glow); }
+.nav-icon { width: 15px; height: 15px; flex-shrink: 0; opacity: 0.55; }
+.nav-item.active .nav-icon { opacity: 1; }
+.sidebar-footer { padding: 14px 20px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
+.api-status { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px; color: var(--text-secondary); }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; flex-shrink: 0; }
+.status-dot.loading { background: var(--amber-bright); }
+.status-dot.error { background: var(--red); animation: none; }
+.btn-signout { background: transparent; border: 1px solid var(--border); color: var(--text-muted); font-family: var(--mono); font-size: 10px; padding: 5px 10px; cursor: pointer; letter-spacing: 0.06em; transition: all 0.12s; text-align: left; }
+.btn-signout:hover { border-color: var(--red); color: var(--red); }
+
+/* MAIN AREA */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+.topbar { height: 50px; flex-shrink: 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 26px; gap: 14px; background: var(--bg-surface); }
+.topbar-title { font-family: var(--display); font-size: 15px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-primary); flex: 1; }
+.topbar-time { font-family: var(--mono); font-size: 11px; color: var(--text-muted); }
+.topbar-btn { background: transparent; border: 1px solid var(--border-mid); color: var(--text-secondary); font-family: var(--mono); font-size: 10px; padding: 5px 12px; cursor: pointer; letter-spacing: 0.06em; transition: all 0.12s; }
+.topbar-btn:hover { border-color: var(--red); color: var(--red); }
+
+/* TICKER */
+.ticker { background: var(--bg-elevated); border-bottom: 1px solid var(--border); overflow: hidden; height: 30px; display: flex; align-items: center; flex-shrink: 0; }
+.ticker-label { background: var(--red); color: white; font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; padding: 0 10px; height: 100%; display: flex; align-items: center; flex-shrink: 0; }
+.ticker-track { flex: 1; overflow: hidden; white-space: nowrap; }
+.ticker-inner { display: inline-block; animation: ticker 40s linear infinite; font-family: var(--mono); font-size: 10px; color: var(--text-secondary); padding-left: 100%; }
+@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* CONTENT */
+.content { flex: 1; overflow-y: auto; padding: 22px 26px; display: flex; flex-direction: column; gap: 18px; }
+.content::-webkit-scrollbar { width: 3px; }
+.content::-webkit-scrollbar-thumb { background: var(--border-mid); }
+
+/* PAGE SECTIONS (for tab switching) */
+.page { display: none; flex-direction: column; gap: 18px; }
+.page.active { display: flex; }
+
+/* PANELS */
+.panel { background: var(--bg-surface); border: 1px solid var(--border); padding: 16px 18px; }
+.panel-title { font-family: var(--mono); font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+.panel-action { font-size: 9px; color: var(--text-muted); cursor: pointer; transition: color 0.12s; }
+.panel-action:hover { color: var(--red); }
+
+/* METRICS */
+.metrics-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.metric-card { background: var(--bg-surface); border: 1px solid var(--border); padding: 14px 16px; position: relative; overflow: hidden; }
+.metric-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent, var(--border)); }
+.metric-card.c-red { --accent: var(--red); }
+.metric-card.c-green { --accent: var(--green); }
+.metric-card.c-amber { --accent: var(--amber-bright); }
+.metric-card.c-blue { --accent: var(--blue); }
+.metric-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+.metric-value { font-family: var(--mono); font-size: 22px; color: var(--text-primary); line-height: 1; margin-bottom: 5px; }
+.metric-value.green { color: var(--green); }
+.metric-value.red { color: var(--red); }
+.metric-value.amber { color: var(--amber-bright); }
+.metric-sub { font-family: var(--mono); font-size: 10px; color: var(--text-muted); }
+.metric-sub.up { color: var(--green); }
+.metric-sub.down { color: var(--red); }
+
+/* GRIDS */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.three-col { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; }
+
+/* STATUS BARS (energy/nerve/happy) */
+.stat-bars { display: flex; flex-direction: column; gap: 10px; }
+.stat-bar-row { display: flex; align-items: center; gap: 10px; }
+.stat-bar-label { font-family: var(--mono); font-size: 10px; color: var(--text-secondary); width: 54px; flex-shrink: 0; }
+.stat-bar-track { flex: 1; height: 6px; background: var(--bg-elevated); border-radius: 1px; overflow: hidden; }
+.stat-bar-fill { height: 100%; border-radius: 1px; transition: width 1s cubic-bezier(0.16,1,0.3,1); }
+.stat-bar-fill.red { background: var(--red); }
+.stat-bar-fill.green { background: var(--green); }
+.stat-bar-fill.amber { background: var(--amber-bright); }
+.stat-bar-fill.blue { background: var(--blue); }
+.stat-bar-val { font-family: var(--mono); font-size: 10px; color: var(--text-secondary); width: 55px; flex-shrink: 0; text-align: right; }
+
+/* ACTIVITY TABLE */
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th { font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-align: left; padding: 0 0 8px; border-bottom: 1px solid var(--border); font-weight: 400; }
+.data-table td { padding: 8px 0; border-bottom: 1px solid var(--border); font-family: var(--mono); font-size: 11px; color: var(--text-secondary); vertical-align: middle; }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { color: var(--text-primary); }
+.tag { display: inline-flex; padding: 2px 7px; font-size: 9px; letter-spacing: 0.06em; border-radius: 1px; }
+.tag.crime { background: rgba(229,57,53,0.12); color: var(--red); }
+.tag.trade { background: rgba(58,123,213,0.12); color: var(--blue); }
+.tag.casino { background: rgba(240,165,0,0.12); color: var(--amber-bright); }
+.tag.mug { background: rgba(217,95,59,0.12); color: #d95f3b; }
+.tag.property { background: rgba(67,168,101,0.12); color: var(--green); }
+.tag.bank { background: rgba(138,135,128,0.12); color: var(--text-secondary); }
+.tag.other { background: rgba(74,72,69,0.12); color: var(--text-muted); }
+.pos { color: var(--green) !important; }
+.neg { color: var(--red) !important; }
+
+/* HORIZONTAL BARS */
+.hbar-list { display: flex; flex-direction: column; gap: 9px; }
+.hbar-row { display: flex; align-items: center; gap: 10px; }
+.hbar-label { font-family: var(--mono); font-size: 10px; color: var(--text-secondary); width: 64px; flex-shrink: 0; text-align: right; }
+.hbar-track { flex: 1; height: 5px; background: var(--bg-elevated); border-radius: 1px; overflow: hidden; }
+.hbar-fill { height: 100%; border-radius: 1px; transition: width 1s cubic-bezier(0.16,1,0.3,1); }
+.hbar-fill.red { background: var(--red); }
+.hbar-fill.blue { background: var(--blue); }
+.hbar-fill.amber { background: var(--amber-bright); }
+.hbar-fill.coral { background: #d95f3b; }
+.hbar-fill.gray { background: var(--text-muted); }
+.hbar-fill.green { background: var(--green); }
+.hbar-val { font-family: var(--mono); font-size: 10px; color: var(--text-secondary); width: 54px; flex-shrink: 0; }
+
+/* STAT ROWS */
+.stat-rows { display: flex; flex-direction: column; }
+.stat-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--border); font-family: var(--mono); font-size: 11px; }
+.stat-row:last-child { border-bottom: none; }
+.stat-k { color: var(--text-secondary); }
+.stat-v { color: var(--text-primary); }
+.stat-v.green { color: var(--green); }
+.stat-v.red { color: var(--red); }
+.stat-v.amber { color: var(--amber-bright); }
+
+/* GOAL BARS */
+.goal-item { margin-bottom: 14px; }
+.goal-item:last-child { margin-bottom: 0; }
+.goal-header { display: flex; justify-content: space-between; margin-bottom: 5px; font-family: var(--mono); font-size: 10px; }
+.goal-name { color: var(--text-secondary); }
+.goal-pct { color: var(--text-primary); }
+.goal-track { height: 4px; background: var(--bg-elevated); border-radius: 1px; overflow: hidden; }
+.goal-fill { height: 100%; border-radius: 1px; background: var(--red); transition: width 1.2s cubic-bezier(0.16,1,0.3,1); }
+.goal-fill.green { background: var(--green); }
+.goal-fill.amber { background: var(--amber-bright); }
+
+/* SPARKLINE */
+.spark-wrap { height: 100px; position: relative; }
+
+/* DONUT */
+.donut-wrap { display: flex; align-items: center; gap: 16px; padding: 4px 0; }
+.donut-legend { flex: 1; display: flex; flex-direction: column; gap: 7px; }
+.legend-row { display: flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 10px; color: var(--text-secondary); }
+.legend-sw { width: 8px; height: 8px; border-radius: 1px; flex-shrink: 0; }
+.legend-pct { margin-left: auto; color: var(--text-primary); }
+
+/* CRIMES PAGE */
+.crimes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.crime-card { background: var(--bg-elevated); border: 1px solid var(--border); padding: 12px 14px; }
+.crime-card-name { font-family: var(--display); font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-primary); margin-bottom: 6px; }
+.crime-card-stat { font-family: var(--mono); font-size: 10px; color: var(--text-secondary); margin-bottom: 3px; }
+.crime-card-stat span { color: var(--text-primary); }
+
+/* EMPTY STATE */
+.empty-state { text-align: center; padding: 40px 20px; font-family: var(--mono); font-size: 11px; color: var(--text-muted); }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+.fade-up { animation: fadeUp 0.4s ease both; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ LOGIN ══════════════════ -->
+<div class="view active" id="view-login">
+  <div class="login-box">
+    <div class="login-logo-eye">// Operator Panel</div>
+    <div class="login-title">TORN<span>FIN</span></div>
+    <div class="login-sub">finance command center · v1.0</div>
+
+    <label class="form-label" for="api-key-input">Torn API Key</label>
+    <input class="form-input" id="api-key-input" type="password"
+      placeholder="Enter your Full Access API key..."
+      autocomplete="off" spellcheck="false" />
+    <div class="form-hint">
+      Find your key at <a href="https://www.torn.com/preferences.php#tab=api" target="_blank">torn.com → Preferences → API</a>.
+      A <strong style="color:var(--text-secondary)">Full Access</strong> key is recommended for all features.
+    </div>
+
+    <div class="login-error" id="login-error">Invalid API key or connection error. Please try again.</div>
+
+    <button class="btn-primary" id="btn-connect" onclick="doLogin()">Connect →</button>
+
+    <div class="login-tos">
+      <div class="tos-title">// Data & Privacy — Torn ToS Compliance</div>
+      <table class="tos-table">
+        <tr><td>Key stored server-side?</td><td class="ok">No — browser only (localStorage)</td></tr>
+        <tr><td>Data sent to third parties?</td><td class="ok">No — API calls go direct to torn.com</td></tr>
+        <tr><td>Data shared with other users?</td><td class="ok">No — your data stays on your device</td></tr>
+        <tr><td>Key access level required</td><td>Full Access (recommended)</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ LOADING ══════════════════ -->
+<div class="view" id="view-loading" style="flex-direction:column;align-items:center;justify-content:center;height:100vh;width:100vw;">
+  <div class="loading-logo">TORN<span>FIN</span></div>
+  <div class="loading-bar-track">
+    <div class="loading-bar-fill" id="loading-bar"></div>
+  </div>
+  <div class="loading-status" id="loading-status">Connecting to Torn API...</div>
+</div>
+
+<!-- ══════════════════ DASHBOARD ══════════════════ -->
+<div class="view" id="view-dashboard">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-eyebrow">// Operator Panel</div>
+      <div class="logo-title">TORN<span>FIN</span></div>
+    </div>
+    <div class="sidebar-player">
+      <div class="player-name" id="sb-name">Loading...</div>
+      <div class="player-meta">
+        <span id="sb-level">Lvl —</span>
+        <span class="rank-badge" id="sb-rank">—</span>
+      </div>
+      <div class="player-meta" style="margin-top:4px;">
+        <span id="sb-faction" style="color:var(--text-muted);">—</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">// Finance</div>
+      <div class="nav-item active" onclick="showPage('overview',this)">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/></svg>
+        Overview
+      </div>
+      <div class="nav-item" onclick="showPage('transactions',this)">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><line x1="2" y1="4" x2="14" y2="4" stroke="currentColor" stroke-width="1.2"/><line x1="2" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="1.2"/><line x1="2" y1="12" x2="10" y2="12" stroke="currentColor" stroke-width="1.2"/></svg>
+        Transactions
+      </div>
+      <div class="nav-item" onclick="showPage('crimes',this)">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2"/><line x1="8" y1="4" x2="8" y2="8.5" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="10.5" r="0.7" fill="currentColor"/></svg>
+        Crimes
+      </div>
+      <div class="nav-section">// Status</div>
+      <div class="nav-item" onclick="showPage('profile',this)">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.2"/></svg>
+        Profile
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="api-status">
+        <div class="status-dot" id="status-dot"></div>
+        <span id="status-text">Connected</span>
+      </div>
+      <button class="btn-signout" onclick="doSignout()">✕ Clear key &amp; sign out</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="topbar-title">Overview</div>
+      <div class="topbar-time" id="live-time">—</div>
+      <button class="topbar-btn" onclick="refreshData()">↻ Refresh</button>
+    </div>
+
+    <!-- TICKER -->
+    <div class="ticker">
+      <div class="ticker-label">LIVE</div>
+      <div class="ticker-track">
+        <div class="ticker-inner" id="ticker-content">Loading market data...</div>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ── OVERVIEW PAGE ── -->
+      <div class="page active" id="page-overview">
+
+        <div class="metrics-row">
+          <div class="metric-card c-amber fade-up">
+            <div class="metric-label">// Net Worth</div>
+            <div class="metric-value amber" id="ov-networth">—</div>
+            <div class="metric-sub" id="ov-networth-sub">Loading...</div>
+          </div>
+          <div class="metric-card c-green fade-up">
+            <div class="metric-label">// Cash on Hand</div>
+            <div class="metric-value green" id="ov-cash">—</div>
+            <div class="metric-sub" id="ov-cash-sub">—</div>
+          </div>
+          <div class="metric-card c-blue fade-up">
+            <div class="metric-label">// Bank Balance</div>
+            <div class="metric-value" id="ov-bank">—</div>
+            <div class="metric-sub" id="ov-bank-sub">—</div>
+          </div>
+          <div class="metric-card c-red fade-up">
+            <div class="metric-label">// Points Value</div>
+            <div class="metric-value" id="ov-points">—</div>
+            <div class="metric-sub" id="ov-points-sub">—</div>
+          </div>
+        </div>
+
+        <div class="three-col">
+          <!-- Income breakdown -->
+          <div class="panel">
+            <div class="panel-title">Income Sources — Recent Log</div>
+            <div class="hbar-list" id="income-bars">
+              <div class="empty-state">Loading transaction data...</div>
+            </div>
+          </div>
+          <!-- Player bars -->
+          <div class="panel">
+            <div class="panel-title">Status Bars</div>
+            <div class="stat-bars" id="status-bars">
+              <div class="empty-state">Loading...</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <!-- Recent transactions -->
+          <div class="panel">
+            <div class="panel-title">
+              Recent Transactions
+              <span class="panel-action" onclick="showPage('transactions', document.querySelector('.nav-item:nth-child(3)'))">View all ›</span>
+            </div>
+            <table class="data-table" id="recent-tx-table">
+              <thead><tr>
+                <th>Type</th><th>Description</th><th>Time</th><th style="text-align:right">Amount</th>
+              </tr></thead>
+              <tbody id="recent-tx-body">
+                <tr><td colspan="4"><div class="empty-state">Loading...</div></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <!-- Net worth donut -->
+            <div class="panel">
+              <div class="panel-title">Wealth Breakdown</div>
+              <div class="donut-wrap">
+                <svg id="donut-svg" width="88" height="88" viewBox="0 0 88 88" style="flex-shrink:0"></svg>
+                <div class="donut-legend" id="donut-legend">
+                  <div class="empty-state" style="padding:0">Loading...</div>
+                </div>
+              </div>
+            </div>
+            <!-- Crime stats -->
+            <div class="panel">
+              <div class="panel-title">Crime Stats</div>
+              <div class="stat-rows" id="crime-stats-mini">
+                <div class="empty-state" style="padding:16px 0">Loading...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /overview -->
+
+      <!-- ── TRANSACTIONS PAGE ── -->
+      <div class="page" id="page-transactions">
+        <div class="panel">
+          <div class="panel-title">Transaction Log — Last 100 Events</div>
+          <table class="data-table">
+            <thead><tr>
+              <th>Type</th><th>Description</th><th>Date / Time</th><th style="text-align:right">Amount</th>
+            </tr></thead>
+            <tbody id="full-tx-body">
+              <tr><td colspan="4"><div class="empty-state">Loading...</div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── CRIMES PAGE ── -->
+      <div class="page" id="page-crimes">
+        <div class="metrics-row">
+          <div class="metric-card c-red"><div class="metric-label">// Total Crimes</div><div class="metric-value" id="cr-total">—</div></div>
+          <div class="metric-card c-green"><div class="metric-label">// Successful</div><div class="metric-value green" id="cr-success">—</div></div>
+          <div class="metric-card c-amber"><div class="metric-label">// Success Rate</div><div class="metric-value amber" id="cr-rate">—</div></div>
+          <div class="metric-card c-blue"><div class="metric-label">// Nerve Spent (est.)</div><div class="metric-value" id="cr-nerve">—</div></div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Crimes Breakdown</div>
+          <div class="crimes-grid" id="crimes-grid">
+            <div class="empty-state" style="grid-column:1/-1">Loading crime data...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PROFILE PAGE ── -->
+      <div class="page" id="page-profile">
+        <div class="two-col">
+          <div class="panel">
+            <div class="panel-title">Player Profile</div>
+            <div class="stat-rows" id="profile-stats">
+              <div class="empty-state">Loading...</div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Battle Stats</div>
+            <div class="hbar-list" id="battle-stats">
+              <div class="empty-state">Battle stats require custom API selections. Not available with preset access levels.</div>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Life &amp; Status Bars</div>
+          <div class="stat-bars" id="profile-bars" style="gap:14px;">
+            <div class="empty-state">Loading...</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /dashboard -->
+
+<script>
+'use strict';
+
+// ── STATE ──
+const API_BASE = 'https://api.torn.com';
+let apiKey = '';
+let playerData = {};
+let moneyData = {};
+let networthData = {};
+let crimeData = {};
+let logData = [];
+let refreshTimer = null;
+
+// ── UTILS ──
+function fmt(n) {
+  if (n === undefined || n === null || isNaN(n)) return '—';
+  const abs = Math.abs(n);
+  if (abs >= 1e9) return '$' + (n/1e9).toFixed(2) + 'B';
+  if (abs >= 1e6) return '$' + (n/1e6).toFixed(2) + 'M';
+  if (abs >= 1e3) return '$' + (n/1e3).toFixed(1) + 'K';
+  return '$' + n.toLocaleString();
+}
+
+function fmtNum(n) {
+  if (!n) return '—';
+  return Number(n).toLocaleString();
+}
+
+function timeAgo(ts) {
+  const diff = Math.floor(Date.now()/1000) - ts;
+  if (diff < 60) return diff + 's ago';
+  if (diff < 3600) return Math.floor(diff/60) + 'm ago';
+  if (diff < 86400) return Math.floor(diff/3600) + 'h ago';
+  return Math.floor(diff/86400) + 'd ago';
+}
+
+function tsToDate(ts) {
+  return new Date(ts * 1000).toLocaleString('en-GB', {
+    day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'
+  });
+}
+
+async function apiFetch(section, selections) {
+  const url = `${API_BASE}/${section}/?selections=${selections}&key=${apiKey}`;
+  const r = await fetch(url);
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  const d = await r.json();
+  if (d.error) throw new Error(d.error.error || 'API error ' + d.error.code);
+  return d;
+}
+
+// ── VIEWS ──
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function showPage(id, navEl) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (navEl) navEl.classList.add('active');
+  const titles = { overview:'Overview', transactions:'Transactions', crimes:'Crimes', profile:'Profile' };
+  document.getElementById('topbar-title').textContent = titles[id] || id;
+}
+
+// ── LIVE CLOCK ──
+function startClock() {
+  function tick() {
+    const now = new Date();
+    const torn = new Date(now.getTime()); // Torn uses UTC
+    document.getElementById('live-time').textContent =
+      torn.toUTCString().slice(5,25) + ' TCT';
+  }
+  tick();
+  setInterval(tick, 1000);
+}
+
+// ── LOGIN ──
+async function doLogin() {
+  const key = document.getElementById('api-key-input').value.trim();
+  if (key.length < 10) { showError('Please enter a valid API key.'); return; }
+
+  document.getElementById('btn-connect').disabled = true;
+  document.getElementById('login-error').style.display = 'none';
+
+  apiKey = key;
+  localStorage.setItem('torn_api_key', key);
+
+  showView('view-loading');
+  await loadAllData();
+}
+
+function showError(msg) {
+  const el = document.getElementById('login-error');
+  el.textContent = msg;
+  el.style.display = 'block';
+  document.getElementById('btn-connect').disabled = false;
+}
+
+function doSignout() {
+  localStorage.removeItem('torn_api_key');
+  apiKey = '';
+  playerData = {}; moneyData = {}; networthData = {}; crimeData = {}; logData = [];
+  if (refreshTimer) clearInterval(refreshTimer);
+  document.getElementById('api-key-input').value = '';
+  document.getElementById('btn-connect').disabled = false;
+  document.getElementById('login-error').style.display = 'none';
+  showView('view-login');
+}
+
+// ── DATA LOADING ──
+function setLoadingStatus(msg, pct) {
+  document.getElementById('loading-status').textContent = msg;
+  document.getElementById('loading-bar').style.width = pct + '%';
+}
+
+async function loadAllData() {
+  try {
+    setLoadingStatus('Fetching player profile...', 15);
+    const basic = await apiFetch('user', 'basic,profile,personalstats');
+    playerData = basic;
+
+    setLoadingStatus('Loading money & net worth...', 40);
+    const money = await apiFetch('user', 'money,networth');
+    moneyData = money;
+
+    setLoadingStatus('Loading crime history...', 60);
+    const crimes = await apiFetch('user', 'crimes');
+    crimeData = crimes;
+
+    setLoadingStatus('Loading transaction log...', 80);
+    const log = await apiFetch('user', 'log');
+    logData = log.log ? Object.values(log.log) : [];
+
+    setLoadingStatus('Building dashboard...', 95);
+    await new Promise(r => setTimeout(r, 300));
+
+    populateDashboard();
+    setLoadingStatus('Done.', 100);
+    await new Promise(r => setTimeout(r, 200));
+    showView('view-dashboard');
+    startClock();
+
+    // Auto-refresh every 3 minutes
+    refreshTimer = setInterval(refreshData, 180000);
+
+  } catch (err) {
+    console.error(err);
+    localStorage.removeItem('torn_api_key');
+    apiKey = '';
+    showView('view-login');
+    showError('Connection failed: ' + err.message);
+  }
+}
+
+async function refreshData() {
+  const dot = document.getElementById('status-dot');
+  const txt = document.getElementById('status-text');
+  dot.className = 'status-dot loading';
+  txt.textContent = 'Refreshing...';
+
+  try {
+    const [money, crimes, log] = await Promise.all([
+      apiFetch('user', 'money,networth'),
+      apiFetch('user', 'crimes'),
+      apiFetch('user', 'log')
+    ]);
+    moneyData = money;
+    crimeData = crimes;
+    logData = log.log ? Object.values(log.log) : [];
+    populateDashboard();
+    dot.className = 'status-dot';
+    txt.textContent = 'Connected';
+  } catch (err) {
+    dot.className = 'status-dot error';
+    txt.textContent = 'Error — retry';
+  }
+}
+
+// ── POPULATE ──
+function populateDashboard() {
+  populateSidebar();
+  populateOverview();
+  populateTransactions();
+  populateCrimes();
+  populateProfile();
+  populateTicker();
+}
+
+function populateSidebar() {
+  const p = playerData;
+  document.getElementById('sb-name').textContent = p.name || '—';
+  document.getElementById('sb-level').textContent = 'Lvl ' + (p.level || '—');
+  document.getElementById('sb-rank').textContent = p.rank || '—';
+  document.getElementById('sb-faction').textContent = p.faction?.faction_name || 'No Faction';
+}
+
+function populateOverview() {
+  // Metrics
+  const nw = networthData.networth || moneyData.networth;
+  const nwTotal = nw?.total || moneyData?.networth?.total || 0;
+  document.getElementById('ov-networth').textContent = fmt(nwTotal);
+
+  const cash = moneyData.money_onhand || 0;
+  document.getElementById('ov-cash').textContent = fmt(cash);
+  document.getElementById('ov-cash-sub').textContent = 'Wallet';
+
+  const bank = moneyData.money_bank || 0;
+  document.getElementById('ov-bank').textContent = fmt(bank);
+
+  const points = moneyData.points || 0;
+  document.getElementById('ov-points').textContent = fmtNum(points) + ' pts';
+  document.getElementById('ov-points-sub').textContent = 'Points balance';
+
+  // Net worth breakdown donut
+  const nwObj = moneyData.networth || {};
+  buildDonut(nwObj);
+
+  // Status bars
+  buildStatusBars();
+
+  // Income bars from log
+  buildIncomeBars();
+
+  // Recent transactions (first 8)
+  buildRecentTx(8);
+
+  // Crime stats mini
+  buildCrimeStatsMini();
+}
+
+function buildDonut(nw) {
+  const segments = [
+    { label: 'Cash', value: (nw.wallet || 0) + (nw.bank || 0), color: '#3a7bd5' },
+    { label: 'Properties', value: nw.properties || 0, color: '#d4820a' },
+    { label: 'Stocks', value: nw.stockmarket || 0, color: '#43a865' },
+    { label: 'Items', value: nw.items || 0, color: '#e53935' },
+    { label: 'Other', value: (nw.displaycase || 0) + (nw.bazaar || 0) + (nw.piggybank || 0), color: '#4a4845' },
+  ].filter(s => s.value > 0);
+
+  const total = segments.reduce((s, x) => s + x.value, 0);
+  if (!total) return;
+
+  const svg = document.getElementById('donut-svg');
+  const legend = document.getElementById('donut-legend');
+  const cx = 44, cy = 44, r = 32, strokeW = 12;
+  const circ = 2 * Math.PI * r;
+
+  let svgHTML = '';
+  let offset = 0;
+  const totalPct = segments.map(s => s.value / total);
+
+  totalPct.forEach((pct, i) => {
+    const dash = pct * circ;
+    const gap = circ - dash;
+    svgHTML += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${segments[i].color}" stroke-width="${strokeW}"
+      stroke-dasharray="${dash.toFixed(2)} ${gap.toFixed(2)}" stroke-dashoffset="${(-offset * circ / (2*Math.PI*r)).toFixed(2)}"
+      transform="rotate(-90 ${cx} ${cy})"/>`;
+    offset += pct * circ;
+  });
+
+  const topLabel = fmt(total);
+  svgHTML += `<text x="${cx}" y="${cy-4}" text-anchor="middle" font-family="'Share Tech Mono'" font-size="9" fill="#e8e6e0">${topLabel.replace('$','$')}</text>`;
+  svgHTML += `<text x="${cx}" y="${cy+8}" text-anchor="middle" font-family="'Share Tech Mono'" font-size="7" fill="#4a4845">NET WORTH</text>`;
+
+  svg.innerHTML = svgHTML;
+
+  legend.innerHTML = segments.map(s =>
+    `<div class="legend-row">
+      <div class="legend-sw" style="background:${s.color}"></div>
+      ${s.label}
+      <span class="legend-pct">${Math.round(s.value/total*100)}%</span>
+    </div>`
+  ).join('');
+}
+
+function buildStatusBars() {
+  const p = playerData;
+  const bars = [
+    { label: 'Life', cur: p.life?.current || 0, max: p.life?.maximum || 100, color: 'red' },
+    { label: 'Energy', cur: p.energy?.current || 0, max: p.energy?.maximum || 100, color: 'green' },
+    { label: 'Nerve', cur: p.nerve?.current || 0, max: p.nerve?.maximum || 100, color: 'amber' },
+    { label: 'Happy', cur: p.happy?.current || 0, max: p.happy?.maximum || 100, color: 'blue' },
+  ];
+
+  const html = bars.map(b => {
+    const pct = b.max ? Math.round(b.cur / b.max * 100) : 0;
+    return `<div class="stat-bar-row">
+      <div class="stat-bar-label">${b.label}</div>
+      <div class="stat-bar-track"><div class="stat-bar-fill ${b.color}" style="width:${pct}%"></div></div>
+      <div class="stat-bar-val">${b.cur} / ${b.max}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('status-bars').innerHTML = html;
+  document.getElementById('profile-bars').innerHTML = html;
+}
+
+function categoriseLog(entry) {
+  const t = (entry.title || '').toLowerCase();
+  const c = (entry.category || '').toLowerCase();
+  if (c === 'crime' || t.includes('crime') || t.includes('theft') || t.includes('shoplifting') || t.includes('assault')) return 'crime';
+  if (c === 'casino' || t.includes('casino') || t.includes('slot') || t.includes('blackjack') || t.includes('poker') || t.includes('roulette')) return 'casino';
+  if (c === 'trade' || t.includes('trade') || t.includes('bazaar') || t.includes('sold') || t.includes('bought') || t.includes('item market')) return 'trade';
+  if (t.includes('attack') || t.includes('mugg') || t.includes('hospital')) return 'mug';
+  if (t.includes('bank') || t.includes('deposit') || t.includes('withdraw') || t.includes('investment')) return 'bank';
+  if (t.includes('property') || t.includes('company') || t.includes('faction')) return 'property';
+  return 'other';
+}
+
+function buildIncomeBars() {
+  const totals = { Crime: 0, Casino: 0, Trading: 0, Mugging: 0, Property: 0, Other: 0 };
+  const colorMap = { Crime: 'red', Casino: 'amber', Trading: 'blue', Mugging: 'coral', Property: 'green', Other: 'gray' };
+
+  logData.forEach(e => {
+    const amount = e.money || 0;
+    if (amount <= 0) return;
+    const cat = categoriseLog(e);
+    if (cat === 'crime') totals.Crime += amount;
+    else if (cat === 'casino') totals.Casino += amount;
+    else if (cat === 'trade') totals.Trading += amount;
+    else if (cat === 'mug') totals.Mugging += amount;
+    else if (cat === 'property') totals.Property += amount;
+    else totals.Other += amount;
+  });
+
+  const entries = Object.entries(totals).filter(([,v]) => v > 0).sort((a,b) => b[1]-a[1]);
+  const max = entries[0]?.[1] || 1;
+
+  if (!entries.length) {
+    document.getElementById('income-bars').innerHTML = '<div class="empty-state">No income data in recent log.</div>';
+    return;
+  }
+
+  document.getElementById('income-bars').innerHTML = entries.map(([label, val]) =>
+    `<div class="hbar-row">
+      <div class="hbar-label">${label}</div>
+      <div class="hbar-track"><div class="hbar-fill ${colorMap[label]}" style="width:${Math.round(val/max*100)}%"></div></div>
+      <div class="hbar-val">${fmt(val)}</div>
+    </div>`
+  ).join('');
+}
+
+function buildRecentTx(limit) {
+  const entries = [...logData]
+    .filter(e => e.money)
+    .sort((a,b) => (b.timestamp || 0) - (a.timestamp || 0))
+    .slice(0, limit);
+
+  const html = entries.length ? entries.map(e => {
+    const cat = categoriseLog(e);
+    const amount = e.money || 0;
+    const sign = amount >= 0 ? '+' : '';
+    return `<tr>
+      <td><span class="tag ${cat}">${cat.toUpperCase()}</span></td>
+      <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.title || '—'}</td>
+      <td>${timeAgo(e.timestamp)}</td>
+      <td style="text-align:right" class="${amount>=0?'pos':'neg'}">${sign}${fmt(Math.abs(amount))}</td>
+    </tr>`;
+  }).join('') : '<tr><td colspan="4"><div class="empty-state">No transaction data found in log.</div></td></tr>';
+
+  document.getElementById('recent-tx-body').innerHTML = html;
+}
+
+function buildCrimeStatsMini() {
+  const crimes = crimeData.crimes || {};
+  const list = Object.values(crimes);
+  const total = list.reduce((s, c) => s + (c.attempts || 0), 0);
+  const success = list.reduce((s, c) => s + (c.success || 0), 0);
+  const rate = total ? Math.round(success / total * 100) : 0;
+
+  document.getElementById('crime-stats-mini').innerHTML = `
+    <div class="stat-row"><span class="stat-k">Total attempts</span><span class="stat-v">${fmtNum(total)}</span></div>
+    <div class="stat-row"><span class="stat-k">Successful</span><span class="stat-v green">${fmtNum(success)}</span></div>
+    <div class="stat-row"><span class="stat-k">Success rate</span><span class="stat-v ${rate>=70?'green':rate>=50?'amber':'red'}">${rate}%</span></div>
+  `;
+}
+
+function populateTransactions() {
+  const entries = [...logData]
+    .filter(e => e.money)
+    .sort((a,b) => (b.timestamp || 0) - (a.timestamp || 0))
+    .slice(0, 100);
+
+  const html = entries.length ? entries.map(e => {
+    const cat = categoriseLog(e);
+    const amount = e.money || 0;
+    const sign = amount >= 0 ? '+' : '';
+    return `<tr>
+      <td><span class="tag ${cat}">${cat.toUpperCase()}</span></td>
+      <td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.title || '—'}</td>
+      <td>${tsToDate(e.timestamp)}</td>
+      <td style="text-align:right" class="${amount>=0?'pos':'neg'}">${sign}${fmt(Math.abs(amount))}</td>
+    </tr>`;
+  }).join('') : '<tr><td colspan="4"><div class="empty-state">No transaction data found.</div></td></tr>';
+
+  document.getElementById('full-tx-body').innerHTML = html;
+}
+
+function populateCrimes() {
+  const crimes = crimeData.crimes || {};
+  const list = Object.entries(crimes);
+  const total = list.reduce((s,[,c]) => s + (c.attempts || 0), 0);
+  const success = list.reduce((s,[,c]) => s + (c.success || 0), 0);
+  const rate = total ? Math.round(success / total * 100) : 0;
+
+  document.getElementById('cr-total').textContent = fmtNum(total);
+  document.getElementById('cr-success').textContent = fmtNum(success);
+  document.getElementById('cr-rate').textContent = rate + '%';
+  document.getElementById('cr-nerve').textContent = '—';
+
+  if (!list.length) {
+    document.getElementById('crimes-grid').innerHTML = '<div class="empty-state" style="grid-column:1/-1">No crime data available.</div>';
+    return;
+  }
+
+  document.getElementById('crimes-grid').innerHTML = list
+    .filter(([,c]) => c.attempts > 0)
+    .sort(([,a],[,b]) => b.attempts - a.attempts)
+    .slice(0, 12)
+    .map(([name, c]) => {
+      const r = c.attempts ? Math.round(c.success/c.attempts*100) : 0;
+      return `<div class="crime-card">
+        <div class="crime-card-name">${name.replace(/_/g,' ')}</div>
+        <div class="crime-card-stat">Attempts: <span>${fmtNum(c.attempts)}</span></div>
+        <div class="crime-card-stat">Success: <span style="color:var(--green)">${fmtNum(c.success)}</span></div>
+        <div class="crime-card-stat">Rate: <span style="color:${r>=70?'var(--green)':r>=50?'var(--amber-bright)':'var(--red)'}">${r}%</span></div>
+      </div>`;
+    }).join('');
+}
+
+function populateProfile() {
+  const p = playerData;
+  const rows = [
+    ['Name', p.name || '—'],
+    ['Player ID', '#' + (p.player_id || '—')],
+    ['Level', p.level || '—'],
+    ['Rank', p.rank || '—'],
+    ['Faction', p.faction?.faction_name || 'None'],
+    ['Position', p.faction?.position || '—'],
+    ['Company', p.job?.company_name || 'Unemployed'],
+    ['Age', p.age ? p.age + ' days' : '—'],
+    ['Last Action', p.last_action?.relative || '—'],
+    ['Status', p.status?.description || '—'],
+  ];
+
+  document.getElementById('profile-stats').innerHTML = rows.map(([k,v]) =>
+    `<div class="stat-row"><span class="stat-k">${k}</span><span class="stat-v">${v}</span></div>`
+  ).join('');
+
+  // Personal stats for battle stats panel
+  const ps = p.personalstats || {};
+  const bstats = [
+    ['Attacks won', ps.attackswon || 0, ps.attackswon || 0],
+    ['Attacks lost', ps.attackslost || 0, ps.attackswon || 0],
+    ['Defends won', ps.defendswon || 0, ps.defendswon || 0],
+    ['Defends lost', ps.defendslost || 0, ps.defendswon || 0],
+    ['Crimes done', ps.crimesskilled || ps.criminaloffenses || 0, ps.criminaloffenses || 0],
+    ['Mugs won', ps.attackstealthed || 0, ps.attackstealthed || 0],
+  ].filter(([,v]) => v > 0);
+
+  if (bstats.length) {
+    const maxVal = Math.max(...bstats.map(([,v]) => v), 1);
+    document.getElementById('battle-stats').innerHTML = bstats.map(([label, val]) =>
+      `<div class="hbar-row">
+        <div class="hbar-label" style="font-size:9px">${label}</div>
+        <div class="hbar-track"><div class="hbar-fill red" style="width:${Math.round(val/maxVal*100)}%"></div></div>
+        <div class="hbar-val">${fmtNum(val)}</div>
+      </div>`
+    ).join('');
+  }
+}
+
+function populateTicker() {
+  const money = moneyData;
+  const parts = [
+    `Cash: ${fmt(money.money_onhand || 0)}`,
+    `Bank: ${fmt(money.money_bank || 0)}`,
+    `Net Worth: ${fmt((money.networth || {}).total || 0)}`,
+    `Points: ${fmtNum(money.points || 0)}`,
+    `Player: ${playerData.name || '—'}`,
+    `Level: ${playerData.level || '—'}`,
+    `Rank: ${playerData.rank || '—'}`,
+    `Status: ${playerData.status?.description || 'Unknown'}`,
+    `Last Seen: ${playerData.last_action?.relative || '—'}`,
+  ];
+
+  const content = parts.join(' &nbsp;·&nbsp; ');
+  const ticker = document.getElementById('ticker-content');
+  ticker.innerHTML = content + ' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ' + content;
+}
+
+// ── BOOT ──
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('torn_api_key');
+  if (saved) {
+    apiKey = saved;
+    document.getElementById('api-key-input').value = saved;
+    showView('view-loading');
+    loadAllData();
+  } else {
+    showView('view-login');
+  }
+});
+</script>
+</body>
+</html>

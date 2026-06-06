@@ -3,662 +3,216 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TornFin — Finance Tracker</title>
+<title>TornFin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --bg-base:     #1a1d2e;
-  --bg-surface:  #20243a;
-  --bg-elevated: #272b42;
-  --bg-hover:    #2e3350;
-  --bg-card:     #232740;
-
-  --border:      rgba(255,255,255,0.07);
-  --border-mid:  rgba(255,255,255,0.12);
-  --border-hi:   rgba(255,255,255,0.2);
-
-  --accent:      #7c8cf8;
-  --accent-dim:  rgba(124,140,248,0.15);
-  --accent-glow: rgba(124,140,248,0.08);
-
-  --green:       #5ebd8a;
-  --green-dim:   rgba(94,189,138,0.15);
-  --red:         #f06b6b;
-  --red-dim:     rgba(240,107,107,0.14);
-  --amber:       #f0b96b;
-  --amber-dim:   rgba(240,185,107,0.14);
-  --blue:        #6baaf0;
-  --blue-dim:    rgba(107,170,240,0.14);
-  --coral:       #f08c6b;
-
-  --text-primary:   #e2e4f0;
-  --text-secondary: #9095b8;
-  --text-muted:     #565a7a;
-
-  --mono:    'DM Mono', monospace;
-  --sans:    'DM Sans', sans-serif;
-  --radius:  10px;
-  --radius-sm: 6px;
-  --sidebar-w: 230px;
-}
-
-html, body {
-  height: 100%;
-  background: var(--bg-base);
-  color: var(--text-primary);
-  font-family: var(--sans);
-  font-size: 14px;
-  line-height: 1.5;
-  overflow: hidden;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* ── VIEWS ── */
-.view { display: none; }
-.view.active { display: flex; }
-
-/* ══════════════════════════
-   LOGIN
-══════════════════════════ */
-#view-login {
-  height: 100vh; width: 100vw;
-  align-items: center; justify-content: center;
-  flex-direction: column;
-  background: radial-gradient(ellipse at 30% 40%, rgba(124,140,248,0.06) 0%, transparent 60%),
-              var(--bg-base);
-}
-
-.login-box {
-  width: 440px;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-mid);
-  border-radius: 16px;
-  padding: 40px 36px;
-  box-shadow: 0 24px 64px rgba(0,0,0,0.4);
-  animation: fadeUp 0.5s ease both;
-}
-
-.login-logo-eye {
-  font-family: var(--mono); font-size: 11px;
-  color: var(--accent); letter-spacing: 0.16em;
-  text-transform: uppercase; margin-bottom: 10px;
-  opacity: 0.8;
-}
-
-.login-title {
-  font-size: 32px; font-weight: 600;
-  color: var(--text-primary); line-height: 1.1;
-  margin-bottom: 6px; letter-spacing: -0.5px;
-}
-
-.login-title span { color: var(--accent); }
-.login-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 32px; }
-
-.form-label {
-  font-size: 12px; font-weight: 500;
-  color: var(--text-secondary);
-  display: block; margin-bottom: 8px;
-  letter-spacing: 0.02em;
-}
-
-.form-input {
-  width: 100%; background: var(--bg-elevated);
-  border: 1px solid var(--border-mid);
-  border-radius: var(--radius-sm);
-  color: var(--text-primary); font-family: var(--mono);
-  font-size: 13px; padding: 11px 14px;
-  outline: none; transition: border-color 0.2s, box-shadow 0.2s;
-  letter-spacing: 0.03em;
-}
-
-.form-input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-dim);
-}
-
-.form-input::placeholder { color: var(--text-muted); }
-
-.form-hint {
-  font-size: 12px; color: var(--text-muted);
-  margin-top: 8px; line-height: 1.7;
-}
-
-.form-hint a { color: var(--blue); text-decoration: none; }
-.form-hint a:hover { color: var(--text-primary); }
-
-.btn-primary {
-  width: 100%; margin-top: 24px;
-  background: var(--accent); border: none;
-  color: #fff; font-family: var(--sans);
-  font-size: 15px; font-weight: 600;
-  padding: 13px; cursor: pointer;
-  border-radius: var(--radius-sm);
-  transition: opacity 0.15s, transform 0.1s;
-  letter-spacing: 0.02em;
-}
-
-.btn-primary:hover { opacity: 0.88; }
-.btn-primary:active { transform: scale(0.99); }
-.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
-
-.login-error {
-  margin-top: 14px; padding: 10px 14px;
-  background: var(--red-dim);
-  border: 1px solid rgba(240,107,107,0.25);
-  border-radius: var(--radius-sm);
-  font-size: 12px; color: var(--red);
-  display: none;
-}
-
-.login-tos {
-  margin-top: 20px; padding: 14px 16px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: var(--bg-elevated);
-}
-
-.tos-title {
-  font-size: 11px; font-weight: 500;
-  color: var(--text-muted); margin-bottom: 8px;
-  letter-spacing: 0.05em; text-transform: uppercase;
-}
-
-.tos-table { width: 100%; border-collapse: collapse; }
-.tos-table td {
-  font-size: 12px; padding: 3px 0;
-  color: var(--text-secondary);
-}
-
-.tos-table td:first-child { color: var(--text-muted); width: 55%; }
-.tos-table .ok { color: var(--green); }
-
-/* ══════════════════════════
-   LOADING
-══════════════════════════ */
-#view-loading {
-  height: 100vh; width: 100vw;
-  align-items: center; justify-content: center;
-  flex-direction: column; gap: 20px;
-}
-
-.loading-logo {
-  font-size: 26px; font-weight: 600;
-  letter-spacing: -0.3px; color: var(--text-primary);
-}
-
-.loading-logo span { color: var(--accent); }
-
-.loading-bar-track {
-  width: 200px; height: 3px;
-  background: var(--bg-elevated);
-  border-radius: 999px; overflow: hidden;
-}
-
-.loading-bar-fill {
-  height: 100%; background: var(--accent);
-  width: 0%; transition: width 0.4s ease;
-  border-radius: 999px;
-}
-
-.loading-status {
-  font-size: 12px; color: var(--text-muted);
-  font-family: var(--mono); letter-spacing: 0.04em;
-}
-
-/* ══════════════════════════
-   DASHBOARD
-══════════════════════════ */
-#view-dashboard { height: 100vh; width: 100vw; }
-
-/* SIDEBAR */
-.sidebar {
-  width: var(--sidebar-w); flex-shrink: 0;
-  background: var(--bg-surface);
-  border-right: 1px solid var(--border);
-  display: flex; flex-direction: column;
-}
-
-.sidebar-logo {
-  padding: 24px 20px 20px;
-  border-bottom: 1px solid var(--border);
-}
-
-.logo-eyebrow {
-  font-size: 10px; color: var(--accent);
-  letter-spacing: 0.12em; text-transform: uppercase;
-  margin-bottom: 4px; opacity: 0.7;
-  font-family: var(--mono);
-}
-
-.logo-title {
-  font-size: 22px; font-weight: 600;
-  letter-spacing: -0.3px; color: var(--text-primary);
-}
-
-.logo-title span { color: var(--accent); }
-
-.sidebar-player {
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--border);
-}
-
-.player-name {
-  font-size: 14px; font-weight: 600;
-  color: var(--text-primary); margin-bottom: 5px;
-}
-
-.player-meta {
-  font-size: 12px; color: var(--text-secondary);
-  display: flex; gap: 6px; flex-wrap: wrap;
-}
-
-.rank-badge { color: var(--amber); font-weight: 500; }
-
-.sidebar-nav { flex: 1; padding: 10px 10px; overflow-y: auto; }
-
-.nav-section {
-  font-size: 10px; font-weight: 500; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--text-muted);
-  padding: 10px 10px 4px;
-}
-
-.nav-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 9px 12px; cursor: pointer;
-  font-size: 14px; font-weight: 500;
-  color: var(--text-secondary);
-  border-radius: var(--radius-sm);
-  transition: all 0.12s; margin-bottom: 1px;
-}
-
-.nav-item:hover { color: var(--text-primary); background: var(--bg-hover); }
-
-.nav-item.active {
-  color: var(--accent);
-  background: var(--accent-glow);
-}
-
-.nav-icon { width: 16px; height: 16px; flex-shrink: 0; opacity: 0.6; }
-.nav-item.active .nav-icon { opacity: 1; }
-
-.sidebar-footer {
-  padding: 14px 20px;
-  border-top: 1px solid var(--border);
-  display: flex; flex-direction: column; gap: 10px;
-}
-
-.api-status {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 12px; color: var(--text-secondary);
-}
-
-.status-dot {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: var(--green); flex-shrink: 0;
-  animation: pulse 2.5s infinite;
-}
-
-.status-dot.loading { background: var(--amber); }
-.status-dot.error { background: var(--red); animation: none; }
-
-.btn-signout {
-  background: transparent;
-  border: 1px solid var(--border-mid);
-  color: var(--text-muted); font-family: var(--sans);
-  font-size: 12px; padding: 6px 12px;
-  border-radius: var(--radius-sm); cursor: pointer;
-  transition: all 0.12s; text-align: left;
-}
-
-.btn-signout:hover { border-color: var(--red); color: var(--red); }
-
-/* MAIN */
-.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
-
-.topbar {
-  height: 54px; flex-shrink: 0;
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center;
-  padding: 0 28px; gap: 14px;
-  background: var(--bg-surface);
-}
-
-.topbar-title {
-  font-size: 16px; font-weight: 600;
-  color: var(--text-primary); flex: 1;
-  letter-spacing: -0.2px;
-}
-
-.topbar-time {
-  font-family: var(--mono); font-size: 11px;
-  color: var(--text-muted);
-}
-
-.topbar-btn {
-  background: transparent;
-  border: 1px solid var(--border-mid);
-  color: var(--text-secondary); font-family: var(--sans);
-  font-size: 12px; font-weight: 500;
-  padding: 6px 14px; cursor: pointer;
-  border-radius: var(--radius-sm);
-  transition: all 0.12s;
-}
-
-.topbar-btn:hover { border-color: var(--accent); color: var(--accent); }
-
-/* TICKER */
-.ticker {
-  height: 32px; flex-shrink: 0;
-  background: var(--bg-elevated);
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; overflow: hidden;
-}
-
-.ticker-label {
-  background: var(--accent); color: #fff;
-  font-size: 10px; font-weight: 600;
-  letter-spacing: 0.1em; padding: 0 12px;
-  height: 100%; display: flex; align-items: center;
-  flex-shrink: 0; font-family: var(--sans);
-}
-
-.ticker-track { flex: 1; overflow: hidden; white-space: nowrap; }
-
-.ticker-inner {
-  display: inline-block;
-  animation: ticker 40s linear infinite;
-  font-family: var(--mono); font-size: 11px;
-  color: var(--text-secondary); padding-left: 100%;
-}
-
-@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-/* CONTENT */
-.content {
-  flex: 1; overflow-y: auto;
-  padding: 24px 28px;
-  display: flex; flex-direction: column; gap: 20px;
-}
-
-.content::-webkit-scrollbar { width: 4px; }
-.content::-webkit-scrollbar-thumb { background: var(--bg-hover); border-radius: 2px; }
-
-/* PAGES */
-.page { display: none; flex-direction: column; gap: 20px; }
-.page.active { display: flex; }
-
-/* PANELS */
-.panel {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 18px 20px;
-}
-
-.panel-title {
-  font-size: 12px; font-weight: 600;
-  letter-spacing: 0.04em; text-transform: uppercase;
-  color: var(--text-muted); margin-bottom: 16px;
-  display: flex; justify-content: space-between; align-items: center;
-}
-
-.panel-action {
-  font-size: 12px; font-weight: 400;
-  text-transform: none; letter-spacing: 0;
-  color: var(--text-muted); cursor: pointer;
-  transition: color 0.12s;
-}
-
-.panel-action:hover { color: var(--accent); }
-
-/* METRICS */
-.metrics-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-
-.metric-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px 18px;
-}
-
-.metric-label {
-  font-size: 11px; font-weight: 500;
-  letter-spacing: 0.05em; text-transform: uppercase;
-  color: var(--text-muted); margin-bottom: 10px;
-}
-
-.metric-value {
-  font-family: var(--mono); font-size: 24px;
-  color: var(--text-primary); line-height: 1; margin-bottom: 6px;
-}
-
-.metric-value.green { color: var(--green); }
-.metric-value.red   { color: var(--red); }
-.metric-value.amber { color: var(--amber); }
-.metric-value.accent { color: var(--accent); }
-
-.metric-sub { font-size: 12px; color: var(--text-muted); }
-.metric-sub.up   { color: var(--green); }
-.metric-sub.down { color: var(--red); }
-
-/* ICON ACCENT on metric card top */
-.metric-card { position: relative; overflow: hidden; }
-.metric-card::after {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: var(--card-accent, var(--border));
-  border-radius: var(--radius) var(--radius) 0 0;
-}
-.metric-card.c-green { --card-accent: var(--green); }
-.metric-card.c-red   { --card-accent: var(--red); }
-.metric-card.c-amber { --card-accent: var(--amber); }
-.metric-card.c-accent { --card-accent: var(--accent); }
-
-/* GRIDS */
-.two-col   { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.three-col { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
-
-/* STATUS BARS */
-.stat-bars { display: flex; flex-direction: column; gap: 12px; }
-
-.stat-bar-row { display: flex; align-items: center; gap: 12px; }
-
-.stat-bar-label {
-  font-size: 12px; color: var(--text-secondary);
-  width: 50px; flex-shrink: 0;
-}
-
-.stat-bar-track {
-  flex: 1; height: 6px;
-  background: var(--bg-elevated);
-  border-radius: 999px; overflow: hidden;
-}
-
-.stat-bar-fill {
-  height: 100%; border-radius: 999px;
-  transition: width 1s cubic-bezier(0.16,1,0.3,1);
-}
-
-.stat-bar-fill.red   { background: var(--red); }
-.stat-bar-fill.green { background: var(--green); }
-.stat-bar-fill.amber { background: var(--amber); }
-.stat-bar-fill.blue  { background: var(--blue); }
-
-.stat-bar-val {
-  font-family: var(--mono); font-size: 11px;
-  color: var(--text-secondary); width: 58px;
-  flex-shrink: 0; text-align: right;
-}
-
-/* TABLE */
-.data-table { width: 100%; border-collapse: collapse; }
-
-.data-table th {
-  font-size: 11px; font-weight: 500;
-  letter-spacing: 0.05em; text-transform: uppercase;
-  color: var(--text-muted); text-align: left;
-  padding: 0 0 10px; border-bottom: 1px solid var(--border);
-}
-
-.data-table td {
-  padding: 9px 0; border-bottom: 1px solid var(--border);
-  font-size: 13px; color: var(--text-secondary);
-  vertical-align: middle;
-}
-
-.data-table tr:last-child td { border-bottom: none; }
-.data-table tr:hover td { color: var(--text-primary); }
-
-/* TAGS */
-.tag {
-  display: inline-flex; padding: 3px 8px;
-  font-size: 10px; font-weight: 600;
-  letter-spacing: 0.05em; border-radius: 4px;
-}
-
-.tag.crime    { background: var(--red-dim);   color: var(--red); }
-.tag.trade    { background: var(--blue-dim);  color: var(--blue); }
-.tag.casino   { background: var(--amber-dim); color: var(--amber); }
-.tag.mug      { background: rgba(240,140,107,0.15); color: var(--coral); }
-.tag.property { background: var(--green-dim); color: var(--green); }
-.tag.bank     { background: rgba(144,149,184,0.12); color: var(--text-secondary); }
-.tag.other    { background: rgba(86,90,122,0.15);   color: var(--text-muted); }
-
-.pos { color: var(--green) !important; }
-.neg { color: var(--red) !important; }
-
-/* HORIZ BARS */
-.hbar-list { display: flex; flex-direction: column; gap: 11px; }
-
-.hbar-row { display: flex; align-items: center; gap: 12px; }
-
-.hbar-label {
-  font-size: 12px; color: var(--text-secondary);
-  width: 64px; flex-shrink: 0; text-align: right;
-}
-
-.hbar-track {
-  flex: 1; height: 6px;
-  background: var(--bg-elevated);
-  border-radius: 999px; overflow: hidden;
-}
-
-.hbar-fill {
-  height: 100%; border-radius: 999px;
-  transition: width 1s cubic-bezier(0.16,1,0.3,1);
-}
-
-.hbar-fill.red   { background: var(--red); }
-.hbar-fill.blue  { background: var(--blue); }
-.hbar-fill.amber { background: var(--amber); }
-.hbar-fill.coral { background: var(--coral); }
-.hbar-fill.gray  { background: var(--text-muted); }
-.hbar-fill.green { background: var(--green); }
-
-.hbar-val {
-  font-family: var(--mono); font-size: 11px;
-  color: var(--text-secondary); width: 54px; flex-shrink: 0;
-}
-
-/* STAT ROWS */
-.stat-rows { display: flex; flex-direction: column; }
-
-.stat-row {
-  display: flex; justify-content: space-between;
-  align-items: center; padding: 8px 0;
-  border-bottom: 1px solid var(--border);
-  font-size: 13px;
-}
-
-.stat-row:last-child { border-bottom: none; }
-.stat-k { color: var(--text-secondary); }
-.stat-v { color: var(--text-primary); font-weight: 500; }
-.stat-v.green { color: var(--green); }
-.stat-v.red   { color: var(--red); }
-.stat-v.amber { color: var(--amber); }
-
-/* GOALS */
-.goal-item { margin-bottom: 16px; }
-.goal-item:last-child { margin-bottom: 0; }
-
-.goal-header {
-  display: flex; justify-content: space-between;
-  margin-bottom: 6px; font-size: 12px;
-}
-
-.goal-name { color: var(--text-secondary); }
-.goal-pct  { color: var(--text-primary); font-weight: 500; }
-
-.goal-track {
-  height: 5px; background: var(--bg-elevated);
-  border-radius: 999px; overflow: hidden;
-}
-
-.goal-fill {
-  height: 100%; border-radius: 999px;
-  background: var(--accent);
-  transition: width 1.2s cubic-bezier(0.16,1,0.3,1);
-}
-
-.goal-fill.green { background: var(--green); }
-.goal-fill.amber { background: var(--amber); }
-
-/* DONUT */
-.donut-wrap { display: flex; align-items: center; gap: 18px; padding: 4px 0; }
-.donut-legend { flex: 1; display: flex; flex-direction: column; gap: 8px; }
-
-.legend-row {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 12px; color: var(--text-secondary);
-}
-
-.legend-sw { width: 9px; height: 9px; border-radius: 2px; flex-shrink: 0; }
-.legend-pct { margin-left: auto; color: var(--text-primary); font-weight: 500; }
-
-/* CRIMES GRID */
-.crimes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-
-.crime-card {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 12px 14px;
-}
-
-.crime-card-name {
-  font-size: 13px; font-weight: 600;
-  color: var(--text-primary); margin-bottom: 8px;
-  text-transform: capitalize;
-}
-
-.crime-card-stat {
-  font-size: 12px; color: var(--text-secondary);
-  margin-bottom: 3px;
-}
-
-.crime-card-stat span { color: var(--text-primary); }
-
-/* EMPTY */
-.empty-state {
-  text-align: center; padding: 32px 20px;
-  font-size: 12px; color: var(--text-muted);
-}
-
-/* ANIMATIONS */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.3; }
-}
-
-.fade-up { animation: fadeUp 0.4s ease both; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:       #181b2e;
+  --bg2:      #1f2340;
+  --bg3:      #262b47;
+  --bg4:      #2e3350;
+  --border:   rgba(255,255,255,0.07);
+  --border2:  rgba(255,255,255,0.13);
+  --acc:      #7c8cf8;
+  --acc-dim:  rgba(124,140,248,0.13);
+  --green:    #52c27a;
+  --green-d:  rgba(82,194,122,0.13);
+  --red:      #f07070;
+  --red-d:    rgba(240,112,112,0.13);
+  --amber:    #f0b96b;
+  --amber-d:  rgba(240,185,107,0.13);
+  --blue:     #6aaef5;
+  --blue-d:   rgba(106,174,245,0.13);
+  --coral:    #f0956b;
+  --t1: #dde0f5;
+  --t2: #8b90b8;
+  --t3: #555878;
+  --mono:'DM Mono',monospace;
+  --sans:'DM Sans',sans-serif;
+  --r:10px;--r2:6px;
+  --sw:230px;
+}
+html,body{height:100%;background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:14px;overflow:hidden;-webkit-font-smoothing:antialiased}
+
+/* views */
+.view{display:none}.view.active{display:flex}
+
+/* ── LOGIN ── */
+#view-login{height:100vh;width:100vw;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at 35% 45%,rgba(124,140,248,.07) 0%,transparent 65%),var(--bg)}
+.login-box{width:440px;background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:40px 36px;animation:fadeUp .45s ease both}
+.login-eyebrow{font-size:11px;color:var(--acc);letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px;opacity:.75}
+.login-title{font-size:30px;font-weight:600;letter-spacing:-.3px;margin-bottom:6px}
+.login-title span{color:var(--acc)}
+.login-sub{font-size:13px;color:var(--t3);margin-bottom:28px}
+.form-lbl{display:block;font-size:12px;font-weight:500;color:var(--t2);margin-bottom:7px}
+.form-inp{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r2);color:var(--t1);font-family:var(--mono);font-size:13px;padding:11px 14px;outline:none;transition:border-color .18s,box-shadow .18s}
+.form-inp:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(124,140,248,.12)}
+.form-inp::placeholder{color:var(--t3)}
+.form-hint{font-size:12px;color:var(--t3);margin-top:8px;line-height:1.7}
+.form-hint a{color:var(--blue);text-decoration:none}.form-hint a:hover{color:var(--t1)}
+.btn-go{width:100%;margin-top:22px;background:var(--acc);border:none;color:#fff;font-family:var(--sans);font-size:15px;font-weight:600;padding:13px;border-radius:var(--r2);cursor:pointer;transition:opacity .15s,transform .1s}
+.btn-go:hover{opacity:.88}.btn-go:active{transform:scale(.99)}.btn-go:disabled{opacity:.4;cursor:not-allowed}
+.login-err{display:none;margin-top:12px;padding:10px 14px;background:var(--red-d);border:1px solid rgba(240,112,112,.25);border-radius:var(--r2);font-size:12px;color:var(--red)}
+.tos-box{margin-top:18px;padding:14px 16px;border:1px solid var(--border);border-radius:var(--r2);background:var(--bg3)}
+.tos-ttl{font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);margin-bottom:8px}
+.tos-tbl{width:100%;border-collapse:collapse}
+.tos-tbl td{font-size:12px;padding:3px 0;color:var(--t2)}
+.tos-tbl td:first-child{color:var(--t3);width:55%}.tos-tbl .ok{color:var(--green)}
+
+/* ── LOADING ── */
+#view-loading{height:100vh;width:100vw;flex-direction:column;align-items:center;justify-content:center;gap:18px}
+.ld-logo{font-size:24px;font-weight:600;letter-spacing:-.2px}.ld-logo span{color:var(--acc)}
+.ld-track{width:200px;height:3px;background:var(--bg3);border-radius:99px;overflow:hidden}
+.ld-fill{height:100%;background:var(--acc);width:0%;transition:width .4s ease;border-radius:99px}
+.ld-txt{font-size:11px;color:var(--t3);font-family:var(--mono);letter-spacing:.04em}
+
+/* ── DASHBOARD ── */
+#view-dashboard{height:100vh;width:100vw}
+
+/* sidebar */
+.sb{width:var(--sw);flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column}
+.sb-logo{padding:22px 18px 18px;border-bottom:1px solid var(--border)}
+.sb-eye{font-size:10px;color:var(--acc);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px;opacity:.65}
+.sb-name{font-size:20px;font-weight:600;letter-spacing:-.2px}.sb-name span{color:var(--acc)}
+.sb-player{padding:14px 18px;border-bottom:1px solid var(--border)}
+.sb-pname{font-size:14px;font-weight:600;color:var(--t1);margin-bottom:5px}
+.sb-meta{font-size:12px;color:var(--t2);display:flex;gap:6px;flex-wrap:wrap}
+.sb-rank{color:var(--amber);font-weight:500}
+.sb-nav{flex:1;padding:8px 10px;overflow-y:auto}
+.nav-sec{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);padding:10px 10px 4px}
+.nav-i{display:flex;align-items:center;gap:10px;padding:8px 12px;cursor:pointer;font-size:14px;font-weight:500;color:var(--t2);border-radius:var(--r2);transition:all .12s;margin-bottom:1px}
+.nav-i:hover{color:var(--t1);background:var(--bg4)}
+.nav-i.on{color:var(--acc);background:rgba(124,140,248,.1)}
+.nav-ic{width:16px;height:16px;flex-shrink:0;opacity:.55}.nav-i.on .nav-ic{opacity:1}
+.sb-ft{padding:14px 18px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:9px}
+.api-dot-row{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--t2)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;animation:pulse 2.5s infinite}
+.dot.loading{background:var(--amber)}.dot.err{background:var(--red);animation:none}
+.btn-out{background:transparent;border:1px solid var(--border2);color:var(--t3);font-family:var(--sans);font-size:12px;padding:6px 12px;border-radius:var(--r2);cursor:pointer;transition:all .12s;text-align:left}
+.btn-out:hover{border-color:var(--red);color:var(--red)}
+
+/* main */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.topbar{height:52px;flex-shrink:0;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 26px;gap:14px;background:var(--bg2)}
+.topbar-title{font-size:16px;font-weight:600;letter-spacing:-.2px;flex:1}
+.topbar-time{font-family:var(--mono);font-size:11px;color:var(--t3)}
+.btn-sm{background:transparent;border:1px solid var(--border2);color:var(--t2);font-family:var(--sans);font-size:12px;font-weight:500;padding:6px 14px;border-radius:var(--r2);cursor:pointer;transition:all .12s}
+.btn-sm:hover{border-color:var(--acc);color:var(--acc)}
+
+/* content */
+.content{flex:1;overflow-y:auto;padding:22px 24px;display:flex;flex-direction:column;gap:18px}
+.content::-webkit-scrollbar{width:4px}.content::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
+
+/* pages */
+.page{display:none;flex-direction:column;gap:18px}.page.active{display:flex}
+
+/* panel */
+.panel{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px}
+.ptitle{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--t3);margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+.pact{font-size:12px;font-weight:400;text-transform:none;letter-spacing:0;color:var(--t3);cursor:pointer;transition:color .12s}.pact:hover{color:var(--acc)}
+
+/* metric cards */
+.mcards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.mc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;position:relative;overflow:hidden}
+.mc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--mc-acc,var(--border));border-radius:var(--r) var(--r) 0 0}
+.mc.cg{--mc-acc:var(--green)}.mc.cr{--mc-acc:var(--red)}.mc.ca{--mc-acc:var(--amber)}.mc.cb{--mc-acc:var(--acc)}
+.mlbl{font-size:11px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--t3);margin-bottom:8px}
+.mval{font-family:var(--mono);font-size:22px;color:var(--t1);line-height:1;margin-bottom:5px}
+.mval.g{color:var(--green)}.mval.r{color:var(--red)}.mval.a{color:var(--amber)}.mval.b{color:var(--acc)}
+.msub{font-size:12px;color:var(--t3)}
+.msub.up{color:var(--green)}.msub.dn{color:var(--red)}
+
+/* grids */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.g3{display:grid;grid-template-columns:2fr 1fr;gap:14px}
+
+/* stat bars */
+.sbars{display:flex;flex-direction:column;gap:11px}
+.sbar-row{display:flex;align-items:center;gap:12px}
+.sbar-lbl{font-size:12px;color:var(--t2);width:52px;flex-shrink:0}
+.sbar-track{flex:1;height:7px;background:var(--bg3);border-radius:99px;overflow:hidden}
+.sbar-fill{height:100%;border-radius:99px;transition:width 1s cubic-bezier(.16,1,.3,1)}
+.sbar-fill.g{background:var(--green)}.sbar-fill.r{background:var(--red)}
+.sbar-fill.a{background:var(--amber)}.sbar-fill.b{background:var(--acc)}
+.sbar-val{font-family:var(--mono);font-size:11px;color:var(--t2);width:60px;flex-shrink:0;text-align:right}
+
+/* table */
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{font-size:11px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--t3);text-align:left;padding:0 0 9px;border-bottom:1px solid var(--border)}
+.tbl td{padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--t2);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{color:var(--t1)}
+
+/* tags */
+.tag{display:inline-flex;padding:2px 7px;font-size:10px;font-weight:600;letter-spacing:.04em;border-radius:4px}
+.tag.crime{background:var(--red-d);color:var(--red)}
+.tag.trade{background:var(--blue-d);color:var(--blue)}
+.tag.casino{background:var(--amber-d);color:var(--amber)}
+.tag.mug{background:rgba(240,149,107,.13);color:var(--coral)}
+.tag.property{background:var(--green-d);color:var(--green)}
+.tag.bank{background:rgba(139,144,184,.1);color:var(--t2)}
+.tag.other{background:rgba(85,88,120,.15);color:var(--t3)}
+.pos{color:var(--green)!important}.neg{color:var(--red)!important}
+
+/* horiz bars */
+.hbars{display:flex;flex-direction:column;gap:10px}
+.hbar-row{display:flex;align-items:center;gap:12px}
+.hbar-lbl{font-size:12px;color:var(--t2);width:66px;flex-shrink:0;text-align:right}
+.hbar-track{flex:1;height:6px;background:var(--bg3);border-radius:99px;overflow:hidden}
+.hbar-fill{height:100%;border-radius:99px;transition:width 1s cubic-bezier(.16,1,.3,1)}
+.hbar-fill.g{background:var(--green)}.hbar-fill.r{background:var(--red)}
+.hbar-fill.a{background:var(--amber)}.hbar-fill.b{background:var(--blue)}
+.hbar-fill.c{background:var(--coral)}.hbar-fill.gr{background:var(--t3)}
+.hbar-val{font-family:var(--mono);font-size:11px;color:var(--t2);width:54px;flex-shrink:0}
+
+/* stat rows */
+.srows{display:flex;flex-direction:column}
+.srow{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px}
+.srow:last-child{border-bottom:none}
+.sk{color:var(--t2)}.sv{color:var(--t1);font-weight:500}
+.sv.g{color:var(--green)}.sv.r{color:var(--red)}.sv.a{color:var(--amber)}
+
+/* donut */
+.donut-wrap{display:flex;align-items:center;gap:16px;padding:4px 0}
+.d-legend{flex:1;display:flex;flex-direction:column;gap:7px}
+.d-row{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--t2)}
+.d-sw{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.d-pct{margin-left:auto;color:var(--t1);font-weight:500}
+
+/* property cards */
+.prop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.prop-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px}
+.prop-card.rented{border-color:rgba(82,194,122,.25)}
+.prop-card.empty{border-color:rgba(240,112,112,.18)}
+.prop-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
+.prop-type{font-size:14px;font-weight:600;color:var(--t1);text-transform:capitalize}
+.prop-badge{font-size:10px;font-weight:600;letter-spacing:.04em;padding:2px 8px;border-radius:4px}
+.prop-badge.rented{background:var(--green-d);color:var(--green)}
+.prop-badge.vacant{background:var(--red-d);color:var(--red)}
+.prop-badge.occupied{background:var(--blue-d);color:var(--blue)}
+.prop-stat{font-size:12px;color:var(--t2);margin-bottom:4px;display:flex;justify-content:space-between}
+.prop-stat span{color:var(--t1);font-weight:500}
+.prop-income-bar{margin-top:10px}
+.prop-bar-track{height:4px;background:var(--bg4);border-radius:99px;overflow:hidden;margin-top:4px}
+.prop-bar-fill{height:100%;border-radius:99px;background:var(--green);transition:width 1s cubic-bezier(.16,1,.3,1)}
+
+/* crimes grid */
+.crime-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.crime-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r2);padding:12px 14px}
+.crime-card-name{font-size:13px;font-weight:600;color:var(--t1);margin-bottom:7px;text-transform:capitalize}
+.crime-stat{font-size:12px;color:var(--t2);margin-bottom:3px}
+.crime-stat span{color:var(--t1)}
+
+/* empty */
+.empty{text-align:center;padding:28px 20px;font-size:12px;color:var(--t3)}
+
+/* animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.fu{animation:fadeUp .4s ease both}
 </style>
 </head>
 <body>
@@ -666,236 +220,151 @@ html, body {
 <!-- LOGIN -->
 <div class="view active" id="view-login">
   <div class="login-box">
-    <div class="login-logo-eye">Finance Tracker</div>
+    <div class="login-eyebrow">Finance Tracker</div>
     <div class="login-title">Torn<span>Fin</span></div>
-    <div class="login-sub">Connect your API key to get started</div>
-
-    <label class="form-label" for="api-key-input">Torn API Key</label>
-    <input class="form-input" id="api-key-input" type="password"
-      placeholder="Paste your Full Access key here…"
-      autocomplete="off" spellcheck="false" />
-    <div class="form-hint">
-      Find your key at <a href="https://www.torn.com/preferences.php#tab=api" target="_blank">Preferences → API</a>.
-      A <strong style="color:var(--text-secondary)">Full Access</strong> key unlocks all features.
-    </div>
-
-    <div class="login-error" id="login-error">Invalid API key or connection error. Please try again.</div>
-    <button class="btn-primary" id="btn-connect" onclick="doLogin()">Connect to Torn →</button>
-
-    <div class="login-tos">
-      <div class="tos-title">Privacy & Torn ToS Compliance</div>
-      <table class="tos-table">
-        <tr><td>Key stored server-side?</td><td class="ok">No — browser localStorage only</td></tr>
-        <tr><td>Data sent to third parties?</td><td class="ok">No — calls go direct to torn.com</td></tr>
-        <tr><td>Shared with other users?</td><td class="ok">No — your device only</td></tr>
-        <tr><td>Access level required</td><td>Full Access (recommended)</td></tr>
+    <div class="login-sub">Enter your API key to load your financial data</div>
+    <label class="form-lbl" for="inp-key">Torn API Key</label>
+    <input class="form-inp" id="inp-key" type="password" placeholder="Paste your Full Access key…" autocomplete="off" spellcheck="false">
+    <div class="form-hint">Get your key at <a href="https://www.torn.com/preferences.php#tab=api" target="_blank">Preferences → API</a>. Full Access key recommended.</div>
+    <div class="login-err" id="login-err">—</div>
+    <button class="btn-go" id="btn-go" onclick="doLogin()">Connect →</button>
+    <div class="tos-box">
+      <div class="tos-ttl">Privacy &amp; Torn ToS</div>
+      <table class="tos-tbl">
+        <tr><td>Key stored server-side?</td><td class="ok">No — localStorage only</td></tr>
+        <tr><td>Sent to third parties?</td><td class="ok">No — direct to torn.com</td></tr>
+        <tr><td>Shared with others?</td><td class="ok">Never</td></tr>
+        <tr><td>Required access level</td><td>Full Access</td></tr>
       </table>
     </div>
   </div>
 </div>
 
 <!-- LOADING -->
-<div class="view" id="view-loading" style="flex-direction:column;align-items:center;justify-content:center;height:100vh;width:100vw;gap:20px;">
-  <div class="loading-logo">Torn<span>Fin</span></div>
-  <div class="loading-bar-track">
-    <div class="loading-bar-fill" id="loading-bar"></div>
-  </div>
-  <div class="loading-status" id="loading-status">Connecting to Torn API…</div>
+<div class="view" id="view-loading" style="flex-direction:column;align-items:center;justify-content:center;height:100vh;width:100vw;gap:18px">
+  <div class="ld-logo">Torn<span>Fin</span></div>
+  <div class="ld-track"><div class="ld-fill" id="ld-bar"></div></div>
+  <div class="ld-txt" id="ld-txt">Connecting…</div>
 </div>
 
 <!-- DASHBOARD -->
 <div class="view" id="view-dashboard">
-
-  <aside class="sidebar">
-    <div class="sidebar-logo">
-      <div class="logo-eyebrow">Finance Tracker</div>
-      <div class="logo-title">Torn<span>Fin</span></div>
+  <!-- SIDEBAR -->
+  <aside class="sb">
+    <div class="sb-logo">
+      <div class="sb-eye">Finance Tracker</div>
+      <div class="sb-name">Torn<span>Fin</span></div>
     </div>
-    <div class="sidebar-player">
-      <div class="player-name" id="sb-name">Loading…</div>
-      <div class="player-meta">
-        <span id="sb-level">Lvl —</span>
-        <span class="rank-badge" id="sb-rank">—</span>
-      </div>
-      <div class="player-meta" style="margin-top:3px;">
-        <span id="sb-faction" style="color:var(--text-muted);">—</span>
-      </div>
+    <div class="sb-player">
+      <div class="sb-pname" id="sb-name">—</div>
+      <div class="sb-meta"><span id="sb-lvl">Lvl —</span><span class="sb-rank" id="sb-rank">—</span></div>
+      <div class="sb-meta" style="margin-top:3px"><span id="sb-faction" style="color:var(--t3)">—</span></div>
     </div>
-    <nav class="sidebar-nav">
-      <div class="nav-section">Finance</div>
-      <div class="nav-item active" onclick="showPage('overview',this)">
-        <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/></svg>
+    <nav class="sb-nav">
+      <div class="nav-sec">Finance</div>
+      <div class="nav-i on" onclick="go('overview',this)">
+        <svg class="nav-ic" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/></svg>
         Overview
       </div>
-      <div class="nav-item" onclick="showPage('transactions',this)">
-        <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><line x1="2" y1="4" x2="14" y2="4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="2" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="2" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      <div class="nav-i" onclick="go('transactions',this)">
+        <svg class="nav-ic" viewBox="0 0 16 16" fill="none"><line x1="2" y1="4" x2="14" y2="4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="2" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="2" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
         Transactions
       </div>
-      <div class="nav-item" onclick="showPage('crimes',this)">
-        <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3"/><line x1="8" y1="4.5" x2="8" y2="8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="10.5" r="0.8" fill="currentColor"/></svg>
+      <div class="nav-i" onclick="go('crimes',this)">
+        <svg class="nav-ic" viewBox="0 0 16 16" fill="none"><path d="M8 1.5 L14 5 L14 11 L8 14.5 L2 11 L2 5 Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><line x1="8" y1="5" x2="8" y2="9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="11" r=".8" fill="currentColor"/></svg>
         Crimes
       </div>
-      <div class="nav-section">Account</div>
-      <div class="nav-item" onclick="showPage('profile',this)">
-        <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5.5" r="2.8" stroke="currentColor" stroke-width="1.3"/><path d="M2 14c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-        Profile
+      <div class="nav-i" onclick="go('properties',this)">
+        <svg class="nav-ic" viewBox="0 0 16 16" fill="none"><path d="M1 15 L1 7 L8 1 L15 7 L15 15" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><rect x="5.5" y="10" width="5" height="5" stroke="currentColor" stroke-width="1.3"/></svg>
+        Properties
       </div>
     </nav>
-    <div class="sidebar-footer">
-      <div class="api-status">
-        <div class="status-dot" id="status-dot"></div>
-        <span id="status-text">Connected</span>
-      </div>
-      <button class="btn-signout" onclick="doSignout()">Sign out &amp; clear key</button>
+    <div class="sb-ft">
+      <div class="api-dot-row"><div class="dot" id="api-dot"></div><span id="api-txt">Connected</span></div>
+      <button class="btn-out" onclick="signOut()">Sign out &amp; clear key</button>
     </div>
   </aside>
 
+  <!-- MAIN -->
   <div class="main">
     <div class="topbar">
-      <div class="topbar-title" id="topbar-title">Overview</div>
-      <div class="topbar-time" id="live-time">—</div>
-      <button class="topbar-btn" onclick="refreshData()">↻ Refresh</button>
+      <div class="topbar-title" id="pg-title">Overview</div>
+      <div class="topbar-time" id="clock">—</div>
+      <button class="btn-sm" onclick="refresh()">↻ Refresh</button>
     </div>
-
-    <div class="ticker">
-      <div class="ticker-label">LIVE</div>
-      <div class="ticker-track">
-        <div class="ticker-inner" id="ticker-content">Loading…</div>
-      </div>
-    </div>
-
     <div class="content">
 
       <!-- OVERVIEW -->
-      <div class="page active" id="page-overview">
-
-        <div class="metrics-row">
-          <div class="metric-card c-amber fade-up">
-            <div class="metric-label">Net Worth</div>
-            <div class="metric-value amber" id="ov-networth">—</div>
-            <div class="metric-sub" id="ov-networth-sub">Total assets</div>
+      <div class="page active" id="pg-overview">
+        <div class="mcards">
+          <div class="mc ca fu"><div class="mlbl">Net Worth</div><div class="mval a" id="ov-nw">—</div><div class="msub" id="ov-nw-s">—</div></div>
+          <div class="mc cg fu"><div class="mlbl">Cash on Hand</div><div class="mval g" id="ov-cash">—</div><div class="msub">Wallet</div></div>
+          <div class="mc cb fu"><div class="mlbl">Bank Balance</div><div class="mval b" id="ov-bank">—</div><div class="msub" id="ov-bank-s">—</div></div>
+          <div class="mc cr fu"><div class="mlbl">Points</div><div class="mval" id="ov-pts">—</div><div class="msub">Points balance</div></div>
+        </div>
+        <div class="g3">
+          <div class="panel">
+            <div class="ptitle">Income by source — recent log</div>
+            <div class="hbars" id="ov-income"><div class="empty">Loading…</div></div>
           </div>
-          <div class="metric-card c-green fade-up">
-            <div class="metric-label">Cash on Hand</div>
-            <div class="metric-value green" id="ov-cash">—</div>
-            <div class="metric-sub" id="ov-cash-sub">Wallet</div>
-          </div>
-          <div class="metric-card c-accent fade-up">
-            <div class="metric-label">Bank Balance</div>
-            <div class="metric-value accent" id="ov-bank">—</div>
-            <div class="metric-sub" id="ov-bank-sub">Savings</div>
-          </div>
-          <div class="metric-card c-red fade-up">
-            <div class="metric-label">Points</div>
-            <div class="metric-value" id="ov-points">—</div>
-            <div class="metric-sub" id="ov-points-sub">Points balance</div>
+          <div class="panel">
+            <div class="ptitle">Status bars</div>
+            <div class="sbars" id="ov-bars"><div class="empty">Loading…</div></div>
           </div>
         </div>
-
-        <div class="three-col">
+        <div class="g2">
           <div class="panel">
-            <div class="panel-title">Income Sources — Recent Log</div>
-            <div class="hbar-list" id="income-bars">
-              <div class="empty-state">Loading transaction data…</div>
-            </div>
+            <div class="ptitle">Recent transactions<span class="pact" onclick="go('transactions',document.querySelectorAll('.nav-i')[1])">View all →</span></div>
+            <table class="tbl"><thead><tr><th>Type</th><th>Description</th><th>Time</th><th style="text-align:right">Amount</th></tr></thead>
+            <tbody id="ov-tx"><tr><td colspan="4"><div class="empty">Loading…</div></td></tr></tbody></table>
           </div>
-          <div class="panel">
-            <div class="panel-title">Status Bars</div>
-            <div class="stat-bars" id="status-bars">
-              <div class="empty-state">Loading…</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="two-col">
-          <div class="panel">
-            <div class="panel-title">
-              Recent Transactions
-              <span class="panel-action" onclick="showPage('transactions', document.querySelectorAll('.nav-item')[1])">View all →</span>
-            </div>
-            <table class="data-table">
-              <thead><tr>
-                <th>Type</th><th>Description</th><th>Time</th><th style="text-align:right">Amount</th>
-              </tr></thead>
-              <tbody id="recent-tx-body">
-                <tr><td colspan="4"><div class="empty-state">Loading…</div></td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div style="display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;flex-direction:column;gap:12px">
             <div class="panel">
-              <div class="panel-title">Wealth Breakdown</div>
-              <div class="donut-wrap">
-                <svg id="donut-svg" width="90" height="90" viewBox="0 0 90 90" style="flex-shrink:0"></svg>
-                <div class="donut-legend" id="donut-legend">
-                  <div class="empty-state" style="padding:0">Loading…</div>
-                </div>
-              </div>
+              <div class="ptitle">Wealth breakdown</div>
+              <div class="donut-wrap"><svg id="d-svg" width="90" height="90" viewBox="0 0 90 90" style="flex-shrink:0"></svg><div class="d-legend" id="d-leg"><div class="empty" style="padding:0">Loading…</div></div></div>
             </div>
             <div class="panel">
-              <div class="panel-title">Crime Summary</div>
-              <div class="stat-rows" id="crime-stats-mini">
-                <div class="empty-state" style="padding:14px 0">Loading…</div>
-              </div>
+              <div class="ptitle">Crime summary</div>
+              <div class="srows" id="ov-crimes"><div class="empty" style="padding:12px 0">Loading…</div></div>
             </div>
           </div>
         </div>
-
-      </div><!-- /overview -->
+      </div>
 
       <!-- TRANSACTIONS -->
-      <div class="page" id="page-transactions">
+      <div class="page" id="pg-transactions">
         <div class="panel">
-          <div class="panel-title">Transaction Log — Last 100 Events</div>
-          <table class="data-table">
-            <thead><tr>
-              <th>Type</th><th>Description</th><th>Date / Time</th><th style="text-align:right">Amount</th>
-            </tr></thead>
-            <tbody id="full-tx-body">
-              <tr><td colspan="4"><div class="empty-state">Loading…</div></td></tr>
-            </tbody>
-          </table>
+          <div class="ptitle">Transaction log — last 100 entries</div>
+          <table class="tbl"><thead><tr><th>Type</th><th>Description</th><th>Date / Time</th><th style="text-align:right">Amount</th></tr></thead>
+          <tbody id="tx-body"><tr><td colspan="4"><div class="empty">Loading…</div></td></tr></tbody></table>
         </div>
       </div>
 
       <!-- CRIMES -->
-      <div class="page" id="page-crimes">
-        <div class="metrics-row">
-          <div class="metric-card c-accent"><div class="metric-label">Total Crimes</div><div class="metric-value accent" id="cr-total">—</div></div>
-          <div class="metric-card c-green"><div class="metric-label">Successful</div><div class="metric-value green" id="cr-success">—</div></div>
-          <div class="metric-card c-amber"><div class="metric-label">Success Rate</div><div class="metric-value amber" id="cr-rate">—</div></div>
-          <div class="metric-card c-red"><div class="metric-label">Nerve Spent (est.)</div><div class="metric-value" id="cr-nerve">—</div></div>
+      <div class="page" id="pg-crimes">
+        <div class="mcards">
+          <div class="mc cb"><div class="mlbl">Total attempts</div><div class="mval b" id="cr-tot">—</div></div>
+          <div class="mc cg"><div class="mlbl">Successful</div><div class="mval g" id="cr-suc">—</div></div>
+          <div class="mc ca"><div class="mlbl">Success rate</div><div class="mval a" id="cr-rate">—</div></div>
+          <div class="mc cr"><div class="mlbl">Failed</div><div class="mval r" id="cr-fail">—</div></div>
         </div>
         <div class="panel">
-          <div class="panel-title">Crimes Breakdown</div>
-          <div class="crimes-grid" id="crimes-grid">
-            <div class="empty-state" style="grid-column:1/-1">Loading crime data…</div>
-          </div>
+          <div class="ptitle">Breakdown by crime type</div>
+          <div class="crime-grid" id="cr-grid"><div class="empty" style="grid-column:1/-1">Loading…</div></div>
         </div>
       </div>
 
-      <!-- PROFILE -->
-      <div class="page" id="page-profile">
-        <div class="two-col">
-          <div class="panel">
-            <div class="panel-title">Player Profile</div>
-            <div class="stat-rows" id="profile-stats">
-              <div class="empty-state">Loading…</div>
-            </div>
-          </div>
-          <div class="panel">
-            <div class="panel-title">Personal Stats</div>
-            <div class="hbar-list" id="battle-stats">
-              <div class="empty-state">Personal stats not available at this access level.</div>
-            </div>
-          </div>
+      <!-- PROPERTIES -->
+      <div class="page" id="pg-properties">
+        <div class="mcards" id="prop-metrics">
+          <div class="mc cg"><div class="mlbl">Total properties</div><div class="mval g" id="pr-total">—</div></div>
+          <div class="mc ca"><div class="mlbl">Currently rented</div><div class="mval a" id="pr-rented">—</div></div>
+          <div class="mc cb"><div class="mlbl">Daily rental income</div><div class="mval b" id="pr-daily">—</div></div>
+          <div class="mc cr"><div class="mlbl">Daily upkeep cost</div><div class="mval r" id="pr-upkeep">—</div></div>
         </div>
         <div class="panel">
-          <div class="panel-title">Life &amp; Status</div>
-          <div class="stat-bars" id="profile-bars" style="gap:14px;">
-            <div class="empty-state">Loading…</div>
-          </div>
+          <div class="ptitle">Your properties</div>
+          <div class="prop-grid" id="pr-grid"><div class="empty" style="grid-column:1/-1">Loading property data…</div></div>
         </div>
       </div>
 
@@ -905,426 +374,358 @@ html, body {
 
 <script>
 'use strict';
+const BASE='https://api.torn.com';
+let key='',pData={},mData={},cData={},logData=[],propData={},barsData={};
+let timer=null;
 
-const API_BASE = 'https://api.torn.com';
-let apiKey = '';
-let playerData = {};
-let moneyData = {};
-let networthData = {};
-let crimeData = {};
-let logData = [];
-let refreshTimer = null;
+// ── UTILS ──
+const fmt=n=>{if(n==null||isNaN(n))return'—';const a=Math.abs(n);if(a>=1e9)return'$'+(n/1e9).toFixed(2)+'B';if(a>=1e6)return'$'+(n/1e6).toFixed(2)+'M';if(a>=1e3)return'$'+(n/1e3).toFixed(1)+'K';return'$'+n.toLocaleString()};
+const fmtN=n=>n?Number(n).toLocaleString():'—';
+const ago=ts=>{const d=Math.floor(Date.now()/1000)-ts;if(d<60)return d+'s ago';if(d<3600)return Math.floor(d/60)+'m ago';if(d<86400)return Math.floor(d/3600)+'h ago';return Math.floor(d/86400)+'d ago'};
+const dt=ts=>new Date(ts*1000).toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+const pct=(a,b)=>b?Math.round(a/b*100):0;
 
-function fmt(n) {
-  if (n === undefined || n === null || isNaN(n)) return '—';
-  const abs = Math.abs(n);
-  if (abs >= 1e9) return '$' + (n/1e9).toFixed(2) + 'B';
-  if (abs >= 1e6) return '$' + (n/1e6).toFixed(2) + 'M';
-  if (abs >= 1e3) return '$' + (n/1e3).toFixed(1) + 'K';
-  return '$' + n.toLocaleString();
-}
-
-function fmtNum(n) {
-  if (!n) return '—';
-  return Number(n).toLocaleString();
-}
-
-function timeAgo(ts) {
-  const diff = Math.floor(Date.now()/1000) - ts;
-  if (diff < 60) return diff + 's ago';
-  if (diff < 3600) return Math.floor(diff/60) + 'm ago';
-  if (diff < 86400) return Math.floor(diff/3600) + 'h ago';
-  return Math.floor(diff/86400) + 'd ago';
-}
-
-function tsToDate(ts) {
-  return new Date(ts * 1000).toLocaleString('en-GB', {
-    day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'
-  });
-}
-
-async function apiFetch(section, selections) {
-  const url = `${API_BASE}/${section}/?selections=${selections}&key=${apiKey}`;
-  const r = await fetch(url);
-  if (!r.ok) throw new Error('HTTP ' + r.status);
-  const d = await r.json();
-  if (d.error) throw new Error(d.error.error || 'API error ' + d.error.code);
+async function api(section,sel,extra=''){
+  const r=await fetch(`${BASE}/${section}/?selections=${sel}&key=${key}${extra}`);
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  const d=await r.json();
+  if(d.error)throw new Error(d.error.error||'API error '+d.error.code);
   return d;
 }
 
-function showView(id) {
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+// ── VIEWS ──
+const showView=id=>{document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active')};
+
+function go(id,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('pg-'+id).classList.add('active');
+  document.querySelectorAll('.nav-i').forEach(n=>n.classList.remove('on'));
+  if(el)el.classList.add('on');
+  const t={overview:'Overview',transactions:'Transactions',crimes:'Crimes',properties:'Properties'};
+  document.getElementById('pg-title').textContent=t[id]||id;
 }
 
-function showPage(id, navEl) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + id).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  if (navEl) navEl.classList.add('active');
-  const titles = { overview:'Overview', transactions:'Transactions', crimes:'Crimes', profile:'Profile' };
-  document.getElementById('topbar-title').textContent = titles[id] || id;
+// ── CLOCK ──
+function startClock(){
+  const tick=()=>{document.getElementById('clock').textContent=new Date().toUTCString().slice(5,25)+' TCT'};
+  tick();setInterval(tick,1000);
 }
 
-function startClock() {
-  function tick() {
-    const now = new Date();
-    document.getElementById('live-time').textContent =
-      now.toUTCString().slice(5,25) + ' TCT';
-  }
-  tick();
-  setInterval(tick, 1000);
-}
-
-async function doLogin() {
-  const key = document.getElementById('api-key-input').value.trim();
-  if (key.length < 10) { showError('Please enter a valid API key.'); return; }
-  document.getElementById('btn-connect').disabled = true;
-  document.getElementById('login-error').style.display = 'none';
-  apiKey = key;
-  localStorage.setItem('torn_api_key', key);
+// ── LOGIN ──
+async function doLogin(){
+  const k=document.getElementById('inp-key').value.trim();
+  if(k.length<10){showErr('Please enter a valid API key.');return}
+  document.getElementById('btn-go').disabled=true;
+  document.getElementById('login-err').style.display='none';
+  key=k;localStorage.setItem('tfkey',k);
   showView('view-loading');
-  await loadAllData();
+  await loadAll();
 }
 
-function showError(msg) {
-  const el = document.getElementById('login-error');
-  el.textContent = msg;
-  el.style.display = 'block';
-  document.getElementById('btn-connect').disabled = false;
+function showErr(m){
+  const e=document.getElementById('login-err');
+  e.textContent=m;e.style.display='block';
+  document.getElementById('btn-go').disabled=false;
 }
 
-function doSignout() {
-  localStorage.removeItem('torn_api_key');
-  apiKey = '';
-  playerData = {}; moneyData = {}; networthData = {}; crimeData = {}; logData = [];
-  if (refreshTimer) clearInterval(refreshTimer);
-  document.getElementById('api-key-input').value = '';
-  document.getElementById('btn-connect').disabled = false;
-  document.getElementById('login-error').style.display = 'none';
+function signOut(){
+  localStorage.removeItem('tfkey');
+  key='';pData={};mData={};cData={};logData=[];propData={};barsData={};
+  if(timer)clearInterval(timer);
+  document.getElementById('inp-key').value='';
+  document.getElementById('btn-go').disabled=false;
+  document.getElementById('login-err').style.display='none';
   showView('view-login');
 }
 
-function setLoadingStatus(msg, pct) {
-  document.getElementById('loading-status').textContent = msg;
-  document.getElementById('loading-bar').style.width = pct + '%';
-}
+function setLD(txt,p){document.getElementById('ld-txt').textContent=txt;document.getElementById('ld-bar').style.width=p+'%'}
 
-async function loadAllData() {
-  try {
-    setLoadingStatus('Fetching player profile…', 15);
-    const basic = await apiFetch('user', 'basic,profile,personalstats');
-    playerData = basic;
+// ── LOAD ALL ──
+async function loadAll(){
+  try{
+    setLD('Fetching profile…',15);
+    pData=await api('user','basic,profile');
 
-    setLoadingStatus('Loading money & net worth…', 40);
-    const money = await apiFetch('user', 'money,networth');
-    moneyData = money;
+    setLD('Loading bars…',30);
+    barsData=await api('user','bars');
 
-    setLoadingStatus('Loading crime history…', 60);
-    const crimes = await apiFetch('user', 'crimes');
-    crimeData = crimes;
+    setLD('Loading money & net worth…',45);
+    mData=await api('user','money,networth');
 
-    setLoadingStatus('Loading transaction log…', 80);
-    const log = await apiFetch('user', 'log');
-    logData = log.log ? Object.values(log.log) : [];
+    setLD('Loading crimes…',60);
+    cData=await api('user','crimes');
 
-    setLoadingStatus('Building dashboard…', 95);
-    await new Promise(r => setTimeout(r, 300));
+    setLD('Loading transaction log…',75);
+    // Fetch log with a broad time window (last 90 days)
+    const now=Math.floor(Date.now()/1000);
+    const from=now-(90*86400);
+    const raw=await api('user','log',`&from=${from}&to=${now}`);
+    logData=raw.log?Object.values(raw.log):[];
 
-    populateDashboard();
-    setLoadingStatus('Done.', 100);
-    await new Promise(r => setTimeout(r, 200));
+    setLD('Loading properties…',90);
+    const praw=await api('user','properties');
+    propData=praw.properties||{};
+
+    setLD('Building dashboard…',97);
+    await new Promise(r=>setTimeout(r,250));
+    populate();
+    setLD('Done',100);
+    await new Promise(r=>setTimeout(r,200));
     showView('view-dashboard');
     startClock();
-    refreshTimer = setInterval(refreshData, 180000);
-
-  } catch (err) {
+    timer=setInterval(refresh,180000);
+  }catch(err){
     console.error(err);
-    localStorage.removeItem('torn_api_key');
-    apiKey = '';
+    localStorage.removeItem('tfkey');key='';
     showView('view-login');
-    showError('Connection failed: ' + err.message);
+    showErr('Failed: '+err.message);
   }
 }
 
-async function refreshData() {
-  const dot = document.getElementById('status-dot');
-  const txt = document.getElementById('status-text');
-  dot.className = 'status-dot loading';
-  txt.textContent = 'Refreshing…';
-  try {
-    const [money, crimes, log] = await Promise.all([
-      apiFetch('user', 'money,networth'),
-      apiFetch('user', 'crimes'),
-      apiFetch('user', 'log')
+async function refresh(){
+  const dot=document.getElementById('api-dot'),txt=document.getElementById('api-txt');
+  dot.className='dot loading';txt.textContent='Refreshing…';
+  try{
+    const now=Math.floor(Date.now()/1000),from=now-(90*86400);
+    [mData,barsData,cData,propData]=await Promise.all([
+      api('user','money,networth'),
+      api('user','bars'),
+      api('user','crimes'),
+      api('user','properties').then(r=>r.properties||{})
     ]);
-    moneyData = money;
-    crimeData = crimes;
-    logData = log.log ? Object.values(log.log) : [];
-    populateDashboard();
-    dot.className = 'status-dot';
-    txt.textContent = 'Connected';
-  } catch (err) {
-    dot.className = 'status-dot error';
-    txt.textContent = 'Error — retry';
-  }
+    const raw=await api('user','log',`&from=${from}&to=${now}`);
+    logData=raw.log?Object.values(raw.log):[];
+    populate();
+    dot.className='dot';txt.textContent='Connected';
+  }catch(e){dot.className='dot err';txt.textContent='Error — retry'}
 }
 
-function populateDashboard() {
-  populateSidebar();
-  populateOverview();
-  populateTransactions();
-  populateCrimes();
-  populateProfile();
-  populateTicker();
+// ── POPULATE ──
+function populate(){popSidebar();popOverview();popTransactions();popCrimes();popProperties()}
+
+function popSidebar(){
+  document.getElementById('sb-name').textContent=pData.name||'—';
+  document.getElementById('sb-lvl').textContent='Lvl '+(pData.level||'—');
+  document.getElementById('sb-rank').textContent=pData.rank||'—';
+  document.getElementById('sb-faction').textContent=pData.faction?.faction_name||'No Faction';
 }
 
-function populateSidebar() {
-  const p = playerData;
-  document.getElementById('sb-name').textContent = p.name || '—';
-  document.getElementById('sb-level').textContent = 'Lvl ' + (p.level || '—');
-  document.getElementById('sb-rank').textContent = p.rank || '—';
-  document.getElementById('sb-faction').textContent = p.faction?.faction_name || 'No Faction';
-}
-
-function populateOverview() {
-  const nwTotal = moneyData?.networth?.total || 0;
-  document.getElementById('ov-networth').textContent = fmt(nwTotal);
-  const cash = moneyData.money_onhand || 0;
-  document.getElementById('ov-cash').textContent = fmt(cash);
-  const bank = moneyData.money_bank || 0;
-  document.getElementById('ov-bank').textContent = fmt(bank);
-  const points = moneyData.points || 0;
-  document.getElementById('ov-points').textContent = fmtNum(points) + ' pts';
-  buildDonut(moneyData.networth || {});
-  buildStatusBars();
-  buildIncomeBars();
+function popOverview(){
+  // metrics
+  const nw=mData.networth?.total||0;
+  document.getElementById('ov-nw').textContent=fmt(nw);
+  document.getElementById('ov-nw-s').textContent='All assets combined';
+  document.getElementById('ov-cash').textContent=fmt(mData.money_onhand||0);
+  document.getElementById('ov-bank').textContent=fmt(mData.money_bank||0);
+  document.getElementById('ov-bank-s').textContent='Bank savings';
+  document.getElementById('ov-pts').textContent=fmtN(mData.points||0)+' pts';
+  buildDonut(mData.networth||{});
+  buildBars();
+  buildIncome();
   buildRecentTx(8);
-  buildCrimeStatsMini();
+  buildCrimeMini();
 }
 
-function buildDonut(nw) {
-  const segments = [
-    { label: 'Cash',       value: (nw.wallet||0)+(nw.bank||0),  color: '#6baaf0' },
-    { label: 'Properties', value: nw.properties||0,             color: '#f0b96b' },
-    { label: 'Stocks',     value: nw.stockmarket||0,            color: '#5ebd8a' },
-    { label: 'Items',      value: nw.items||0,                  color: '#f06b6b' },
-    { label: 'Other',      value: (nw.displaycase||0)+(nw.bazaar||0)+(nw.piggybank||0), color: '#565a7a' },
-  ].filter(s => s.value > 0);
-
-  const total = segments.reduce((s,x) => s+x.value, 0);
-  if (!total) return;
-
-  const svg = document.getElementById('donut-svg');
-  const legend = document.getElementById('donut-legend');
-  const cx=45,cy=45,r=32,sw=12,circ=2*Math.PI*r;
-
-  let html = '', offset = 0;
-  segments.forEach((seg,i) => {
-    const pct = seg.value/total;
-    const dash = pct*circ, gap = circ-dash;
-    html += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${seg.color}" stroke-width="${sw}"
-      stroke-dasharray="${dash.toFixed(2)} ${gap.toFixed(2)}"
-      stroke-dashoffset="${(-(offset/circ)*circ).toFixed(2)}"
-      transform="rotate(-90 ${cx} ${cy})"/>`;
-    offset += dash;
-  });
-
-  html += `<text x="${cx}" y="${cy-4}" text-anchor="middle" font-family="'DM Mono'" font-size="9" fill="#e2e4f0">${fmt(total)}</text>`;
-  html += `<text x="${cx}" y="${cy+8}" text-anchor="middle" font-family="'DM Mono'" font-size="7" fill="#565a7a">NET WORTH</text>`;
-  svg.innerHTML = html;
-
-  legend.innerHTML = segments.map(s =>
-    `<div class="legend-row">
-      <div class="legend-sw" style="background:${s.color}"></div>
-      ${s.label}<span class="legend-pct">${Math.round(s.value/total*100)}%</span>
-    </div>`
-  ).join('');
-}
-
-function buildStatusBars() {
-  const p = playerData;
-  const bars = [
-    { label:'Life',   cur:p.life?.current||0,   max:p.life?.maximum||100,   color:'red' },
-    { label:'Energy', cur:p.energy?.current||0, max:p.energy?.maximum||100, color:'green' },
-    { label:'Nerve',  cur:p.nerve?.current||0,  max:p.nerve?.maximum||100,  color:'amber' },
-    { label:'Happy',  cur:p.happy?.current||0,  max:p.happy?.maximum||100,  color:'blue' },
+function buildBars(){
+  // bars come from the 'bars' selection — separate from profile
+  const b=barsData;
+  const bars=[
+    {lbl:'Life',  cur:b.life?.current||0,   max:b.life?.maximum||100,   cl:'r'},
+    {lbl:'Energy',cur:b.energy?.current||0, max:b.energy?.maximum||100, cl:'g'},
+    {lbl:'Nerve', cur:b.nerve?.current||0,  max:b.nerve?.maximum||100,  cl:'a'},
+    {lbl:'Happy', cur:b.happy?.current||0,  max:b.happy?.maximum||100,  cl:'b'},
   ];
-  const html = bars.map(b => {
-    const pct = b.max ? Math.round(b.cur/b.max*100) : 0;
-    return `<div class="stat-bar-row">
-      <div class="stat-bar-label">${b.label}</div>
-      <div class="stat-bar-track"><div class="stat-bar-fill ${b.color}" style="width:${pct}%"></div></div>
-      <div class="stat-bar-val">${b.cur} / ${b.max}</div>
+  const h=bars.map(bar=>{
+    const p=pct(bar.cur,bar.max);
+    return`<div class="sbar-row">
+      <div class="sbar-lbl">${bar.lbl}</div>
+      <div class="sbar-track"><div class="sbar-fill ${bar.cl}" style="width:${p}%"></div></div>
+      <div class="sbar-val">${bar.cur} / ${bar.max}</div>
     </div>`;
   }).join('');
-  document.getElementById('status-bars').innerHTML = html;
-  document.getElementById('profile-bars').innerHTML = html;
+  document.getElementById('ov-bars').innerHTML=h;
 }
 
-function categoriseLog(entry) {
-  const t = (entry.title||'').toLowerCase(), c = (entry.category||'').toLowerCase();
-  if (c==='crime'||t.includes('crime')||t.includes('theft')||t.includes('shoplifting')||t.includes('assault')) return 'crime';
-  if (c==='casino'||t.includes('casino')||t.includes('slot')||t.includes('blackjack')||t.includes('poker')||t.includes('roulette')) return 'casino';
-  if (c==='trade'||t.includes('trade')||t.includes('bazaar')||t.includes('sold')||t.includes('bought')||t.includes('item market')) return 'trade';
-  if (t.includes('attack')||t.includes('mugg')||t.includes('hospital')) return 'mug';
-  if (t.includes('bank')||t.includes('deposit')||t.includes('withdraw')||t.includes('investment')) return 'bank';
-  if (t.includes('property')||t.includes('company')||t.includes('faction')) return 'property';
-  return 'other';
-}
-
-function buildIncomeBars() {
-  const totals = { Crime:0, Casino:0, Trading:0, Mugging:0, Property:0, Other:0 };
-  const colorMap = { Crime:'red', Casino:'amber', Trading:'blue', Mugging:'coral', Property:'green', Other:'gray' };
-  logData.forEach(e => {
-    const a = e.money||0; if (a<=0) return;
-    const cat = categoriseLog(e);
-    if (cat==='crime') totals.Crime+=a;
-    else if (cat==='casino') totals.Casino+=a;
-    else if (cat==='trade') totals.Trading+=a;
-    else if (cat==='mug') totals.Mugging+=a;
-    else if (cat==='property') totals.Property+=a;
-    else totals.Other+=a;
+function buildDonut(nw){
+  const segs=[
+    {lbl:'Cash',   val:(nw.wallet||0)+(nw.bank||0), col:'#6aaef5'},
+    {lbl:'Props',  val:nw.properties||0,            col:'#f0b96b'},
+    {lbl:'Stocks', val:nw.stockmarket||0,           col:'#52c27a'},
+    {lbl:'Items',  val:nw.items||0,                 col:'#f07070'},
+    {lbl:'Other',  val:(nw.displaycase||0)+(nw.bazaar||0)+(nw.piggybank||0), col:'#555878'},
+  ].filter(s=>s.val>0);
+  const total=segs.reduce((s,x)=>s+x.val,0);
+  if(!total)return;
+  const svg=document.getElementById('d-svg'),leg=document.getElementById('d-leg');
+  const cx=45,cy=45,r=32,sw=12,circ=2*Math.PI*r;
+  let html='',off=0;
+  segs.forEach(s=>{
+    const d=s.val/total*circ,g=circ-d;
+    html+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${s.col}" stroke-width="${sw}"
+      stroke-dasharray="${d.toFixed(2)} ${g.toFixed(2)}"
+      stroke-dashoffset="${(-off).toFixed(2)}"
+      transform="rotate(-90 ${cx} ${cy})"/>`;
+    off+=d;
   });
-  const entries = Object.entries(totals).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]);
-  const max = entries[0]?.[1]||1;
-  document.getElementById('income-bars').innerHTML = entries.length
-    ? entries.map(([label,val]) =>
-        `<div class="hbar-row">
-          <div class="hbar-label">${label}</div>
-          <div class="hbar-track"><div class="hbar-fill ${colorMap[label]}" style="width:${Math.round(val/max*100)}%"></div></div>
-          <div class="hbar-val">${fmt(val)}</div>
-        </div>`).join('')
-    : '<div class="empty-state">No income data in recent log.</div>';
+  html+=`<text x="${cx}" y="${cy-3}" text-anchor="middle" font-family="'DM Mono'" font-size="9" fill="#dde0f5">${fmt(total)}</text>
+  <text x="${cx}" y="${cy+9}" text-anchor="middle" font-family="'DM Mono'" font-size="7" fill="#555878">NET WORTH</text>`;
+  svg.innerHTML=html;
+  leg.innerHTML=segs.map(s=>`<div class="d-row"><div class="d-sw" style="background:${s.col}"></div>${s.lbl}<span class="d-pct">${Math.round(s.val/total*100)}%</span></div>`).join('');
 }
 
-function buildRecentTx(limit) {
-  const entries = [...logData].filter(e=>e.money).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)).slice(0,limit);
-  document.getElementById('recent-tx-body').innerHTML = entries.length
-    ? entries.map(e => {
-        const cat=categoriseLog(e), amount=e.money||0, sign=amount>=0?'+':'';
-        return `<tr>
-          <td><span class="tag ${cat}">${cat.toUpperCase()}</span></td>
-          <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.title||'—'}</td>
-          <td>${timeAgo(e.timestamp)}</td>
-          <td style="text-align:right" class="${amount>=0?'pos':'neg'}">${sign}${fmt(Math.abs(amount))}</td>
-        </tr>`;}).join('')
-    : '<tr><td colspan="4"><div class="empty-state">No transaction data found.</div></td></tr>';
+function catLog(e){
+  const t=(e.title||'').toLowerCase(),c=(e.category||'').toLowerCase();
+  if(c==='crime'||/crime|theft|shoplifting|assault|robbery/.test(t))return'crime';
+  if(c==='casino'||/casino|slot|blackjack|poker|roulette|craps/.test(t))return'casino';
+  if(c==='trade'||/trade|bazaar|sold|bought|item market|auction/.test(t))return'trade';
+  if(/attack|mugg|hospital/.test(t))return'mug';
+  if(/bank|deposit|withdraw|investment|interest/.test(t))return'bank';
+  if(/property|rental|rent/.test(t))return'property';
+  return'other';
 }
 
-function buildCrimeStatsMini() {
-  const crimes = crimeData.crimes||{};
-  const list = Object.values(crimes);
-  const total = list.reduce((s,c)=>s+(c.attempts||0),0);
-  const success = list.reduce((s,c)=>s+(c.success||0),0);
-  const rate = total ? Math.round(success/total*100) : 0;
-  document.getElementById('crime-stats-mini').innerHTML = `
-    <div class="stat-row"><span class="stat-k">Total attempts</span><span class="stat-v">${fmtNum(total)}</span></div>
-    <div class="stat-row"><span class="stat-k">Successful</span><span class="stat-v green">${fmtNum(success)}</span></div>
-    <div class="stat-row"><span class="stat-k">Success rate</span><span class="stat-v ${rate>=70?'green':rate>=50?'amber':'red'}">${rate}%</span></div>
-  `;
+function buildIncome(){
+  const tot={Crime:0,Casino:0,Trading:0,Mugging:0,Property:0,Bank:0,Other:0};
+  const cm={Crime:'r',Casino:'a',Trading:'b',Mugging:'c',Property:'g',Bank:'gr',Other:'gr'};
+  logData.forEach(e=>{
+    const a=e.money||0;if(a<=0)return;
+    const cat=catLog(e);
+    if(cat==='crime')tot.Crime+=a;
+    else if(cat==='casino')tot.Casino+=a;
+    else if(cat==='trade')tot.Trading+=a;
+    else if(cat==='mug')tot.Mugging+=a;
+    else if(cat==='property')tot.Property+=a;
+    else if(cat==='bank')tot.Bank+=a;
+    else tot.Other+=a;
+  });
+  const ents=Object.entries(tot).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]);
+  const mx=ents[0]?.[1]||1;
+  document.getElementById('ov-income').innerHTML=ents.length
+    ?ents.map(([l,v])=>`<div class="hbar-row"><div class="hbar-lbl">${l}</div><div class="hbar-track"><div class="hbar-fill ${cm[l]}" style="width:${Math.round(v/mx*100)}%"></div></div><div class="hbar-val">${fmt(v)}</div></div>`).join('')
+    :'<div class="empty">No income found in log.</div>';
 }
 
-function populateTransactions() {
-  const entries = [...logData].filter(e=>e.money).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)).slice(0,100);
-  document.getElementById('full-tx-body').innerHTML = entries.length
-    ? entries.map(e => {
-        const cat=categoriseLog(e), amount=e.money||0, sign=amount>=0?'+':'';
-        return `<tr>
-          <td><span class="tag ${cat}">${cat.toUpperCase()}</span></td>
-          <td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.title||'—'}</td>
-          <td>${tsToDate(e.timestamp)}</td>
-          <td style="text-align:right" class="${amount>=0?'pos':'neg'}">${sign}${fmt(Math.abs(amount))}</td>
-        </tr>`;}).join('')
-    : '<tr><td colspan="4"><div class="empty-state">No transaction data found.</div></td></tr>';
+function buildRecentTx(limit){
+  const rows=[...logData].filter(e=>e.money).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)).slice(0,limit);
+  document.getElementById('ov-tx').innerHTML=rows.length
+    ?rows.map(e=>{const cat=catLog(e),a=e.money||0,sg=a>=0?'+':'';
+      return`<tr><td><span class="tag ${cat}">${cat.toUpperCase()}</span></td><td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.title||'—'}</td><td>${ago(e.timestamp)}</td><td style="text-align:right" class="${a>=0?'pos':'neg'}">${sg}${fmt(Math.abs(a))}</td></tr>`;}).join('')
+    :'<tr><td colspan="4"><div class="empty">No transactions found.</div></td></tr>';
 }
 
-function populateCrimes() {
-  const crimes = crimeData.crimes||{};
-  const list = Object.entries(crimes);
-  const total = list.reduce((s,[,c])=>s+(c.attempts||0),0);
-  const success = list.reduce((s,[,c])=>s+(c.success||0),0);
-  const rate = total ? Math.round(success/total*100) : 0;
-  document.getElementById('cr-total').textContent = fmtNum(total);
-  document.getElementById('cr-success').textContent = fmtNum(success);
-  document.getElementById('cr-rate').textContent = rate+'%';
-  document.getElementById('cr-nerve').textContent = '—';
-  document.getElementById('crimes-grid').innerHTML = list.length
-    ? list.filter(([,c])=>c.attempts>0).sort(([,a],[,b])=>b.attempts-a.attempts).slice(0,12)
-        .map(([name,c]) => {
-          const r = c.attempts ? Math.round(c.success/c.attempts*100) : 0;
-          return `<div class="crime-card">
-            <div class="crime-card-name">${name.replace(/_/g,' ')}</div>
-            <div class="crime-card-stat">Attempts: <span>${fmtNum(c.attempts)}</span></div>
-            <div class="crime-card-stat">Success: <span style="color:var(--green)">${fmtNum(c.success)}</span></div>
-            <div class="crime-card-stat">Rate: <span style="color:${r>=70?'var(--green)':r>=50?'var(--amber)':'var(--red)'}">${r}%</span></div>
-          </div>`;}).join('')
-    : '<div class="empty-state" style="grid-column:1/-1">No crime data available.</div>';
+function buildCrimeMini(){
+  const list=Object.values(cData.crimes||{});
+  const tot=list.reduce((s,c)=>s+(c.attempts||0),0);
+  const suc=list.reduce((s,c)=>s+(c.success||0),0);
+  const rate=tot?Math.round(suc/tot*100):0;
+  document.getElementById('ov-crimes').innerHTML=`
+    <div class="srow"><span class="sk">Total attempts</span><span class="sv">${fmtN(tot)}</span></div>
+    <div class="srow"><span class="sk">Successful</span><span class="sv g">${fmtN(suc)}</span></div>
+    <div class="srow"><span class="sk">Success rate</span><span class="sv ${rate>=70?'g':rate>=50?'a':'r'}">${rate}%</span></div>`;
 }
 
-function populateProfile() {
-  const p = playerData;
-  const rows = [
-    ['Name', p.name||'—'], ['Player ID','#'+(p.player_id||'—')],
-    ['Level', p.level||'—'], ['Rank', p.rank||'—'],
-    ['Faction', p.faction?.faction_name||'None'],
-    ['Position', p.faction?.position||'—'],
-    ['Company', p.job?.company_name||'Unemployed'],
-    ['Age', p.age ? p.age+' days' : '—'],
-    ['Last Action', p.last_action?.relative||'—'],
-    ['Status', p.status?.description||'—'],
-  ];
-  document.getElementById('profile-stats').innerHTML = rows.map(([k,v]) =>
-    `<div class="stat-row"><span class="stat-k">${k}</span><span class="stat-v">${v}</span></div>`
-  ).join('');
-  const ps = p.personalstats||{};
-  const bstats = [
-    ['Attacks won', ps.attackswon||0],
-    ['Attacks lost', ps.attackslost||0],
-    ['Defends won', ps.defendswon||0],
-    ['Defends lost', ps.defendslost||0],
-    ['Crimes done', ps.criminaloffenses||0],
-    ['Mugs won', ps.attackstealthed||0],
-  ].filter(([,v])=>v>0);
-  if (bstats.length) {
-    const maxVal = Math.max(...bstats.map(([,v])=>v),1);
-    document.getElementById('battle-stats').innerHTML = bstats.map(([label,val]) =>
-      `<div class="hbar-row">
-        <div class="hbar-label" style="font-size:11px">${label}</div>
-        <div class="hbar-track"><div class="hbar-fill red" style="width:${Math.round(val/maxVal*100)}%"></div></div>
-        <div class="hbar-val">${fmtNum(val)}</div>
-      </div>`).join('');
-  }
+function popTransactions(){
+  const rows=[...logData].filter(e=>e.money).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)).slice(0,100);
+  document.getElementById('tx-body').innerHTML=rows.length
+    ?rows.map(e=>{const cat=catLog(e),a=e.money||0,sg=a>=0?'+':'';
+      return`<tr><td><span class="tag ${cat}">${cat.toUpperCase()}</span></td><td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.title||'—'}</td><td>${dt(e.timestamp)}</td><td style="text-align:right" class="${a>=0?'pos':'neg'}">${sg}${fmt(Math.abs(a))}</td></tr>`;}).join('')
+    :'<tr><td colspan="4"><div class="empty">No transactions found in log.</div></td></tr>';
 }
 
-function populateTicker() {
-  const money = moneyData;
-  const parts = [
-    `Cash: ${fmt(money.money_onhand||0)}`,
-    `Bank: ${fmt(money.money_bank||0)}`,
-    `Net Worth: ${fmt((money.networth||{}).total||0)}`,
-    `Points: ${fmtNum(money.points||0)}`,
-    `Player: ${playerData.name||'—'}`,
-    `Level: ${playerData.level||'—'}`,
-    `Rank: ${playerData.rank||'—'}`,
-    `Status: ${playerData.status?.description||'Unknown'}`,
-    `Last Seen: ${playerData.last_action?.relative||'—'}`,
-  ];
-  const content = parts.join('  ·  ');
-  const ticker = document.getElementById('ticker-content');
-  ticker.innerHTML = content + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + content;
+function popCrimes(){
+  const crimes=cData.crimes||{};
+  const list=Object.entries(crimes);
+  const tot=list.reduce((s,[,c])=>s+(c.attempts||0),0);
+  const suc=list.reduce((s,[,c])=>s+(c.success||0),0);
+  const fail=tot-suc;
+  const rate=tot?Math.round(suc/tot*100):0;
+  document.getElementById('cr-tot').textContent=fmtN(tot);
+  document.getElementById('cr-suc').textContent=fmtN(suc);
+  document.getElementById('cr-rate').textContent=rate+'%';
+  document.getElementById('cr-fail').textContent=fmtN(fail);
+
+  const active=list.filter(([,c])=>c.attempts>0).sort(([,a],[,b])=>b.attempts-a.attempts);
+  document.getElementById('cr-grid').innerHTML=active.length
+    ?active.map(([name,c])=>{
+        const r=c.attempts?Math.round(c.success/c.attempts*100):0;
+        const col=r>=70?'var(--green)':r>=50?'var(--amber)':'var(--red)';
+        return`<div class="crime-card">
+          <div class="crime-card-name">${name.replace(/_/g,' ')}</div>
+          <div class="crime-stat">Attempts: <span>${fmtN(c.attempts)}</span></div>
+          <div class="crime-stat">Success: <span style="color:var(--green)">${fmtN(c.success)}</span></div>
+          <div class="crime-stat">Rate: <span style="color:${col}">${r}%</span></div>
+        </div>`;}).join('')
+    :'<div class="empty" style="grid-column:1/-1">No crime data available.</div>';
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  const saved = localStorage.getItem('torn_api_key');
-  if (saved) {
-    apiKey = saved;
-    document.getElementById('api-key-input').value = saved;
-    showView('view-loading');
-    loadAllData();
-  } else {
-    showView('view-login');
-  }
+function popProperties(){
+  const props=Object.entries(propData);
+  const totalCount=props.length;
+  let rentedCount=0,dailyIncome=0,dailyUpkeep=0;
+
+  // Find max daily income for bar scaling
+  let maxIncome=0;
+  props.forEach(([,p])=>{
+    const cpd=parseInt(p.rented?.cost_per_day||0);
+    if(cpd>maxIncome)maxIncome=cpd;
+  });
+
+  const cards=props.map(([id,p])=>{
+    const rented=p.rented&&p.rented.user_id;
+    const isLiving=p.users_living&&parseInt(p.users_living)>0;
+    const upkeep=parseInt(p.upkeep||0);
+    const cpd=rented?parseInt(p.rented.cost_per_day||0):0;
+    const total_cost=rented?parseInt(p.rented.total_cost||0):0;
+    const days_left=rented?parseInt(p.rented.days_left||0):0;
+    const tenant_id=rented?p.rented.user_id:'—';
+
+    if(rented){rentedCount++;dailyIncome+=cpd}
+    dailyUpkeep+=upkeep;
+
+    // status badge
+    let badge,bclass;
+    if(rented){badge='Rented';bclass='rented'}
+    else if(isLiving){badge='Occupied';bclass='occupied'}
+    else{badge='Vacant';bclass='vacant'}
+
+    const barPct=maxIncome&&cpd?Math.round(cpd/maxIncome*100):0;
+
+    // Property type name
+    const typeName=(p.property_type||'Unknown property').toString();
+
+    return`<div class="prop-card ${bclass}">
+      <div class="prop-top">
+        <div class="prop-type">${typeName.replace(/_/g,' ')}</div>
+        <span class="prop-badge ${bclass}">${badge}</span>
+      </div>
+      ${rented?`
+        <div class="prop-stat">Tenant ID <span>#${tenant_id}</span></div>
+        <div class="prop-stat">Daily rate <span>${fmt(cpd)}</span></div>
+        <div class="prop-stat">Days remaining <span>${days_left} days</span></div>
+        <div class="prop-stat">Total contract value <span>${fmt(total_cost)}</span></div>
+        <div class="prop-income-bar">
+          <div style="font-size:11px;color:var(--t3);margin-bottom:3px">Income vs best property</div>
+          <div class="prop-bar-track"><div class="prop-bar-fill" style="width:${barPct}%"></div></div>
+        </div>`
+      :isLiving?`<div class="prop-stat">Occupied by <span>${fmtN(p.users_living)} user(s)</span></div>`
+      :`<div class="prop-stat" style="color:var(--t3);font-style:italic">No tenant — available to rent</div>`}
+      <div class="prop-stat" style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">Daily upkeep <span style="color:var(--red)">${fmt(upkeep)}</span></div>
+      ${cpd&&upkeep?`<div class="prop-stat">Net daily <span style="color:${cpd-upkeep>=0?'var(--green)':'var(--red)'}">${fmt(cpd-upkeep)}</span></div>`:''}
+    </div>`;
+  }).join('');
+
+  document.getElementById('pr-total').textContent=totalCount||'—';
+  document.getElementById('pr-rented').textContent=rentedCount||'0';
+  document.getElementById('pr-daily').textContent=fmt(dailyIncome);
+  document.getElementById('pr-upkeep').textContent=fmt(dailyUpkeep);
+  document.getElementById('pr-grid').innerHTML=cards||'<div class="empty" style="grid-column:1/-1">No properties found on your account.</div>';
+}
+
+// ── BOOT ──
+window.addEventListener('DOMContentLoaded',()=>{
+  const saved=localStorage.getItem('tfkey');
+  if(saved){key=saved;document.getElementById('inp-key').value=saved;showView('view-loading');loadAll()}
+  else showView('view-login');
 });
 </script>
 </body>

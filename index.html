@@ -5,232 +5,216 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TornFin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:       #181b2e;
-  --bg2:      #1f2340;
-  --bg3:      #262b47;
-  --bg4:      #2e3350;
-  --border:   rgba(255,255,255,0.07);
-  --border2:  rgba(255,255,255,0.13);
-  --acc:      #7c8cf8;
-  --acc-dim:  rgba(124,140,248,0.13);
-  --green:    #52c27a;
-  --green-d:  rgba(82,194,122,0.13);
-  --red:      #f07070;
-  --red-d:    rgba(240,112,112,0.13);
-  --amber:    #f0b96b;
-  --amber-d:  rgba(240,185,107,0.13);
-  --blue:     #6aaef5;
-  --blue-d:   rgba(106,174,245,0.13);
-  --coral:    #f0956b;
-  --t1: #dde0f5;
-  --t2: #8b90b8;
-  --t3: #555878;
-  --mono:'DM Mono',monospace;
-  --sans:'DM Sans',sans-serif;
-  --r:10px;--r2:6px;
-  --sw:230px;
+  --bg:#181b2e;--bg2:#1f2340;--bg3:#262b47;--bg4:#2e3350;
+  --bd:rgba(255,255,255,.07);--bd2:rgba(255,255,255,.13);
+  --acc:#7c8cf8;--acc-d:rgba(124,140,248,.13);
+  --gn:#52c27a;--gn-d:rgba(82,194,122,.13);
+  --rd:#f07070;--rd-d:rgba(240,112,112,.13);
+  --am:#f0b96b;--am-d:rgba(240,185,107,.13);
+  --bl:#6aaef5;--bl-d:rgba(106,174,245,.13);
+  --co:#f0956b;
+  --t1:#dde0f5;--t2:#8b90b8;--t3:#555878;
+  --mono:'DM Mono',monospace;--sans:'DM Sans',sans-serif;
+  --r:10px;--r2:6px;--sw:230px;
 }
 html,body{height:100%;background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:14px;overflow:hidden;-webkit-font-smoothing:antialiased}
-
-/* views */
 .view{display:none}.view.active{display:flex}
 
-/* ── LOGIN ── */
-#view-login{height:100vh;width:100vw;align-items:center;justify-content:center;
+/* LOGIN */
+#vl{height:100vh;width:100vw;align-items:center;justify-content:center;flex-direction:column;
   background:radial-gradient(ellipse at 35% 45%,rgba(124,140,248,.07) 0%,transparent 65%),var(--bg)}
-.login-box{width:440px;background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:40px 36px;animation:fadeUp .45s ease both}
-.login-eyebrow{font-size:11px;color:var(--acc);letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px;opacity:.75}
-.login-title{font-size:30px;font-weight:600;letter-spacing:-.3px;margin-bottom:6px}
-.login-title span{color:var(--acc)}
-.login-sub{font-size:13px;color:var(--t3);margin-bottom:28px}
-.form-lbl{display:block;font-size:12px;font-weight:500;color:var(--t2);margin-bottom:7px}
-.form-inp{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r2);color:var(--t1);font-family:var(--mono);font-size:13px;padding:11px 14px;outline:none;transition:border-color .18s,box-shadow .18s}
-.form-inp:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(124,140,248,.12)}
-.form-inp::placeholder{color:var(--t3)}
-.form-hint{font-size:12px;color:var(--t3);margin-top:8px;line-height:1.7}
-.form-hint a{color:var(--blue);text-decoration:none}.form-hint a:hover{color:var(--t1)}
-.btn-go{width:100%;margin-top:22px;background:var(--acc);border:none;color:#fff;font-family:var(--sans);font-size:15px;font-weight:600;padding:13px;border-radius:var(--r2);cursor:pointer;transition:opacity .15s,transform .1s}
-.btn-go:hover{opacity:.88}.btn-go:active{transform:scale(.99)}.btn-go:disabled{opacity:.4;cursor:not-allowed}
-.login-err{display:none;margin-top:12px;padding:10px 14px;background:var(--red-d);border:1px solid rgba(240,112,112,.25);border-radius:var(--r2);font-size:12px;color:var(--red)}
-.tos-box{margin-top:18px;padding:14px 16px;border:1px solid var(--border);border-radius:var(--r2);background:var(--bg3)}
-.tos-ttl{font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);margin-bottom:8px}
-.tos-tbl{width:100%;border-collapse:collapse}
-.tos-tbl td{font-size:12px;padding:3px 0;color:var(--t2)}
-.tos-tbl td:first-child{color:var(--t3);width:55%}.tos-tbl .ok{color:var(--green)}
+.lbox{width:440px;background:var(--bg2);border:1px solid var(--bd2);border-radius:16px;padding:40px 36px;animation:fadeUp .45s ease both}
+.ley{font-size:11px;color:var(--acc);letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px;opacity:.75}
+.ltit{font-size:30px;font-weight:600;letter-spacing:-.3px;margin-bottom:6px}.ltit span{color:var(--acc)}
+.lsub{font-size:13px;color:var(--t3);margin-bottom:28px}
+.flbl{display:block;font-size:12px;font-weight:500;color:var(--t2);margin-bottom:7px}
+.finp{width:100%;background:var(--bg3);border:1px solid var(--bd2);border-radius:var(--r2);color:var(--t1);font-family:var(--mono);font-size:13px;padding:11px 14px;outline:none;transition:border-color .18s,box-shadow .18s}
+.finp:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(124,140,248,.12)}
+.finp::placeholder{color:var(--t3)}
+.fhint{font-size:12px;color:var(--t3);margin-top:8px;line-height:1.7}
+.fhint a{color:var(--bl);text-decoration:none}.fhint a:hover{color:var(--t1)}
+.bgo{width:100%;margin-top:22px;background:var(--acc);border:none;color:#fff;font-family:var(--sans);font-size:15px;font-weight:600;padding:13px;border-radius:var(--r2);cursor:pointer;transition:opacity .15s}
+.bgo:hover{opacity:.88}.bgo:disabled{opacity:.4;cursor:not-allowed}
+.lerr{display:none;margin-top:12px;padding:10px 14px;background:var(--rd-d);border:1px solid rgba(240,112,112,.25);border-radius:var(--r2);font-size:12px;color:var(--rd)}
+.tos{margin-top:18px;padding:14px 16px;border:1px solid var(--bd);border-radius:var(--r2);background:var(--bg3)}
+.tost{font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);margin-bottom:8px}
+.tostbl{width:100%;border-collapse:collapse}
+.tostbl td{font-size:12px;padding:3px 0;color:var(--t2)}
+.tostbl td:first-child{color:var(--t3);width:55%}.tostbl .ok{color:var(--gn)}
 
-/* ── LOADING ── */
-#view-loading{height:100vh;width:100vw;flex-direction:column;align-items:center;justify-content:center;gap:18px}
-.ld-logo{font-size:24px;font-weight:600;letter-spacing:-.2px}.ld-logo span{color:var(--acc)}
-.ld-track{width:200px;height:3px;background:var(--bg3);border-radius:99px;overflow:hidden}
-.ld-fill{height:100%;background:var(--acc);width:0%;transition:width .4s ease;border-radius:99px}
-.ld-txt{font-size:11px;color:var(--t3);font-family:var(--mono);letter-spacing:.04em}
+/* LOADING */
+#vld{height:100vh;width:100vw;flex-direction:column;align-items:center;justify-content:center;gap:18px}
+.ldl{font-size:24px;font-weight:600;letter-spacing:-.2px}.ldl span{color:var(--acc)}
+.ldt{width:200px;height:3px;background:var(--bg3);border-radius:99px;overflow:hidden}
+.ldf{height:100%;background:var(--acc);width:0%;transition:width .4s ease;border-radius:99px}
+.ldtxt{font-size:11px;color:var(--t3);font-family:var(--mono);letter-spacing:.04em}
 
-/* ── DASHBOARD ── */
-#view-dashboard{height:100vh;width:100vw}
+/* DASHBOARD */
+#vd{height:100vh;width:100vw}
 
 /* sidebar */
-.sb{width:var(--sw);flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column}
-.sb-logo{padding:22px 18px 18px;border-bottom:1px solid var(--border)}
-.sb-eye{font-size:10px;color:var(--acc);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px;opacity:.65}
-.sb-name{font-size:20px;font-weight:600;letter-spacing:-.2px}.sb-name span{color:var(--acc)}
-.sb-player{padding:14px 18px;border-bottom:1px solid var(--border)}
-.sb-pname{font-size:14px;font-weight:600;color:var(--t1);margin-bottom:5px}
-.sb-meta{font-size:12px;color:var(--t2);display:flex;gap:6px;flex-wrap:wrap}
-.sb-rank{color:var(--amber);font-weight:500}
-.sb-nav{flex:1;padding:8px 10px;overflow-y:auto}
-.nav-sec{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);padding:10px 10px 4px}
-.nav-i{display:flex;align-items:center;gap:10px;padding:8px 12px;cursor:pointer;font-size:14px;font-weight:500;color:var(--t2);border-radius:var(--r2);transition:all .12s;margin-bottom:1px}
-.nav-i:hover{color:var(--t1);background:var(--bg4)}
-.nav-i.on{color:var(--acc);background:rgba(124,140,248,.1)}
-.nav-ic{width:16px;height:16px;flex-shrink:0;opacity:.55}.nav-i.on .nav-ic{opacity:1}
-.sb-ft{padding:14px 18px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:9px}
-.api-dot-row{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--t2)}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;animation:pulse 2.5s infinite}
-.dot.loading{background:var(--amber)}.dot.err{background:var(--red);animation:none}
-.btn-out{background:transparent;border:1px solid var(--border2);color:var(--t3);font-family:var(--sans);font-size:12px;padding:6px 12px;border-radius:var(--r2);cursor:pointer;transition:all .12s;text-align:left}
-.btn-out:hover{border-color:var(--red);color:var(--red)}
+.sb{width:var(--sw);flex-shrink:0;background:var(--bg2);border-right:1px solid var(--bd);display:flex;flex-direction:column}
+.sblog{padding:22px 18px 18px;border-bottom:1px solid var(--bd)}
+.sby{font-size:10px;color:var(--acc);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px;opacity:.65}
+.sbt{font-size:20px;font-weight:600;letter-spacing:-.2px}.sbt span{color:var(--acc)}
+.sbp{padding:14px 18px;border-bottom:1px solid var(--bd)}
+.sbpn{font-size:14px;font-weight:600;margin-bottom:5px}
+.sbm{font-size:12px;color:var(--t2);display:flex;gap:6px;flex-wrap:wrap}
+.sbrank{color:var(--am);font-weight:500}
+.sbnav{flex:1;padding:8px 10px;overflow-y:auto}
+.nsec{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);padding:10px 10px 4px}
+.ni{display:flex;align-items:center;gap:10px;padding:8px 12px;cursor:pointer;font-size:14px;font-weight:500;color:var(--t2);border-radius:var(--r2);transition:all .12s;margin-bottom:1px}
+.ni:hover{color:var(--t1);background:var(--bg4)}.ni.on{color:var(--acc);background:rgba(124,140,248,.1)}
+.nic{width:16px;height:16px;flex-shrink:0;opacity:.55}.ni.on .nic{opacity:1}
+.sbft{padding:14px 18px;border-top:1px solid var(--bd);display:flex;flex-direction:column;gap:9px}
+.dot-row{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--t2)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--gn);flex-shrink:0;animation:pulse 2.5s infinite}
+.dot.spin{background:var(--am)}.dot.err{background:var(--rd);animation:none}
+.bout{background:transparent;border:1px solid var(--bd2);color:var(--t3);font-family:var(--sans);font-size:12px;padding:6px 12px;border-radius:var(--r2);cursor:pointer;transition:all .12s;text-align:left}
+.bout:hover{border-color:var(--rd);color:var(--rd)}
 
 /* main */
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
-.topbar{height:52px;flex-shrink:0;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 26px;gap:14px;background:var(--bg2)}
-.topbar-title{font-size:16px;font-weight:600;letter-spacing:-.2px;flex:1}
-.topbar-time{font-family:var(--mono);font-size:11px;color:var(--t3)}
-.btn-sm{background:transparent;border:1px solid var(--border2);color:var(--t2);font-family:var(--sans);font-size:12px;font-weight:500;padding:6px 14px;border-radius:var(--r2);cursor:pointer;transition:all .12s}
-.btn-sm:hover{border-color:var(--acc);color:var(--acc)}
+.topbar{height:52px;flex-shrink:0;border-bottom:1px solid var(--bd);display:flex;align-items:center;padding:0 26px;gap:14px;background:var(--bg2)}
+.tbt{font-size:16px;font-weight:600;letter-spacing:-.2px;flex:1}
+.tbc{font-family:var(--mono);font-size:11px;color:var(--t3)}
+.bsm{background:transparent;border:1px solid var(--bd2);color:var(--t2);font-family:var(--sans);font-size:12px;font-weight:500;padding:6px 14px;border-radius:var(--r2);cursor:pointer;transition:all .12s}
+.bsm:hover{border-color:var(--acc);color:var(--acc)}
 
 /* content */
-.content{flex:1;overflow-y:auto;padding:22px 24px;display:flex;flex-direction:column;gap:18px}
-.content::-webkit-scrollbar{width:4px}.content::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
-
-/* pages */
+.cnt{flex:1;overflow-y:auto;padding:22px 24px;display:flex;flex-direction:column;gap:18px}
+.cnt::-webkit-scrollbar{width:4px}.cnt::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
 .page{display:none;flex-direction:column;gap:18px}.page.active{display:flex}
 
 /* panel */
-.panel{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px}
-.ptitle{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--t3);margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
-.pact{font-size:12px;font-weight:400;text-transform:none;letter-spacing:0;color:var(--t3);cursor:pointer;transition:color .12s}.pact:hover{color:var(--acc)}
+.pnl{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);padding:16px 18px}
+.pt{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--t3);margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+.pa{font-size:12px;font-weight:400;text-transform:none;letter-spacing:0;color:var(--t3);cursor:pointer;transition:color .12s}.pa:hover{color:var(--acc)}
 
-/* metric cards */
-.mcards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.mc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;position:relative;overflow:hidden}
-.mc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--mc-acc,var(--border));border-radius:var(--r) var(--r) 0 0}
-.mc.cg{--mc-acc:var(--green)}.mc.cr{--mc-acc:var(--red)}.mc.ca{--mc-acc:var(--amber)}.mc.cb{--mc-acc:var(--acc)}
+/* metrics */
+.mc4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.mc{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);padding:14px 16px;position:relative;overflow:hidden}
+.mc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--mca,var(--bd));border-radius:var(--r) var(--r) 0 0}
+.mc.cg{--mca:var(--gn)}.mc.cr{--mca:var(--rd)}.mc.ca{--mca:var(--am)}.mc.cb{--mca:var(--acc)}
 .mlbl{font-size:11px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--t3);margin-bottom:8px}
-.mval{font-family:var(--mono);font-size:22px;color:var(--t1);line-height:1;margin-bottom:5px}
-.mval.g{color:var(--green)}.mval.r{color:var(--red)}.mval.a{color:var(--amber)}.mval.b{color:var(--acc)}
-.msub{font-size:12px;color:var(--t3)}
-.msub.up{color:var(--green)}.msub.dn{color:var(--red)}
+.mv{font-family:var(--mono);font-size:22px;color:var(--t1);line-height:1;margin-bottom:5px}
+.mv.g{color:var(--gn)}.mv.r{color:var(--rd)}.mv.a{color:var(--am)}.mv.b{color:var(--acc)}
+.ms{font-size:12px;color:var(--t3)}.ms.up{color:var(--gn)}.ms.dn{color:var(--rd)}
 
 /* grids */
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .g3{display:grid;grid-template-columns:2fr 1fr;gap:14px}
 
-/* stat bars */
+/* status bars */
 .sbars{display:flex;flex-direction:column;gap:11px}
-.sbar-row{display:flex;align-items:center;gap:12px}
-.sbar-lbl{font-size:12px;color:var(--t2);width:52px;flex-shrink:0}
-.sbar-track{flex:1;height:7px;background:var(--bg3);border-radius:99px;overflow:hidden}
-.sbar-fill{height:100%;border-radius:99px;transition:width 1s cubic-bezier(.16,1,.3,1)}
-.sbar-fill.g{background:var(--green)}.sbar-fill.r{background:var(--red)}
-.sbar-fill.a{background:var(--amber)}.sbar-fill.b{background:var(--acc)}
-.sbar-val{font-family:var(--mono);font-size:11px;color:var(--t2);width:60px;flex-shrink:0;text-align:right}
+.sbar{display:flex;align-items:center;gap:12px}
+.sbl{font-size:12px;color:var(--t2);width:52px;flex-shrink:0}
+.sbt2{flex:1;height:7px;background:var(--bg3);border-radius:99px;overflow:hidden}
+.sbf{height:100%;border-radius:99px;transition:width 1s cubic-bezier(.16,1,.3,1)}
+.sbf.g{background:var(--gn)}.sbf.r{background:var(--rd)}.sbf.a{background:var(--am)}.sbf.b{background:var(--acc)}
+.sbv{font-family:var(--mono);font-size:11px;color:var(--t2);width:60px;flex-shrink:0;text-align:right}
 
 /* table */
 .tbl{width:100%;border-collapse:collapse}
-.tbl th{font-size:11px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--t3);text-align:left;padding:0 0 9px;border-bottom:1px solid var(--border)}
-.tbl td{padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--t2);vertical-align:middle}
+.tbl th{font-size:11px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--t3);text-align:left;padding:0 0 9px;border-bottom:1px solid var(--bd)}
+.tbl td{padding:8px 0;border-bottom:1px solid var(--bd);font-size:13px;color:var(--t2);vertical-align:middle}
 .tbl tr:last-child td{border-bottom:none}
 .tbl tr:hover td{color:var(--t1)}
+.tbl th:last-child,.tbl td:last-child{text-align:right}
 
 /* tags */
 .tag{display:inline-flex;padding:2px 7px;font-size:10px;font-weight:600;letter-spacing:.04em;border-radius:4px}
-.tag.crime{background:var(--red-d);color:var(--red)}
-.tag.trade{background:var(--blue-d);color:var(--blue)}
-.tag.casino{background:var(--amber-d);color:var(--amber)}
-.tag.mug{background:rgba(240,149,107,.13);color:var(--coral)}
-.tag.property{background:var(--green-d);color:var(--green)}
+.tag.crime{background:var(--rd-d);color:var(--rd)}
+.tag.trade{background:var(--bl-d);color:var(--bl)}
+.tag.casino{background:var(--am-d);color:var(--am)}
+.tag.mug{background:rgba(240,149,107,.13);color:var(--co)}
+.tag.prop{background:var(--gn-d);color:var(--gn)}
 .tag.bank{background:rgba(139,144,184,.1);color:var(--t2)}
+.tag.stock{background:var(--acc-d);color:var(--acc)}
 .tag.other{background:rgba(85,88,120,.15);color:var(--t3)}
-.pos{color:var(--green)!important}.neg{color:var(--red)!important}
+.pos{color:var(--gn)!important}.neg{color:var(--rd)!important}
 
 /* horiz bars */
 .hbars{display:flex;flex-direction:column;gap:10px}
-.hbar-row{display:flex;align-items:center;gap:12px}
-.hbar-lbl{font-size:12px;color:var(--t2);width:66px;flex-shrink:0;text-align:right}
-.hbar-track{flex:1;height:6px;background:var(--bg3);border-radius:99px;overflow:hidden}
-.hbar-fill{height:100%;border-radius:99px;transition:width 1s cubic-bezier(.16,1,.3,1)}
-.hbar-fill.g{background:var(--green)}.hbar-fill.r{background:var(--red)}
-.hbar-fill.a{background:var(--amber)}.hbar-fill.b{background:var(--blue)}
-.hbar-fill.c{background:var(--coral)}.hbar-fill.gr{background:var(--t3)}
-.hbar-val{font-family:var(--mono);font-size:11px;color:var(--t2);width:54px;flex-shrink:0}
+.hbr{display:flex;align-items:center;gap:12px}
+.hbl{font-size:12px;color:var(--t2);width:66px;flex-shrink:0;text-align:right}
+.hbt{flex:1;height:6px;background:var(--bg3);border-radius:99px;overflow:hidden}
+.hbf{height:100%;border-radius:99px;transition:width 1s cubic-bezier(.16,1,.3,1)}
+.hbf.g{background:var(--gn)}.hbf.r{background:var(--rd)}.hbf.a{background:var(--am)}
+.hbf.b{background:var(--bl)}.hbf.c{background:var(--co)}.hbf.gr{background:var(--t3)}.hbf.p{background:var(--acc)}
+.hbv{font-family:var(--mono);font-size:11px;color:var(--t2);width:54px;flex-shrink:0}
 
 /* stat rows */
 .srows{display:flex;flex-direction:column}
-.srow{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px}
-.srow:last-child{border-bottom:none}
+.sr{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--bd);font-size:13px}
+.sr:last-child{border-bottom:none}
 .sk{color:var(--t2)}.sv{color:var(--t1);font-weight:500}
-.sv.g{color:var(--green)}.sv.r{color:var(--red)}.sv.a{color:var(--amber)}
+.sv.g{color:var(--gn)}.sv.r{color:var(--rd)}.sv.a{color:var(--am)}
 
 /* donut */
-.donut-wrap{display:flex;align-items:center;gap:16px;padding:4px 0}
-.d-legend{flex:1;display:flex;flex-direction:column;gap:7px}
-.d-row{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--t2)}
-.d-sw{width:9px;height:9px;border-radius:2px;flex-shrink:0}
-.d-pct{margin-left:auto;color:var(--t1);font-weight:500}
+.dwrap{display:flex;align-items:center;gap:16px;padding:4px 0}
+.dleg{flex:1;display:flex;flex-direction:column;gap:7px}
+.drow{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--t2)}
+.dsw{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.dpct{margin-left:auto;color:var(--t1);font-weight:500}
 
 /* property cards */
-.prop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
-.prop-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px}
-.prop-card.rented{border-color:rgba(82,194,122,.25)}
-.prop-card.empty{border-color:rgba(240,112,112,.18)}
-.prop-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
-.prop-type{font-size:14px;font-weight:600;color:var(--t1);text-transform:capitalize}
-.prop-badge{font-size:10px;font-weight:600;letter-spacing:.04em;padding:2px 8px;border-radius:4px}
-.prop-badge.rented{background:var(--green-d);color:var(--green)}
-.prop-badge.vacant{background:var(--red-d);color:var(--red)}
-.prop-badge.occupied{background:var(--blue-d);color:var(--blue)}
-.prop-stat{font-size:12px;color:var(--t2);margin-bottom:4px;display:flex;justify-content:space-between}
-.prop-stat span{color:var(--t1);font-weight:500}
-.prop-income-bar{margin-top:10px}
-.prop-bar-track{height:4px;background:var(--bg4);border-radius:99px;overflow:hidden;margin-top:4px}
-.prop-bar-fill{height:100%;border-radius:99px;background:var(--green);transition:width 1s cubic-bezier(.16,1,.3,1)}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.pcard{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r);padding:14px 16px}
+.pcard.rented{border-color:rgba(82,194,122,.3)}
+.pcard.vacant{border-color:rgba(240,112,112,.2)}
+.ptop{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
+.ptyp{font-size:14px;font-weight:600;text-transform:capitalize}
+.pbadge{font-size:10px;font-weight:600;letter-spacing:.04em;padding:2px 8px;border-radius:4px}
+.pbadge.rented{background:var(--gn-d);color:var(--gn)}
+.pbadge.vacant{background:var(--rd-d);color:var(--rd)}
+.pbadge.occupied{background:var(--bl-d);color:var(--bl)}
+.pst{font-size:12px;color:var(--t2);margin-bottom:5px;display:flex;justify-content:space-between}
+.pst span{color:var(--t1);font-weight:500}
+.pst a{color:var(--acc);font-weight:500;text-decoration:none}.pst a:hover{text-decoration:underline}
+.pdiv{margin-top:10px;padding-top:10px;border-top:1px solid var(--bd)}
+.pbar{margin-top:8px}
+.pbtrack{height:4px;background:var(--bg4);border-radius:99px;overflow:hidden;margin-top:4px}
+.pbfill{height:100%;border-radius:99px;background:var(--gn);transition:width 1s cubic-bezier(.16,1,.3,1)}
 
-/* crimes grid */
-.crime-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
-.crime-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r2);padding:12px 14px}
-.crime-card-name{font-size:13px;font-weight:600;color:var(--t1);margin-bottom:7px;text-transform:capitalize}
-.crime-stat{font-size:12px;color:var(--t2);margin-bottom:3px}
-.crime-stat span{color:var(--t1)}
+/* crime cards */
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.ccard{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r2);padding:12px 14px}
+.ccn{font-size:13px;font-weight:600;text-transform:capitalize;margin-bottom:8px}
+.ccs{font-size:12px;color:var(--t2);margin-bottom:3px}
+.ccs span{color:var(--t1)}
+.cbar{height:4px;background:var(--bg4);border-radius:99px;overflow:hidden;margin-top:8px}
+.cbarfill{height:100%;border-radius:99px;transition:width 1s cubic-bezier(.16,1,.3,1)}
 
-/* empty */
+/* notice box */
+.notice{padding:12px 16px;background:var(--am-d);border:1px solid rgba(240,185,107,.25);border-radius:var(--r2);font-size:12px;color:var(--am);margin-bottom:14px;line-height:1.6}
+
 .empty{text-align:center;padding:28px 20px;font-size:12px;color:var(--t3)}
 
-/* animations */
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.fu{animation:fadeUp .4s ease both}
 </style>
 </head>
 <body>
 
 <!-- LOGIN -->
-<div class="view active" id="view-login">
-  <div class="login-box">
-    <div class="login-eyebrow">Finance Tracker</div>
-    <div class="login-title">Torn<span>Fin</span></div>
-    <div class="login-sub">Enter your API key to load your financial data</div>
-    <label class="form-lbl" for="inp-key">Torn API Key</label>
-    <input class="form-inp" id="inp-key" type="password" placeholder="Paste your Full Access key…" autocomplete="off" spellcheck="false">
-    <div class="form-hint">Get your key at <a href="https://www.torn.com/preferences.php#tab=api" target="_blank">Preferences → API</a>. Full Access key recommended.</div>
-    <div class="login-err" id="login-err">—</div>
-    <button class="btn-go" id="btn-go" onclick="doLogin()">Connect →</button>
-    <div class="tos-box">
-      <div class="tos-ttl">Privacy &amp; Torn ToS</div>
-      <table class="tos-tbl">
+<div class="view active" id="vl">
+  <div class="lbox">
+    <div class="ley">Finance Tracker</div>
+    <div class="ltit">Torn<span>Fin</span></div>
+    <div class="lsub">Connect your API key to load your data</div>
+    <label class="flbl" for="ikey">Torn API Key</label>
+    <input class="finp" id="ikey" type="password" placeholder="Paste Full Access key here…" autocomplete="off" spellcheck="false">
+    <div class="fhint">Get your key at <a href="https://www.torn.com/preferences.php#tab=api" target="_blank">Preferences → API</a>. Full Access recommended.</div>
+    <div class="lerr" id="lerr">—</div>
+    <button class="bgo" id="bgo" onclick="doLogin()">Connect →</button>
+    <div class="tos">
+      <div class="tost">Privacy &amp; Torn ToS</div>
+      <table class="tostbl">
         <tr><td>Key stored server-side?</td><td class="ok">No — localStorage only</td></tr>
         <tr><td>Sent to third parties?</td><td class="ok">No — direct to torn.com</td></tr>
         <tr><td>Shared with others?</td><td class="ok">Never</td></tr>
@@ -241,285 +225,287 @@ html,body{height:100%;background:var(--bg);color:var(--t1);font-family:var(--san
 </div>
 
 <!-- LOADING -->
-<div class="view" id="view-loading" style="flex-direction:column;align-items:center;justify-content:center;height:100vh;width:100vw;gap:18px">
-  <div class="ld-logo">Torn<span>Fin</span></div>
-  <div class="ld-track"><div class="ld-fill" id="ld-bar"></div></div>
-  <div class="ld-txt" id="ld-txt">Connecting…</div>
+<div class="view" id="vld" style="flex-direction:column;align-items:center;justify-content:center;height:100vh;width:100vw;gap:18px">
+  <div class="ldl">Torn<span>Fin</span></div>
+  <div class="ldt"><div class="ldf" id="lbar"></div></div>
+  <div class="ldtxt" id="ltxt">Connecting…</div>
 </div>
 
 <!-- DASHBOARD -->
-<div class="view" id="view-dashboard">
-  <!-- SIDEBAR -->
+<div class="view" id="vd">
   <aside class="sb">
-    <div class="sb-logo">
-      <div class="sb-eye">Finance Tracker</div>
-      <div class="sb-name">Torn<span>Fin</span></div>
+    <div class="sblog"><div class="sby">Finance Tracker</div><div class="sbt">Torn<span>Fin</span></div></div>
+    <div class="sbp">
+      <div class="sbpn" id="sbn">—</div>
+      <div class="sbm"><span id="sblv">Lvl —</span><span class="sbrank" id="sbrk">—</span></div>
+      <div class="sbm" style="margin-top:3px"><span id="sbfac" style="color:var(--t3)">—</span></div>
     </div>
-    <div class="sb-player">
-      <div class="sb-pname" id="sb-name">—</div>
-      <div class="sb-meta"><span id="sb-lvl">Lvl —</span><span class="sb-rank" id="sb-rank">—</span></div>
-      <div class="sb-meta" style="margin-top:3px"><span id="sb-faction" style="color:var(--t3)">—</span></div>
-    </div>
-    <nav class="sb-nav">
-      <div class="nav-sec">Finance</div>
-      <div class="nav-i on" onclick="go('overview',this)">
-        <svg class="nav-ic" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/></svg>
+    <nav class="sbnav">
+      <div class="nsec">Finance</div>
+      <div class="ni on" onclick="go('overview',this)">
+        <svg class="nic" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/></svg>
         Overview
       </div>
-      <div class="nav-i" onclick="go('transactions',this)">
-        <svg class="nav-ic" viewBox="0 0 16 16" fill="none"><line x1="2" y1="4" x2="14" y2="4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="2" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="2" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      <div class="ni" onclick="go('transactions',this)">
+        <svg class="nic" viewBox="0 0 16 16" fill="none"><line x1="2" y1="4" x2="14" y2="4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="2" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="2" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
         Transactions
       </div>
-      <div class="nav-i" onclick="go('crimes',this)">
-        <svg class="nav-ic" viewBox="0 0 16 16" fill="none"><path d="M8 1.5 L14 5 L14 11 L8 14.5 L2 11 L2 5 Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><line x1="8" y1="5" x2="8" y2="9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="11" r=".8" fill="currentColor"/></svg>
+      <div class="ni" onclick="go('crimes',this)">
+        <svg class="nic" viewBox="0 0 16 16" fill="none"><path d="M8 1.5L14 5v6L8 14.5 2 11V5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><line x1="8" y1="5" x2="8" y2="9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="11" r=".8" fill="currentColor"/></svg>
         Crimes
       </div>
-      <div class="nav-i" onclick="go('properties',this)">
-        <svg class="nav-ic" viewBox="0 0 16 16" fill="none"><path d="M1 15 L1 7 L8 1 L15 7 L15 15" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><rect x="5.5" y="10" width="5" height="5" stroke="currentColor" stroke-width="1.3"/></svg>
+      <div class="ni" onclick="go('properties',this)">
+        <svg class="nic" viewBox="0 0 16 16" fill="none"><path d="M1 15V7L8 1l7 6v8" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><rect x="5.5" y="10" width="5" height="5" stroke="currentColor" stroke-width="1.3"/></svg>
         Properties
       </div>
     </nav>
-    <div class="sb-ft">
-      <div class="api-dot-row"><div class="dot" id="api-dot"></div><span id="api-txt">Connected</span></div>
-      <button class="btn-out" onclick="signOut()">Sign out &amp; clear key</button>
+    <div class="sbft">
+      <div class="dot-row"><div class="dot" id="adot"></div><span id="atxt">Connected</span></div>
+      <button class="bout" onclick="signOut()">Sign out &amp; clear key</button>
     </div>
   </aside>
 
-  <!-- MAIN -->
   <div class="main">
     <div class="topbar">
-      <div class="topbar-title" id="pg-title">Overview</div>
-      <div class="topbar-time" id="clock">—</div>
-      <button class="btn-sm" onclick="refresh()">↻ Refresh</button>
+      <div class="tbt" id="pgt">Overview</div>
+      <div class="tbc" id="clk">—</div>
+      <button class="bsm" onclick="refresh()">↻ Refresh</button>
     </div>
-    <div class="content">
+    <div class="cnt">
 
       <!-- OVERVIEW -->
       <div class="page active" id="pg-overview">
-        <div class="mcards">
-          <div class="mc ca fu"><div class="mlbl">Net Worth</div><div class="mval a" id="ov-nw">—</div><div class="msub" id="ov-nw-s">—</div></div>
-          <div class="mc cg fu"><div class="mlbl">Cash on Hand</div><div class="mval g" id="ov-cash">—</div><div class="msub">Wallet</div></div>
-          <div class="mc cb fu"><div class="mlbl">Bank Balance</div><div class="mval b" id="ov-bank">—</div><div class="msub" id="ov-bank-s">—</div></div>
-          <div class="mc cr fu"><div class="mlbl">Points</div><div class="mval" id="ov-pts">—</div><div class="msub">Points balance</div></div>
+        <div class="mc4">
+          <div class="mc ca"><div class="mlbl">Net Worth</div><div class="mv a" id="ov-nw">—</div><div class="ms">All assets</div></div>
+          <div class="mc cg"><div class="mlbl">Cash on Hand</div><div class="mv g" id="ov-cash">—</div><div class="ms">Wallet</div></div>
+          <div class="mc cb"><div class="mlbl">Bank Balance</div><div class="mv b" id="ov-bank">—</div><div class="ms" id="ov-bs">—</div></div>
+          <div class="mc cr"><div class="mlbl">Points</div><div class="mv" id="ov-pts">—</div><div class="ms">Points balance</div></div>
         </div>
         <div class="g3">
-          <div class="panel">
-            <div class="ptitle">Income by source — recent log</div>
-            <div class="hbars" id="ov-income"><div class="empty">Loading…</div></div>
-          </div>
-          <div class="panel">
-            <div class="ptitle">Status bars</div>
-            <div class="sbars" id="ov-bars"><div class="empty">Loading…</div></div>
-          </div>
+          <div class="pnl"><div class="pt">Income by source</div><div class="hbars" id="ov-inc"><div class="empty">Loading…</div></div></div>
+          <div class="pnl"><div class="pt">Status bars</div><div class="sbars" id="ov-bars"><div class="empty">Loading…</div></div></div>
         </div>
         <div class="g2">
-          <div class="panel">
-            <div class="ptitle">Recent transactions<span class="pact" onclick="go('transactions',document.querySelectorAll('.nav-i')[1])">View all →</span></div>
-            <table class="tbl"><thead><tr><th>Type</th><th>Description</th><th>Time</th><th style="text-align:right">Amount</th></tr></thead>
+          <div class="pnl">
+            <div class="pt">Recent transactions<span class="pa" onclick="go('transactions',document.querySelectorAll('.ni')[1])">View all →</span></div>
+            <table class="tbl"><thead><tr><th>Type</th><th>Description</th><th>Time</th><th>Amount</th></tr></thead>
             <tbody id="ov-tx"><tr><td colspan="4"><div class="empty">Loading…</div></td></tr></tbody></table>
           </div>
           <div style="display:flex;flex-direction:column;gap:12px">
-            <div class="panel">
-              <div class="ptitle">Wealth breakdown</div>
-              <div class="donut-wrap"><svg id="d-svg" width="90" height="90" viewBox="0 0 90 90" style="flex-shrink:0"></svg><div class="d-legend" id="d-leg"><div class="empty" style="padding:0">Loading…</div></div></div>
+            <div class="pnl"><div class="pt">Wealth breakdown</div>
+              <div class="dwrap"><svg id="dsvg" width="90" height="90" viewBox="0 0 90 90" style="flex-shrink:0"></svg><div class="dleg" id="dleg"><div class="empty" style="padding:0">Loading…</div></div></div>
             </div>
-            <div class="panel">
-              <div class="ptitle">Crime summary</div>
-              <div class="srows" id="ov-crimes"><div class="empty" style="padding:12px 0">Loading…</div></div>
-            </div>
+            <div class="pnl"><div class="pt">Crime summary</div><div class="srows" id="ov-cr"><div class="empty" style="padding:12px 0">Loading…</div></div></div>
           </div>
         </div>
       </div>
 
       <!-- TRANSACTIONS -->
       <div class="page" id="pg-transactions">
-        <div class="panel">
-          <div class="ptitle">Transaction log — last 100 entries</div>
-          <table class="tbl"><thead><tr><th>Type</th><th>Description</th><th>Date / Time</th><th style="text-align:right">Amount</th></tr></thead>
+        <div class="pnl">
+          <div class="pt">Money transactions — last 100</div>
+          <table class="tbl"><thead><tr><th>Type</th><th>Description</th><th>Date / Time</th><th>Amount</th></tr></thead>
           <tbody id="tx-body"><tr><td colspan="4"><div class="empty">Loading…</div></td></tr></tbody></table>
         </div>
       </div>
 
       <!-- CRIMES -->
       <div class="page" id="pg-crimes">
-        <div class="mcards">
-          <div class="mc cb"><div class="mlbl">Total attempts</div><div class="mval b" id="cr-tot">—</div></div>
-          <div class="mc cg"><div class="mlbl">Successful</div><div class="mval g" id="cr-suc">—</div></div>
-          <div class="mc ca"><div class="mlbl">Success rate</div><div class="mval a" id="cr-rate">—</div></div>
-          <div class="mc cr"><div class="mlbl">Failed</div><div class="mval r" id="cr-fail">—</div></div>
+        <div class="mc4">
+          <div class="mc cb"><div class="mlbl">Total crimes</div><div class="mv b" id="cr-tot">—</div></div>
+          <div class="mc cg"><div class="mlbl">Successful</div><div class="mv g" id="cr-suc">—</div></div>
+          <div class="mc ca"><div class="mlbl">Success rate</div><div class="mv a" id="cr-rt">—</div></div>
+          <div class="mc cr"><div class="mlbl">Jailed / Failed</div><div class="mv r" id="cr-jl">—</div></div>
         </div>
-        <div class="panel">
-          <div class="ptitle">Breakdown by crime type</div>
-          <div class="crime-grid" id="cr-grid"><div class="empty" style="grid-column:1/-1">Loading…</div></div>
+        <div class="pnl">
+          <div class="pt">Criminal record breakdown</div>
+          <div id="cr-notice"></div>
+          <div class="cgrid" id="cr-grid"><div class="empty" style="grid-column:1/-1">Loading…</div></div>
         </div>
       </div>
 
       <!-- PROPERTIES -->
       <div class="page" id="pg-properties">
-        <div class="mcards" id="prop-metrics">
-          <div class="mc cg"><div class="mlbl">Total properties</div><div class="mval g" id="pr-total">—</div></div>
-          <div class="mc ca"><div class="mlbl">Currently rented</div><div class="mval a" id="pr-rented">—</div></div>
-          <div class="mc cb"><div class="mlbl">Daily rental income</div><div class="mval b" id="pr-daily">—</div></div>
-          <div class="mc cr"><div class="mlbl">Daily upkeep cost</div><div class="mval r" id="pr-upkeep">—</div></div>
+        <div class="mc4">
+          <div class="mc cg"><div class="mlbl">Total properties</div><div class="mv g" id="pr-tot">—</div></div>
+          <div class="mc ca"><div class="mlbl">Rented out</div><div class="mv a" id="pr-rnt">—</div></div>
+          <div class="mc cb"><div class="mlbl">Daily rental income</div><div class="mv b" id="pr-inc">—</div></div>
+          <div class="mc cr"><div class="mlbl">Daily upkeep (yours)</div><div class="mv r" id="pr-upk">—</div></div>
         </div>
-        <div class="panel">
-          <div class="ptitle">Your properties</div>
-          <div class="prop-grid" id="pr-grid"><div class="empty" style="grid-column:1/-1">Loading property data…</div></div>
+        <div class="pnl">
+          <div class="pt">Your properties <span class="pa" id="pr-loading" style="color:var(--am)"></span></div>
+          <div class="pgrid" id="pr-grid"><div class="empty" style="grid-column:1/-1">Loading property data…</div></div>
         </div>
       </div>
 
-    </div><!-- /content -->
-  </div><!-- /main -->
-</div><!-- /dashboard -->
+    </div>
+  </div>
+</div>
 
 <script>
 'use strict';
-const BASE='https://api.torn.com';
-let key='',pData={},mData={},cData={},logData=[],propData={},barsData={};
-let timer=null;
+const B='https://api.torn.com';
+let K='',pD={},mD={},crD={},lgD=[],prD={},bD={};
+let timer=null,renterNames={};
 
-// ── UTILS ──
+// utils
 const fmt=n=>{if(n==null||isNaN(n))return'—';const a=Math.abs(n);if(a>=1e9)return'$'+(n/1e9).toFixed(2)+'B';if(a>=1e6)return'$'+(n/1e6).toFixed(2)+'M';if(a>=1e3)return'$'+(n/1e3).toFixed(1)+'K';return'$'+n.toLocaleString()};
-const fmtN=n=>n?Number(n).toLocaleString():'—';
+const fmtN=n=>n?Number(n).toLocaleString():'0';
 const ago=ts=>{const d=Math.floor(Date.now()/1000)-ts;if(d<60)return d+'s ago';if(d<3600)return Math.floor(d/60)+'m ago';if(d<86400)return Math.floor(d/3600)+'h ago';return Math.floor(d/86400)+'d ago'};
-const dt=ts=>new Date(ts*1000).toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
-const pct=(a,b)=>b?Math.round(a/b*100):0;
+const dtfmt=ts=>new Date(ts*1000).toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+const pct=(a,b)=>b?Math.min(100,Math.round(a/b*100)):0;
 
-async function api(section,sel,extra=''){
-  const r=await fetch(`${BASE}/${section}/?selections=${sel}&key=${key}${extra}`);
+async function api(sec,sel,extra=''){
+  const r=await fetch(`${B}/${sec}/?selections=${sel}&key=${K}${extra}`);
   if(!r.ok)throw new Error('HTTP '+r.status);
   const d=await r.json();
-  if(d.error)throw new Error(d.error.error||'API error '+d.error.code);
+  if(d.error)throw new Error(d.error.error||'API err '+d.error.code);
   return d;
 }
 
-// ── VIEWS ──
-const showView=id=>{document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active')};
+async function apiUser(id){
+  const r=await fetch(`${B}/user/${id}?selections=basic&key=${K}`);
+  if(!r.ok)return null;
+  const d=await r.json();
+  return d.error?null:d;
+}
+
+const showV=id=>{document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active')};
 
 function go(id,el){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('pg-'+id).classList.add('active');
-  document.querySelectorAll('.nav-i').forEach(n=>n.classList.remove('on'));
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));
   if(el)el.classList.add('on');
   const t={overview:'Overview',transactions:'Transactions',crimes:'Crimes',properties:'Properties'};
-  document.getElementById('pg-title').textContent=t[id]||id;
+  document.getElementById('pgt').textContent=t[id]||id;
 }
 
-// ── CLOCK ──
-function startClock(){
-  const tick=()=>{document.getElementById('clock').textContent=new Date().toUTCString().slice(5,25)+' TCT'};
-  tick();setInterval(tick,1000);
-}
+function startClock(){const t=()=>{document.getElementById('clk').textContent=new Date().toUTCString().slice(5,25)+' TCT'};t();setInterval(t,1000)}
 
-// ── LOGIN ──
 async function doLogin(){
-  const k=document.getElementById('inp-key').value.trim();
+  const k=document.getElementById('ikey').value.trim();
   if(k.length<10){showErr('Please enter a valid API key.');return}
-  document.getElementById('btn-go').disabled=true;
-  document.getElementById('login-err').style.display='none';
-  key=k;localStorage.setItem('tfkey',k);
-  showView('view-loading');
-  await loadAll();
+  document.getElementById('bgo').disabled=true;
+  document.getElementById('lerr').style.display='none';
+  K=k;localStorage.setItem('tfk',k);
+  showV('vld');await loadAll();
 }
 
-function showErr(m){
-  const e=document.getElementById('login-err');
-  e.textContent=m;e.style.display='block';
-  document.getElementById('btn-go').disabled=false;
-}
+function showErr(m){const e=document.getElementById('lerr');e.textContent=m;e.style.display='block';document.getElementById('bgo').disabled=false}
 
 function signOut(){
-  localStorage.removeItem('tfkey');
-  key='';pData={};mData={};cData={};logData=[];propData={};barsData={};
+  localStorage.removeItem('tfk');K='';pD={};mD={};crD={};lgD=[];prD={};bD={};renterNames={};
   if(timer)clearInterval(timer);
-  document.getElementById('inp-key').value='';
-  document.getElementById('btn-go').disabled=false;
-  document.getElementById('login-err').style.display='none';
-  showView('view-login');
+  document.getElementById('ikey').value='';
+  document.getElementById('bgo').disabled=false;
+  document.getElementById('lerr').style.display='none';
+  showV('vl');
 }
 
-function setLD(txt,p){document.getElementById('ld-txt').textContent=txt;document.getElementById('ld-bar').style.width=p+'%'}
+function ld(t,p){document.getElementById('ltxt').textContent=t;document.getElementById('lbar').style.width=p+'%'}
 
-// ── LOAD ALL ──
 async function loadAll(){
   try{
-    setLD('Fetching profile…',15);
-    pData=await api('user','basic,profile');
+    ld('Fetching profile…',10);
+    pD=await api('user','basic,profile');
 
-    setLD('Loading bars…',30);
-    barsData=await api('user','bars');
+    ld('Loading status bars…',22);
+    bD=await api('user','bars');
 
-    setLD('Loading money & net worth…',45);
-    mData=await api('user','money,networth');
+    ld('Loading money & net worth…',35);
+    mD=await api('user','money,networth');
 
-    setLD('Loading crimes…',60);
-    cData=await api('user','crimes');
+    ld('Loading criminal record…',50);
+    // Use criminalrecord for both crimes 1.0 and 2.0 players
+    // Also try crimes selection but handle error 19 gracefully
+    try{ crD=await api('user','criminalrecord'); }
+    catch(e){ crD={}; }
 
-    setLD('Loading transaction log…',75);
-    // Fetch log with a broad time window (last 90 days)
+    ld('Loading transaction log…',65);
+    // Fetch last 100 money-related log entries by fetching without category filter
+    // The log returns mixed entries — we filter by money field client-side
     const now=Math.floor(Date.now()/1000);
-    const from=now-(90*86400);
-    const raw=await api('user','log',`&from=${from}&to=${now}`);
-    logData=raw.log?Object.values(raw.log):[];
+    const from=now-(120*86400); // last 120 days
+    try{
+      const raw=await api('user','log',`&from=${from}&to=${now}`);
+      lgD=raw.log?Object.values(raw.log):[];
+    }catch(e){lgD=[]}
 
-    setLD('Loading properties…',90);
-    const praw=await api('user','properties');
-    propData=praw.properties||{};
+    ld('Loading properties…',82);
+    try{
+      const pr=await api('user','properties');
+      prD=pr.properties||{};
+    }catch(e){prD={}}
 
-    setLD('Building dashboard…',97);
-    await new Promise(r=>setTimeout(r,250));
-    populate();
-    setLD('Done',100);
+    ld('Building dashboard…',96);
     await new Promise(r=>setTimeout(r,200));
-    showView('view-dashboard');
-    startClock();
+    populate();
+    ld('Done',100);
+    await new Promise(r=>setTimeout(r,150));
+    showV('vd');startClock();
     timer=setInterval(refresh,180000);
+
+    // After showing dashboard, fetch renter names in background
+    fetchRenterNames();
   }catch(err){
     console.error(err);
-    localStorage.removeItem('tfkey');key='';
-    showView('view-login');
-    showErr('Failed: '+err.message);
+    localStorage.removeItem('tfk');K='';
+    showV('vl');showErr('Failed: '+err.message);
   }
 }
 
+async function fetchRenterNames(){
+  const ids=[];
+  Object.values(prD).forEach(p=>{
+    const uid=p.rented?.user_id;
+    if(uid&&!renterNames[uid])ids.push(uid);
+  });
+  if(!ids.length)return;
+  // fetch up to 5 renter names concurrently
+  const lbl=document.getElementById('pr-loading');
+  if(lbl)lbl.textContent='(loading renter names…)';
+  const batch=ids.slice(0,10);
+  await Promise.all(batch.map(async id=>{
+    const d=await apiUser(id);
+    if(d?.name)renterNames[id]=d.name;
+  }));
+  if(lbl)lbl.textContent='';
+  // re-render properties with names
+  renderProperties();
+}
+
 async function refresh(){
-  const dot=document.getElementById('api-dot'),txt=document.getElementById('api-txt');
-  dot.className='dot loading';txt.textContent='Refreshing…';
+  const dot=document.getElementById('adot'),txt=document.getElementById('atxt');
+  dot.className='dot spin';txt.textContent='Refreshing…';
   try{
-    const now=Math.floor(Date.now()/1000),from=now-(90*86400);
-    [mData,barsData,cData,propData]=await Promise.all([
-      api('user','money,networth'),
-      api('user','bars'),
-      api('user','crimes'),
-      api('user','properties').then(r=>r.properties||{})
-    ]);
-    const raw=await api('user','log',`&from=${from}&to=${now}`);
-    logData=raw.log?Object.values(raw.log):[];
+    const now=Math.floor(Date.now()/1000),from=now-(120*86400);
+    [mD,bD]=await Promise.all([api('user','money,networth'),api('user','bars')]);
+    try{crD=await api('user','criminalrecord')}catch(e){}
+    try{const r=await api('user','log',`&from=${from}&to=${now}`);lgD=r.log?Object.values(r.log):[]}catch(e){}
+    try{const p=await api('user','properties');prD=p.properties||{}}catch(e){}
     populate();
     dot.className='dot';txt.textContent='Connected';
+    fetchRenterNames();
   }catch(e){dot.className='dot err';txt.textContent='Error — retry'}
 }
 
-// ── POPULATE ──
-function populate(){popSidebar();popOverview();popTransactions();popCrimes();popProperties()}
+function populate(){popSB();popOverview();popTransactions();popCrimes();renderProperties()}
 
-function popSidebar(){
-  document.getElementById('sb-name').textContent=pData.name||'—';
-  document.getElementById('sb-lvl').textContent='Lvl '+(pData.level||'—');
-  document.getElementById('sb-rank').textContent=pData.rank||'—';
-  document.getElementById('sb-faction').textContent=pData.faction?.faction_name||'No Faction';
+function popSB(){
+  document.getElementById('sbn').textContent=pD.name||'—';
+  document.getElementById('sblv').textContent='Lvl '+(pD.level||'—');
+  document.getElementById('sbrk').textContent=pD.rank||'—';
+  document.getElementById('sbfac').textContent=pD.faction?.faction_name||'No Faction';
 }
 
 function popOverview(){
-  // metrics
-  const nw=mData.networth?.total||0;
-  document.getElementById('ov-nw').textContent=fmt(nw);
-  document.getElementById('ov-nw-s').textContent='All assets combined';
-  document.getElementById('ov-cash').textContent=fmt(mData.money_onhand||0);
-  document.getElementById('ov-bank').textContent=fmt(mData.money_bank||0);
-  document.getElementById('ov-bank-s').textContent='Bank savings';
-  document.getElementById('ov-pts').textContent=fmtN(mData.points||0)+' pts';
-  buildDonut(mData.networth||{});
+  document.getElementById('ov-nw').textContent=fmt(mD.networth?.total||0);
+  document.getElementById('ov-cash').textContent=fmt(mD.money_onhand||0);
+  document.getElementById('ov-bank').textContent=fmt(mD.money_bank||0);
+  document.getElementById('ov-bs').textContent='Invested: '+fmt(mD.cayman_bank||0);
+  document.getElementById('ov-pts').textContent=fmtN(mD.points||0)+' pts';
+  buildDonut(mD.networth||{});
   buildBars();
   buildIncome();
   buildRecentTx(8);
@@ -527,205 +513,244 @@ function popOverview(){
 }
 
 function buildBars(){
-  // bars come from the 'bars' selection — separate from profile
-  const b=barsData;
+  const b=bD;
   const bars=[
-    {lbl:'Life',  cur:b.life?.current||0,   max:b.life?.maximum||100,   cl:'r'},
-    {lbl:'Energy',cur:b.energy?.current||0, max:b.energy?.maximum||100, cl:'g'},
-    {lbl:'Nerve', cur:b.nerve?.current||0,  max:b.nerve?.maximum||100,  cl:'a'},
-    {lbl:'Happy', cur:b.happy?.current||0,  max:b.happy?.maximum||100,  cl:'b'},
+    {l:'Life',  c:b.life?.current||0,  m:b.life?.maximum||100,  cl:'r'},
+    {l:'Energy',c:b.energy?.current||0,m:b.energy?.maximum||100,cl:'g'},
+    {l:'Nerve', c:b.nerve?.current||0, m:b.nerve?.maximum||100, cl:'a'},
+    {l:'Happy', c:b.happy?.current||0, m:b.happy?.maximum||100, cl:'b'},
   ];
-  const h=bars.map(bar=>{
-    const p=pct(bar.cur,bar.max);
-    return`<div class="sbar-row">
-      <div class="sbar-lbl">${bar.lbl}</div>
-      <div class="sbar-track"><div class="sbar-fill ${bar.cl}" style="width:${p}%"></div></div>
-      <div class="sbar-val">${bar.cur} / ${bar.max}</div>
-    </div>`;
-  }).join('');
-  document.getElementById('ov-bars').innerHTML=h;
+  document.getElementById('ov-bars').innerHTML=bars.map(b=>`
+    <div class="sbar">
+      <div class="sbl">${b.l}</div>
+      <div class="sbt2"><div class="sbf ${b.cl}" style="width:${pct(b.c,b.m)}%"></div></div>
+      <div class="sbv">${b.c} / ${b.m}</div>
+    </div>`).join('');
 }
 
 function buildDonut(nw){
   const segs=[
-    {lbl:'Cash',   val:(nw.wallet||0)+(nw.bank||0), col:'#6aaef5'},
-    {lbl:'Props',  val:nw.properties||0,            col:'#f0b96b'},
-    {lbl:'Stocks', val:nw.stockmarket||0,           col:'#52c27a'},
-    {lbl:'Items',  val:nw.items||0,                 col:'#f07070'},
-    {lbl:'Other',  val:(nw.displaycase||0)+(nw.bazaar||0)+(nw.piggybank||0), col:'#555878'},
-  ].filter(s=>s.val>0);
-  const total=segs.reduce((s,x)=>s+x.val,0);
-  if(!total)return;
-  const svg=document.getElementById('d-svg'),leg=document.getElementById('d-leg');
+    {l:'Cash',   v:(nw.wallet||0)+(nw.bank||0),col:'#6aaef5'},
+    {l:'Props',  v:nw.properties||0,           col:'#f0b96b'},
+    {l:'Stocks', v:nw.stockmarket||0,          col:'#52c27a'},
+    {l:'Items',  v:nw.items||0,                col:'#f07070'},
+    {l:'Other',  v:(nw.displaycase||0)+(nw.bazaar||0)+(nw.piggybank||0),col:'#555878'},
+  ].filter(s=>s.v>0);
+  const tot=segs.reduce((s,x)=>s+x.v,0);if(!tot)return;
+  const svg=document.getElementById('dsvg'),leg=document.getElementById('dleg');
   const cx=45,cy=45,r=32,sw=12,circ=2*Math.PI*r;
-  let html='',off=0;
-  segs.forEach(s=>{
-    const d=s.val/total*circ,g=circ-d;
-    html+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${s.col}" stroke-width="${sw}"
-      stroke-dasharray="${d.toFixed(2)} ${g.toFixed(2)}"
-      stroke-dashoffset="${(-off).toFixed(2)}"
-      transform="rotate(-90 ${cx} ${cy})"/>`;
-    off+=d;
-  });
-  html+=`<text x="${cx}" y="${cy-3}" text-anchor="middle" font-family="'DM Mono'" font-size="9" fill="#dde0f5">${fmt(total)}</text>
-  <text x="${cx}" y="${cy+9}" text-anchor="middle" font-family="'DM Mono'" font-size="7" fill="#555878">NET WORTH</text>`;
-  svg.innerHTML=html;
-  leg.innerHTML=segs.map(s=>`<div class="d-row"><div class="d-sw" style="background:${s.col}"></div>${s.lbl}<span class="d-pct">${Math.round(s.val/total*100)}%</span></div>`).join('');
+  let h='',off=0;
+  segs.forEach(s=>{const d=s.v/tot*circ,g=circ-d;h+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${s.col}" stroke-width="${sw}" stroke-dasharray="${d.toFixed(2)} ${g.toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}" transform="rotate(-90 ${cx} ${cy})"/>`;off+=d});
+  h+=`<text x="${cx}" y="${cy-3}" text-anchor="middle" font-family="'DM Mono'" font-size="9" fill="#dde0f5">${fmt(tot)}</text>
+      <text x="${cx}" y="${cy+9}" text-anchor="middle" font-family="'DM Mono'" font-size="7" fill="#555878">NET WORTH</text>`;
+  svg.innerHTML=h;
+  leg.innerHTML=segs.map(s=>`<div class="drow"><div class="dsw" style="background:${s.col}"></div>${s.l}<span class="dpct">${Math.round(s.v/tot*100)}%</span></div>`).join('');
 }
 
+// Transaction log categorisation — using title keywords + category field
 function catLog(e){
   const t=(e.title||'').toLowerCase(),c=(e.category||'').toLowerCase();
-  if(c==='crime'||/crime|theft|shoplifting|assault|robbery/.test(t))return'crime';
-  if(c==='casino'||/casino|slot|blackjack|poker|roulette|craps/.test(t))return'casino';
-  if(c==='trade'||/trade|bazaar|sold|bought|item market|auction/.test(t))return'trade';
+  if(c==='crime'||/\bcrime\b|theft|shoplifting|burglary|pickpocket|search for cash|hustling|graffiti|card skim|cracking|forgery|scam/.test(t))return'crime';
+  if(c==='casino'||/casino|slot|blackjack|poker|roulette|craps|wheel of fortune/.test(t))return'casino';
+  if(c==='trade'||/bazaar|item market|sold.*item|bought.*item|trade/.test(t))return'trade';
   if(/attack|mugg|hospital/.test(t))return'mug';
-  if(/bank|deposit|withdraw|investment|interest/.test(t))return'bank';
-  if(/property|rental|rent/.test(t))return'property';
+  if(/bank|deposit|withdraw|investment|interest|cayman/.test(t))return'bank';
+  if(/rent|property|upkeep/.test(t))return'prop';
+  if(/stock|dividend|share/.test(t))return'stock';
   return'other';
 }
 
+const catColor={crime:'r',casino:'a',trade:'b',mug:'c',bank:'gr',prop:'g',stock:'p',other:'gr'};
+
 function buildIncome(){
-  const tot={Crime:0,Casino:0,Trading:0,Mugging:0,Property:0,Bank:0,Other:0};
-  const cm={Crime:'r',Casino:'a',Trading:'b',Mugging:'c',Property:'g',Bank:'gr',Other:'gr'};
-  logData.forEach(e=>{
+  const tot={Crime:0,Casino:0,Trading:0,Mugging:0,Bank:0,Property:0,Stocks:0,Other:0};
+  const cm={Crime:'r',Casino:'a',Trading:'b',Mugging:'c',Bank:'gr',Property:'g',Stocks:'p',Other:'gr'};
+  lgD.forEach(e=>{
     const a=e.money||0;if(a<=0)return;
-    const cat=catLog(e);
-    if(cat==='crime')tot.Crime+=a;
-    else if(cat==='casino')tot.Casino+=a;
-    else if(cat==='trade')tot.Trading+=a;
-    else if(cat==='mug')tot.Mugging+=a;
-    else if(cat==='property')tot.Property+=a;
-    else if(cat==='bank')tot.Bank+=a;
+    const c=catLog(e);
+    if(c==='crime')tot.Crime+=a;
+    else if(c==='casino')tot.Casino+=a;
+    else if(c==='trade')tot.Trading+=a;
+    else if(c==='mug')tot.Mugging+=a;
+    else if(c==='bank')tot.Bank+=a;
+    else if(c==='prop')tot.Property+=a;
+    else if(c==='stock')tot.Stocks+=a;
     else tot.Other+=a;
   });
   const ents=Object.entries(tot).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]);
   const mx=ents[0]?.[1]||1;
-  document.getElementById('ov-income').innerHTML=ents.length
-    ?ents.map(([l,v])=>`<div class="hbar-row"><div class="hbar-lbl">${l}</div><div class="hbar-track"><div class="hbar-fill ${cm[l]}" style="width:${Math.round(v/mx*100)}%"></div></div><div class="hbar-val">${fmt(v)}</div></div>`).join('')
-    :'<div class="empty">No income found in log.</div>';
+  document.getElementById('ov-inc').innerHTML=ents.length
+    ?ents.map(([l,v])=>`<div class="hbr"><div class="hbl">${l}</div><div class="hbt"><div class="hbf ${cm[l]}" style="width:${Math.round(v/mx*100)}%"></div></div><div class="hbv">${fmt(v)}</div></div>`).join('')
+    :'<div class="empty">No income found. Log may be empty for this period.</div>';
 }
 
-function buildRecentTx(limit){
-  const rows=[...logData].filter(e=>e.money).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)).slice(0,limit);
+function buildRecentTx(lim){
+  const rows=[...lgD].filter(e=>e.money).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)).slice(0,lim);
   document.getElementById('ov-tx').innerHTML=rows.length
-    ?rows.map(e=>{const cat=catLog(e),a=e.money||0,sg=a>=0?'+':'';
-      return`<tr><td><span class="tag ${cat}">${cat.toUpperCase()}</span></td><td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.title||'—'}</td><td>${ago(e.timestamp)}</td><td style="text-align:right" class="${a>=0?'pos':'neg'}">${sg}${fmt(Math.abs(a))}</td></tr>`;}).join('')
-    :'<tr><td colspan="4"><div class="empty">No transactions found.</div></td></tr>';
+    ?rows.map(e=>{const cat=catLog(e),a=e.money||0;return`<tr>
+      <td><span class="tag ${cat}">${cat.toUpperCase()}</span></td>
+      <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.title||'—'}</td>
+      <td>${ago(e.timestamp)}</td>
+      <td class="${a>=0?'pos':'neg'}">${a>=0?'+':''}${fmt(Math.abs(a))}</td>
+    </tr>`}).join('')
+    :'<tr><td colspan="4"><div class="empty">No money transactions found in log.<br><small style="color:var(--t3)">The API log only returns the last 100 entries. If you have low activity this may appear empty.</small></div></td></tr>';
 }
 
 function buildCrimeMini(){
-  const list=Object.values(cData.crimes||{});
-  const tot=list.reduce((s,c)=>s+(c.attempts||0),0);
-  const suc=list.reduce((s,c)=>s+(c.success||0),0);
-  const rate=tot?Math.round(suc/tot*100):0;
-  document.getElementById('ov-crimes').innerHTML=`
-    <div class="srow"><span class="sk">Total attempts</span><span class="sv">${fmtN(tot)}</span></div>
-    <div class="srow"><span class="sk">Successful</span><span class="sv g">${fmtN(suc)}</span></div>
-    <div class="srow"><span class="sk">Success rate</span><span class="sv ${rate>=70?'g':rate>=50?'a':'r'}">${rate}%</span></div>`;
+  const cr=crD.criminalrecord||crD||{};
+  // Sum all criminal record fields
+  const fields=['theft','auto_theft','drug_deals','fraud_crimes','vandalism','selling_illegal_products','arson','kidnapping','murder','computer_crimes','extortion','other_crimes'];
+  let tot=0;
+  fields.forEach(f=>{if(cr[f])tot+=cr[f]});
+  const jailed=pD.personalstats?.jailed||0;
+  document.getElementById('ov-cr').innerHTML=`
+    <div class="sr"><span class="sk">Lifetime crimes committed</span><span class="sv">${fmtN(tot)}</span></div>
+    <div class="sr"><span class="sk">Times jailed</span><span class="sv r">${fmtN(jailed)}</span></div>
+    <div class="sr"><span class="sk">Theft</span><span class="sv">${fmtN(cr.theft||0)}</span></div>
+    <div class="sr"><span class="sk">Drug deals</span><span class="sv">${fmtN(cr.drug_deals||0)}</span></div>`;
 }
 
 function popTransactions(){
-  const rows=[...logData].filter(e=>e.money).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)).slice(0,100);
+  const rows=[...lgD].filter(e=>e.money).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)).slice(0,100);
   document.getElementById('tx-body').innerHTML=rows.length
-    ?rows.map(e=>{const cat=catLog(e),a=e.money||0,sg=a>=0?'+':'';
-      return`<tr><td><span class="tag ${cat}">${cat.toUpperCase()}</span></td><td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.title||'—'}</td><td>${dt(e.timestamp)}</td><td style="text-align:right" class="${a>=0?'pos':'neg'}">${sg}${fmt(Math.abs(a))}</td></tr>`;}).join('')
-    :'<tr><td colspan="4"><div class="empty">No transactions found in log.</div></td></tr>';
+    ?rows.map(e=>{const cat=catLog(e),a=e.money||0;return`<tr>
+      <td><span class="tag ${cat}">${cat.toUpperCase()}</span></td>
+      <td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.title||'—'}</td>
+      <td>${dtfmt(e.timestamp)}</td>
+      <td class="${a>=0?'pos':'neg'}">${a>=0?'+':''}${fmt(Math.abs(a))}</td>
+    </tr>`}).join('')
+    :'<tr><td colspan="4"><div class="empty">No transactions found.<br><small style="color:var(--t3)">The Torn API log returns only your last 100 activity entries regardless of date. Money transactions only appear if they occurred in your most recent 100 actions.</small></div></td></tr>';
 }
 
 function popCrimes(){
-  const crimes=cData.crimes||{};
-  const list=Object.entries(crimes);
-  const tot=list.reduce((s,[,c])=>s+(c.attempts||0),0);
-  const suc=list.reduce((s,[,c])=>s+(c.success||0),0);
-  const fail=tot-suc;
-  const rate=tot?Math.round(suc/tot*100):0;
-  document.getElementById('cr-tot').textContent=fmtN(tot);
-  document.getElementById('cr-suc').textContent=fmtN(suc);
-  document.getElementById('cr-rate').textContent=rate+'%';
-  document.getElementById('cr-fail').textContent=fmtN(fail);
+  const cr=crD.criminalrecord||{};
 
-  const active=list.filter(([,c])=>c.attempts>0).sort(([,a],[,b])=>b.attempts-a.attempts);
+  // Criminal record fields and display names
+  const fields=[
+    {k:'theft',             l:'Theft',              col:'#f07070'},
+    {k:'auto_theft',        l:'Auto theft',         col:'#f0956b'},
+    {k:'drug_deals',        l:'Drug deals',         col:'#f0b96b'},
+    {k:'fraud_crimes',      l:'Fraud',              col:'#6aaef5'},
+    {k:'vandalism',         l:'Vandalism',          col:'#8b90b8'},
+    {k:'selling_illegal_products',l:'Illegal sales',col:'#52c27a'},
+    {k:'arson',             l:'Arson',              col:'#f07070'},
+    {k:'kidnapping',        l:'Kidnapping',         col:'#c27a52'},
+    {k:'murder',            l:'Murder',             col:'#c25252'},
+    {k:'computer_crimes',   l:'Computer crimes',    col:'#7c8cf8'},
+    {k:'extortion',         l:'Extortion',          col:'#a87cf8'},
+    {k:'other_crimes',      l:'Other crimes',       col:'#555878'},
+  ];
+
+  const active=fields.filter(f=>cr[f.k]>0);
+  const tot=active.reduce((s,f)=>s+cr[f.k],0);
+  const mx=active[0]?.k?Math.max(...active.map(f=>cr[f.k])):1;
+
+  document.getElementById('cr-tot').textContent=fmtN(tot);
+  // For success/jailed use personalstats
+  const ps=pD.personalstats||{};
+  const jailed=ps.jailed||0;
+  document.getElementById('cr-suc').textContent=fmtN(tot); // criminalrecord only tracks successes
+  document.getElementById('cr-rt').textContent=tot>0?'100%':'—'; // criminal record = successful crimes only
+  document.getElementById('cr-jl').textContent=fmtN(jailed);
+
+  // Notice explaining what's shown
+  document.getElementById('cr-notice').innerHTML=`<div class="notice">
+    ⚡ The Torn API's <code>criminalrecord</code> tracks <strong>successful crimes only</strong> — these are your lifetime totals. Crimes 2.0 per-crime skill stats are not available via the API yet.
+  </div>`;
+
   document.getElementById('cr-grid').innerHTML=active.length
-    ?active.map(([name,c])=>{
-        const r=c.attempts?Math.round(c.success/c.attempts*100):0;
-        const col=r>=70?'var(--green)':r>=50?'var(--amber)':'var(--red)';
-        return`<div class="crime-card">
-          <div class="crime-card-name">${name.replace(/_/g,' ')}</div>
-          <div class="crime-stat">Attempts: <span>${fmtN(c.attempts)}</span></div>
-          <div class="crime-stat">Success: <span style="color:var(--green)">${fmtN(c.success)}</span></div>
-          <div class="crime-stat">Rate: <span style="color:${col}">${r}%</span></div>
-        </div>`;}).join('')
-    :'<div class="empty" style="grid-column:1/-1">No crime data available.</div>';
+    ?active.map(f=>{const v=cr[f.k],bp=pct(v,Math.max(...active.map(x=>cr[x.k])));return`
+      <div class="ccard">
+        <div class="ccn">${f.l}</div>
+        <div class="ccs">Committed: <span>${fmtN(v)}</span></div>
+        <div class="cbar"><div class="cbarfill" style="width:${bp}%;background:${f.col}"></div></div>
+      </div>`}).join('')
+    :`<div class="empty" style="grid-column:1/-1">No criminal record data found.<br><small style="color:var(--t3)">This may be a new account or the criminalrecord API selection returned no data.</small></div>`;
 }
 
-function popProperties(){
-  const props=Object.entries(propData);
-  const totalCount=props.length;
-  let rentedCount=0,dailyIncome=0,dailyUpkeep=0;
+function renderProperties(){
+  const props=Object.entries(prD);
+  if(!props.length){
+    document.getElementById('pr-grid').innerHTML='<div class="empty" style="grid-column:1/-1">No properties found on your account.</div>';
+    return;
+  }
 
-  // Find max daily income for bar scaling
-  let maxIncome=0;
-  props.forEach(([,p])=>{
-    const cpd=parseInt(p.rented?.cost_per_day||0);
-    if(cpd>maxIncome)maxIncome=cpd;
-  });
+  let rentedCount=0,dailyIncome=0,dailyUpkeep=0;
+  let maxCPD=0;
+  props.forEach(([,p])=>{const cpd=parseInt(p.rented?.cost_per_day||0);if(cpd>maxCPD)maxCPD=cpd});
 
   const cards=props.map(([id,p])=>{
-    const rented=p.rented&&p.rented.user_id;
-    const isLiving=p.users_living&&parseInt(p.users_living)>0;
+    const rented=!!(p.rented&&p.rented.user_id);
+    const living=parseInt(p.users_living||0)>0;
     const upkeep=parseInt(p.upkeep||0);
     const cpd=rented?parseInt(p.rented.cost_per_day||0):0;
-    const total_cost=rented?parseInt(p.rented.total_cost||0):0;
-    const days_left=rented?parseInt(p.rented.days_left||0):0;
-    const tenant_id=rented?p.rented.user_id:'—';
+    const totalContract=rented?parseInt(p.rented.total_cost||0):0;
+    const daysLeft=rented?parseInt(p.rented.days_left||0):0;
+    const uid=rented?p.rented.user_id:null;
+    const renterName=uid?renterNames[uid]:null;
 
+    // Upkeep only counts if YOU are living there — if rented out, tenant pays
     if(rented){rentedCount++;dailyIncome+=cpd}
-    dailyUpkeep+=upkeep;
+    else if(!rented){dailyUpkeep+=upkeep} // only add upkeep if not rented out
 
-    // status badge
     let badge,bclass;
-    if(rented){badge='Rented';bclass='rented'}
-    else if(isLiving){badge='Occupied';bclass='occupied'}
+    if(rented){badge='Rented Out';bclass='rented'}
+    else if(living){badge='Occupied';bclass='occupied'}
     else{badge='Vacant';bclass='vacant'}
 
-    const barPct=maxIncome&&cpd?Math.round(cpd/maxIncome*100):0;
+    const barPct=maxCPD&&cpd?Math.round(cpd/maxCPD*100):0;
+    const typeName=String(p.property_type||id).replace(/_/g,' ');
+    const netDaily=cpd-upkeep;
 
-    // Property type name
-    const typeName=(p.property_type||'Unknown property').toString();
-
-    return`<div class="prop-card ${bclass}">
-      <div class="prop-top">
-        <div class="prop-type">${typeName.replace(/_/g,' ')}</div>
-        <span class="prop-badge ${bclass}">${badge}</span>
-      </div>
-      ${rented?`
-        <div class="prop-stat">Tenant ID <span>#${tenant_id}</span></div>
-        <div class="prop-stat">Daily rate <span>${fmt(cpd)}</span></div>
-        <div class="prop-stat">Days remaining <span>${days_left} days</span></div>
-        <div class="prop-stat">Total contract value <span>${fmt(total_cost)}</span></div>
-        <div class="prop-income-bar">
+    const renterDisplay=rented
+      ?`<div class="pst">Tenant
+          <span>
+            ${renterName
+              ?`<a href="https://www.torn.com/profiles.php?XID=${uid}" target="_blank">${renterName} [#${uid}]</a>`
+              :`<a href="https://www.torn.com/profiles.php?XID=${uid}" target="_blank">#${uid}</a>`}
+          </span>
+        </div>
+        <div class="pst">Daily rate <span>${fmt(cpd)}</span></div>
+        <div class="pst">Days remaining <span>${daysLeft}d</span></div>
+        <div class="pst">Contract value <span>${fmt(totalContract)}</span></div>
+        <div class="pbar">
           <div style="font-size:11px;color:var(--t3);margin-bottom:3px">Income vs best property</div>
-          <div class="prop-bar-track"><div class="prop-bar-fill" style="width:${barPct}%"></div></div>
+          <div class="pbtrack"><div class="pbfill" style="width:${barPct}%"></div></div>
+        </div>
+        <div class="pdiv">
+          <div class="pst">Upkeep (paid by tenant) <span style="color:var(--t3)">—</span></div>
+          <div class="pst">Net daily <span style="color:var(--gn)">${fmt(cpd)}</span></div>
         </div>`
-      :isLiving?`<div class="prop-stat">Occupied by <span>${fmtN(p.users_living)} user(s)</span></div>`
-      :`<div class="prop-stat" style="color:var(--t3);font-style:italic">No tenant — available to rent</div>`}
-      <div class="prop-stat" style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">Daily upkeep <span style="color:var(--red)">${fmt(upkeep)}</span></div>
-      ${cpd&&upkeep?`<div class="prop-stat">Net daily <span style="color:${cpd-upkeep>=0?'var(--green)':'var(--red)'}">${fmt(cpd-upkeep)}</span></div>`:''}
+      :living
+        ?`<div class="pst">Occupied by <span>${fmtN(p.users_living)} user(s)</span></div>
+           <div class="pdiv">
+             <div class="pst">Daily upkeep <span style="color:var(--rd)">${fmt(upkeep)}</span></div>
+           </div>`
+        :`<div class="pst" style="color:var(--t3);font-style:italic;font-size:12px">No tenant — available to rent</div>
+          <div class="pdiv">
+            <div class="pst">Daily upkeep <span style="color:var(--rd)">${fmt(upkeep)}</span></div>
+          </div>`;
+
+    return`<div class="pcard ${bclass}">
+      <div class="ptop"><div class="ptyp">${typeName}</div><span class="pbadge ${bclass}">${badge}</span></div>
+      ${renterDisplay}
     </div>`;
   }).join('');
 
-  document.getElementById('pr-total').textContent=totalCount||'—';
-  document.getElementById('pr-rented').textContent=rentedCount||'0';
-  document.getElementById('pr-daily').textContent=fmt(dailyIncome);
-  document.getElementById('pr-upkeep').textContent=fmt(dailyUpkeep);
-  document.getElementById('pr-grid').innerHTML=cards||'<div class="empty" style="grid-column:1/-1">No properties found on your account.</div>';
+  document.getElementById('pr-tot').textContent=fmtN(props.length);
+  document.getElementById('pr-rnt').textContent=fmtN(rentedCount);
+  document.getElementById('pr-inc').textContent=fmt(dailyIncome);
+  document.getElementById('pr-upk').textContent=fmt(dailyUpkeep);
+  document.getElementById('pr-grid').innerHTML=cards;
 }
 
-// ── BOOT ──
+// popProperties just calls renderProperties
+function popProperties(){}
+
 window.addEventListener('DOMContentLoaded',()=>{
-  const saved=localStorage.getItem('tfkey');
-  if(saved){key=saved;document.getElementById('inp-key').value=saved;showView('view-loading');loadAll()}
-  else showView('view-login');
+  const s=localStorage.getItem('tfk');
+  if(s){K=s;document.getElementById('ikey').value=s;showV('vld');loadAll()}
+  else showV('vl');
 });
 </script>
 </body>

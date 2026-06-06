@@ -16,7 +16,7 @@
   --rd:#f07070;--rd-d:rgba(240,112,112,.13);
   --am:#f0b96b;--am-d:rgba(240,185,107,.13);
   --bl:#6aaef5;--bl-d:rgba(106,174,245,.13);
-  --co:#f0956b;
+  --co:#f0956b;--co-d:rgba(240,149,107,.13);
   --t1:#dde0f5;--t2:#8b90b8;--t3:#555878;
   --mono:'DM Mono',monospace;--sans:'DM Sans',sans-serif;
   --r:10px;--r2:6px;--sw:230px;
@@ -64,14 +64,14 @@ html,body{height:100%;background:var(--bg);color:var(--t1);font-family:var(--san
 .sbp{padding:14px 18px;border-bottom:1px solid var(--bd)}
 .sbpn{font-size:14px;font-weight:600;margin-bottom:5px}
 .sbm{font-size:12px;color:var(--t2);display:flex;gap:6px;flex-wrap:wrap}
-.sbrank{color:var(--am);font-weight:500}
+.sbrnk{color:var(--am);font-weight:500}
 .sbnav{flex:1;padding:8px 10px;overflow-y:auto}
 .nsec{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);padding:10px 10px 4px}
 .ni{display:flex;align-items:center;gap:10px;padding:8px 12px;cursor:pointer;font-size:14px;font-weight:500;color:var(--t2);border-radius:var(--r2);transition:all .12s;margin-bottom:1px}
 .ni:hover{color:var(--t1);background:var(--bg4)}.ni.on{color:var(--acc);background:rgba(124,140,248,.1)}
 .nic{width:16px;height:16px;flex-shrink:0;opacity:.55}.ni.on .nic{opacity:1}
 .sbft{padding:14px 18px;border-top:1px solid var(--bd);display:flex;flex-direction:column;gap:9px}
-.dot-row{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--t2)}
+.dotrow{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--t2)}
 .dot{width:7px;height:7px;border-radius:50%;background:var(--gn);flex-shrink:0;animation:pulse 2.5s infinite}
 .dot.spin{background:var(--am)}.dot.err{background:var(--rd);animation:none}
 .bout{background:transparent;border:1px solid var(--bd2);color:var(--t3);font-family:var(--sans);font-size:12px;padding:6px 12px;border-radius:var(--r2);cursor:pointer;transition:all .12s;text-align:left}
@@ -90,35 +90,37 @@ html,body{height:100%;background:var(--bg);color:var(--t1);font-family:var(--san
 .cnt::-webkit-scrollbar{width:4px}.cnt::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
 .page{display:none;flex-direction:column;gap:18px}.page.active{display:flex}
 
-/* panel */
+/* panels */
 .pnl{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);padding:16px 18px}
 .pt{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--t3);margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
 .pa{font-size:12px;font-weight:400;text-transform:none;letter-spacing:0;color:var(--t3);cursor:pointer;transition:color .12s}.pa:hover{color:var(--acc)}
 
 /* metrics */
 .mc4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.mc3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .mc{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);padding:14px 16px;position:relative;overflow:hidden}
 .mc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--mca,var(--bd));border-radius:var(--r) var(--r) 0 0}
-.mc.cg{--mca:var(--gn)}.mc.cr{--mca:var(--rd)}.mc.ca{--mca:var(--am)}.mc.cb{--mca:var(--acc)}
+.mc.cg{--mca:var(--gn)}.mc.cr{--mca:var(--rd)}.mc.ca{--mca:var(--am)}.mc.cb{--mca:var(--acc)}.mc.co{--mca:var(--co)}
 .mlbl{font-size:11px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--t3);margin-bottom:8px}
 .mv{font-family:var(--mono);font-size:22px;color:var(--t1);line-height:1;margin-bottom:5px}
-.mv.g{color:var(--gn)}.mv.r{color:var(--rd)}.mv.a{color:var(--am)}.mv.b{color:var(--acc)}
+.mv.g{color:var(--gn)}.mv.r{color:var(--rd)}.mv.a{color:var(--am)}.mv.b{color:var(--acc)}.mv.o{color:var(--co)}
 .ms{font-size:12px;color:var(--t3)}.ms.up{color:var(--gn)}.ms.dn{color:var(--rd)}
 
 /* grids */
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .g3{display:grid;grid-template-columns:2fr 1fr;gap:14px}
+.g32{display:grid;grid-template-columns:3fr 2fr;gap:14px}
 
-/* status bars */
+/* stat bars */
 .sbars{display:flex;flex-direction:column;gap:11px}
 .sbar{display:flex;align-items:center;gap:12px}
-.sbl{font-size:12px;color:var(--t2);width:52px;flex-shrink:0}
+.sbl2{font-size:12px;color:var(--t2);width:52px;flex-shrink:0}
 .sbt2{flex:1;height:7px;background:var(--bg3);border-radius:99px;overflow:hidden}
 .sbf{height:100%;border-radius:99px;transition:width 1s cubic-bezier(.16,1,.3,1)}
 .sbf.g{background:var(--gn)}.sbf.r{background:var(--rd)}.sbf.a{background:var(--am)}.sbf.b{background:var(--acc)}
 .sbv{font-family:var(--mono);font-size:11px;color:var(--t2);width:60px;flex-shrink:0;text-align:right}
 
-/* table */
+/* tables */
 .tbl{width:100%;border-collapse:collapse}
 .tbl th{font-size:11px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--t3);text-align:left;padding:0 0 9px;border-bottom:1px solid var(--bd)}
 .tbl td{padding:8px 0;border-bottom:1px solid var(--bd);font-size:13px;color:var(--t2);vertical-align:middle}
@@ -127,11 +129,11 @@ html,body{height:100%;background:var(--bg);color:var(--t1);font-family:var(--san
 .tbl th:last-child,.tbl td:last-child{text-align:right}
 
 /* tags */
-.tag{display:inline-flex;padding:2px 7px;font-size:10px;font-weight:600;letter-spacing:.04em;border-radius:4px}
+.tag{display:inline-flex;padding:2px 7px;font-size:10px;font-weight:600;letter-spacing:.04em;border-radius:4px;white-space:nowrap}
 .tag.crime{background:var(--rd-d);color:var(--rd)}
 .tag.trade{background:var(--bl-d);color:var(--bl)}
 .tag.casino{background:var(--am-d);color:var(--am)}
-.tag.mug{background:rgba(240,149,107,.13);color:var(--co)}
+.tag.mug{background:var(--co-d);color:var(--co)}
 .tag.prop{background:var(--gn-d);color:var(--gn)}
 .tag.bank{background:rgba(139,144,184,.1);color:var(--t2)}
 .tag.stock{background:var(--acc-d);color:var(--acc)}
@@ -153,7 +155,7 @@ html,body{height:100%;background:var(--bg);color:var(--t1);font-family:var(--san
 .sr{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--bd);font-size:13px}
 .sr:last-child{border-bottom:none}
 .sk{color:var(--t2)}.sv{color:var(--t1);font-weight:500}
-.sv.g{color:var(--gn)}.sv.r{color:var(--rd)}.sv.a{color:var(--am)}
+.sv.g{color:var(--gn)}.sv.r{color:var(--rd)}.sv.a{color:var(--am)}.sv.b{color:var(--acc)}
 
 /* donut */
 .dwrap{display:flex;align-items:center;gap:16px;padding:4px 0}
@@ -163,26 +165,29 @@ html,body{height:100%;background:var(--bg);color:var(--t1);font-family:var(--san
 .dpct{margin-left:auto;color:var(--t1);font-weight:500}
 
 /* property cards */
-.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
 .pcard{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r);padding:14px 16px}
 .pcard.rented{border-color:rgba(82,194,122,.3)}
 .pcard.vacant{border-color:rgba(240,112,112,.2)}
-.ptop{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
-.ptyp{font-size:14px;font-weight:600;text-transform:capitalize}
-.pbadge{font-size:10px;font-weight:600;letter-spacing:.04em;padding:2px 8px;border-radius:4px}
+.pcard.mine{border-color:rgba(106,174,245,.2)}
+.ptop{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;gap:8px}
+.ptyp{font-size:14px;font-weight:600}
+.pbadge{font-size:10px;font-weight:600;letter-spacing:.04em;padding:2px 8px;border-radius:4px;white-space:nowrap;flex-shrink:0}
 .pbadge.rented{background:var(--gn-d);color:var(--gn)}
 .pbadge.vacant{background:var(--rd-d);color:var(--rd)}
-.pbadge.occupied{background:var(--bl-d);color:var(--bl)}
-.pst{font-size:12px;color:var(--t2);margin-bottom:5px;display:flex;justify-content:space-between}
-.pst span{color:var(--t1);font-weight:500}
-.pst a{color:var(--acc);font-weight:500;text-decoration:none}.pst a:hover{text-decoration:underline}
+.pbadge.mine{background:var(--bl-d);color:var(--bl)}
+.pst{font-size:12px;color:var(--t2);margin-bottom:5px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.pst span{color:var(--t1);font-weight:500;text-align:right}
+.pst a{color:var(--acc);font-weight:500;text-decoration:none;text-align:right}.pst a:hover{text-decoration:underline}
 .pdiv{margin-top:10px;padding-top:10px;border-top:1px solid var(--bd)}
 .pbar{margin-top:8px}
 .pbtrack{height:4px;background:var(--bg4);border-radius:99px;overflow:hidden;margin-top:4px}
 .pbfill{height:100%;border-radius:99px;background:var(--gn);transition:width 1s cubic-bezier(.16,1,.3,1)}
+.pupg{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.upgpill{font-size:10px;padding:1px 6px;border-radius:3px;background:var(--bg4);color:var(--t2)}
 
 /* crime cards */
-.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
 .ccard{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r2);padding:12px 14px}
 .ccn{font-size:13px;font-weight:600;text-transform:capitalize;margin-bottom:8px}
 .ccs{font-size:12px;color:var(--t2);margin-bottom:3px}
@@ -190,10 +195,35 @@ html,body{height:100%;background:var(--bg);color:var(--t1);font-family:var(--san
 .cbar{height:4px;background:var(--bg4);border-radius:99px;overflow:hidden;margin-top:8px}
 .cbarfill{height:100%;border-radius:99px;transition:width 1s cubic-bezier(.16,1,.3,1)}
 
-/* notice box */
-.notice{padding:12px 16px;background:var(--am-d);border:1px solid rgba(240,185,107,.25);border-radius:var(--r2);font-size:12px;color:var(--am);margin-bottom:14px;line-height:1.6}
+/* cashflow */
+.cfrow{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--bd);font-size:13px}
+.cfrow:last-child{border-bottom:none}
+.cfrow.total{padding-top:12px;font-weight:600;font-size:14px}
+.cflbl{color:var(--t2);display:flex;align-items:center;gap:8px}
+.cflbl .dot2{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+.cfval{font-family:var(--mono);font-weight:500}
+.cf-section{margin-bottom:4px}
+.cf-head{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);padding:12px 0 6px}
+
+/* bank card */
+.bank-card{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r);padding:16px 18px;margin-bottom:12px}
+.bc-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.bc-name{font-size:13px;font-weight:600;color:var(--t1)}
+.bc-badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px}
+.bc-badge.active{background:var(--gn-d);color:var(--gn)}
+.bc-badge.ready{background:var(--am-d);color:var(--am)}
+.bc-badge.empty{background:var(--bd);color:var(--t3)}
+.bc-row{display:flex;justify-content:space-between;font-size:12px;color:var(--t2);margin-bottom:5px}
+.bc-row span{color:var(--t1);font-weight:500}
+.bc-progress{height:4px;background:var(--bg4);border-radius:99px;overflow:hidden;margin-top:10px}
+.bc-bar{height:100%;border-radius:99px;background:var(--acc);transition:width 1s cubic-bezier(.16,1,.3,1)}
+
+/* notice */
+.notice{padding:10px 14px;background:var(--am-d);border:1px solid rgba(240,185,107,.2);border-radius:var(--r2);font-size:12px;color:var(--am);line-height:1.6}
+.info{padding:10px 14px;background:var(--acc-d);border:1px solid rgba(124,140,248,.2);border-radius:var(--r2);font-size:12px;color:var(--acc);line-height:1.6}
 
 .empty{text-align:center;padding:28px 20px;font-size:12px;color:var(--t3)}
+.empty small{display:block;margin-top:6px;color:var(--t3);opacity:.7}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
@@ -218,7 +248,6 @@ html,body{height:100%;background:var(--bg);color:var(--t1);font-family:var(--san
         <tr><td>Key stored server-side?</td><td class="ok">No — localStorage only</td></tr>
         <tr><td>Sent to third parties?</td><td class="ok">No — direct to torn.com</td></tr>
         <tr><td>Shared with others?</td><td class="ok">Never</td></tr>
-        <tr><td>Required access level</td><td>Full Access</td></tr>
       </table>
     </div>
   </div>
@@ -237,30 +266,32 @@ html,body{height:100%;background:var(--bg);color:var(--t1);font-family:var(--san
     <div class="sblog"><div class="sby">Finance Tracker</div><div class="sbt">Torn<span>Fin</span></div></div>
     <div class="sbp">
       <div class="sbpn" id="sbn">—</div>
-      <div class="sbm"><span id="sblv">Lvl —</span><span class="sbrank" id="sbrk">—</span></div>
+      <div class="sbm"><span id="sblv">Lvl —</span><span class="sbrnk" id="sbrk">—</span></div>
       <div class="sbm" style="margin-top:3px"><span id="sbfac" style="color:var(--t3)">—</span></div>
     </div>
     <nav class="sbnav">
       <div class="nsec">Finance</div>
       <div class="ni on" onclick="go('overview',this)">
-        <svg class="nic" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/></svg>
-        Overview
+        <svg class="nic" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/></svg>Overview
+      </div>
+      <div class="ni" onclick="go('cashflow',this)">
+        <svg class="nic" viewBox="0 0 16 16" fill="none"><path d="M2 12 L5 8 L8 10 L11 5 L14 7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 7 L14 7 L14 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Cash Flow
+      </div>
+      <div class="ni" onclick="go('bank',this)">
+        <svg class="nic" viewBox="0 0 16 16" fill="none"><rect x="1" y="6" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M4 6V4a4 4 0 018 0v2" stroke="currentColor" stroke-width="1.3"/><circle cx="8" cy="10.5" r="1.5" stroke="currentColor" stroke-width="1.3"/></svg>Bank
       </div>
       <div class="ni" onclick="go('transactions',this)">
-        <svg class="nic" viewBox="0 0 16 16" fill="none"><line x1="2" y1="4" x2="14" y2="4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="2" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="2" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-        Transactions
+        <svg class="nic" viewBox="0 0 16 16" fill="none"><line x1="2" y1="4" x2="14" y2="4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="2" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="2" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Transactions
       </div>
       <div class="ni" onclick="go('crimes',this)">
-        <svg class="nic" viewBox="0 0 16 16" fill="none"><path d="M8 1.5L14 5v6L8 14.5 2 11V5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><line x1="8" y1="5" x2="8" y2="9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="11" r=".8" fill="currentColor"/></svg>
-        Crimes
+        <svg class="nic" viewBox="0 0 16 16" fill="none"><path d="M8 1.5L14 5v6L8 14.5 2 11V5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><line x1="8" y1="5" x2="8" y2="9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="11" r=".8" fill="currentColor"/></svg>Crimes
       </div>
       <div class="ni" onclick="go('properties',this)">
-        <svg class="nic" viewBox="0 0 16 16" fill="none"><path d="M1 15V7L8 1l7 6v8" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><rect x="5.5" y="10" width="5" height="5" stroke="currentColor" stroke-width="1.3"/></svg>
-        Properties
+        <svg class="nic" viewBox="0 0 16 16" fill="none"><path d="M1 15V7L8 1l7 6v8" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><rect x="5.5" y="10" width="5" height="5" stroke="currentColor" stroke-width="1.3"/></svg>Properties
       </div>
     </nav>
     <div class="sbft">
-      <div class="dot-row"><div class="dot" id="adot"></div><span id="atxt">Connected</span></div>
+      <div class="dotrow"><div class="dot" id="adot"></div><span id="atxt">Connected</span></div>
       <button class="bout" onclick="signOut()">Sign out &amp; clear key</button>
     </div>
   </aside>
@@ -273,21 +304,21 @@ html,body{height:100%;background:var(--bg);color:var(--t1);font-family:var(--san
     </div>
     <div class="cnt">
 
-      <!-- OVERVIEW -->
+      <!-- ══ OVERVIEW ══ -->
       <div class="page active" id="pg-overview">
         <div class="mc4">
           <div class="mc ca"><div class="mlbl">Net Worth</div><div class="mv a" id="ov-nw">—</div><div class="ms">All assets</div></div>
           <div class="mc cg"><div class="mlbl">Cash on Hand</div><div class="mv g" id="ov-cash">—</div><div class="ms">Wallet</div></div>
-          <div class="mc cb"><div class="mlbl">Bank Balance</div><div class="mv b" id="ov-bank">—</div><div class="ms" id="ov-bs">—</div></div>
-          <div class="mc cr"><div class="mlbl">Points</div><div class="mv" id="ov-pts">—</div><div class="ms">Points balance</div></div>
+          <div class="mc cb"><div class="mlbl">City Bank</div><div class="mv b" id="ov-bank">—</div><div class="ms" id="ov-bs">Invested</div></div>
+          <div class="mc co"><div class="mlbl">Cayman Bank</div><div class="mv o" id="ov-cay">—</div><div class="ms">Offshore</div></div>
         </div>
         <div class="g3">
-          <div class="pnl"><div class="pt">Income by source</div><div class="hbars" id="ov-inc"><div class="empty">Loading…</div></div></div>
+          <div class="pnl"><div class="pt">Income by source — recent log</div><div class="hbars" id="ov-inc"><div class="empty">Loading…</div></div></div>
           <div class="pnl"><div class="pt">Status bars</div><div class="sbars" id="ov-bars"><div class="empty">Loading…</div></div></div>
         </div>
         <div class="g2">
           <div class="pnl">
-            <div class="pt">Recent transactions<span class="pa" onclick="go('transactions',document.querySelectorAll('.ni')[1])">View all →</span></div>
+            <div class="pt">Recent transactions<span class="pa" onclick="go('transactions',document.querySelectorAll('.ni')[3])">View all →</span></div>
             <table class="tbl"><thead><tr><th>Type</th><th>Description</th><th>Time</th><th>Amount</th></tr></thead>
             <tbody id="ov-tx"><tr><td colspan="4"><div class="empty">Loading…</div></td></tr></tbody></table>
           </div>
@@ -295,45 +326,131 @@ html,body{height:100%;background:var(--bg);color:var(--t1);font-family:var(--san
             <div class="pnl"><div class="pt">Wealth breakdown</div>
               <div class="dwrap"><svg id="dsvg" width="90" height="90" viewBox="0 0 90 90" style="flex-shrink:0"></svg><div class="dleg" id="dleg"><div class="empty" style="padding:0">Loading…</div></div></div>
             </div>
-            <div class="pnl"><div class="pt">Crime summary</div><div class="srows" id="ov-cr"><div class="empty" style="padding:12px 0">Loading…</div></div></div>
+            <div class="pnl"><div class="pt">Crime income summary</div><div class="srows" id="ov-cr"><div class="empty" style="padding:12px 0">Loading…</div></div></div>
           </div>
         </div>
       </div>
 
-      <!-- TRANSACTIONS -->
+      <!-- ══ CASH FLOW ══ -->
+      <div class="page" id="pg-cashflow">
+        <div class="mc3">
+          <div class="mc cg"><div class="mlbl">Est. Monthly Income</div><div class="mv g" id="cf-in">—</div><div class="ms">From all sources</div></div>
+          <div class="mc cr"><div class="mlbl">Est. Monthly Outflow</div><div class="mv r" id="cf-out">—</div><div class="ms">Costs &amp; upkeep</div></div>
+          <div class="mc cb"><div class="mlbl">Est. Monthly Net</div><div class="mv b" id="cf-net">—</div><div class="ms">Income minus costs</div></div>
+        </div>
+        <div class="g2">
+          <div class="pnl">
+            <div class="pt">Income sources</div>
+            <div class="cf-section">
+              <div class="cf-head">Passive (daily)</div>
+              <div id="cf-passive"></div>
+            </div>
+            <div class="cf-section">
+              <div class="cf-head">Active (from log)</div>
+              <div id="cf-active"></div>
+            </div>
+            <div style="border-top:1px solid var(--bd2);margin-top:8px">
+              <div class="cfrow total"><div class="cflbl">Total estimated monthly</div><div class="cfval pos" id="cf-total-in">—</div></div>
+            </div>
+          </div>
+          <div class="pnl">
+            <div class="pt">Outflows</div>
+            <div id="cf-costs"></div>
+            <div style="border-top:1px solid var(--bd2);margin-top:8px">
+              <div class="cfrow total"><div class="cflbl">Total estimated monthly</div><div class="cfval neg" id="cf-total-out">—</div></div>
+            </div>
+            <div class="cf-head" style="padding-top:16px">Net position</div>
+            <div id="cf-net-rows"></div>
+          </div>
+        </div>
+        <div class="info" id="cf-notice">Cash flow is estimated from your API data. Active income uses your transaction log average. Bank interest is calculated from current invested amount × estimated APR.</div>
+      </div>
+
+      <!-- ══ BANK ══ -->
+      <div class="page" id="pg-bank">
+        <div class="mc4">
+          <div class="mc cb"><div class="mlbl">City Bank</div><div class="mv b" id="bk-city">—</div><div class="ms" id="bk-city-s">Invested</div></div>
+          <div class="mc co"><div class="mlbl">Cayman Islands</div><div class="mv o" id="bk-cay">—</div><div class="ms">0.5% / month</div></div>
+          <div class="mc cg"><div class="mlbl">Property Vault</div><div class="mv g" id="bk-vault">—</div><div class="ms">No interest</div></div>
+          <div class="mc ca"><div class="mlbl">Bank + Cayman Total</div><div class="mv a" id="bk-total">—</div><div class="ms">Invested capital</div></div>
+        </div>
+        <div class="g2">
+          <div>
+            <div id="bk-cards"><div class="bank-card"><div class="empty">Loading bank data…</div></div></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div class="pnl">
+              <div class="pt">Bank interest rates (base)</div>
+              <div class="srows">
+                <div class="sr"><span class="sk">1 week</span><span class="sv">0.37%</span></div>
+                <div class="sr"><span class="sk">2 weeks</span><span class="sv">0.85%</span></div>
+                <div class="sr"><span class="sk">1 month</span><span class="sv">1.85%</span></div>
+                <div class="sr"><span class="sk">2 months</span><span class="sv">4.07%</span></div>
+                <div class="sr"><span class="sk">3 months</span><span class="sv a">5.92%</span></div>
+              </div>
+            </div>
+            <div class="pnl">
+              <div class="pt">Cayman Islands</div>
+              <div class="srows">
+                <div class="sr"><span class="sk">Balance</span><span class="sv b" id="bk2-cay">—</span></div>
+                <div class="sr"><span class="sk">Base rate</span><span class="sv">0.5% / month</span></div>
+                <div class="sr"><span class="sk">Est. monthly return</span><span class="sv g" id="bk2-cay-int">—</span></div>
+                <div class="sr"><span class="sk">Est. annual return</span><span class="sv g" id="bk2-cay-ann">—</span></div>
+              </div>
+            </div>
+            <div class="pnl">
+              <div class="pt">Investment tips</div>
+              <div style="font-size:12px;color:var(--t2);line-height:1.7">
+                <div style="margin-bottom:6px">💡 3-month investment has the best APR at ~5.92% base</div>
+                <div style="margin-bottom:6px">💡 Each merit in Bank Interest adds +5% APR bonus</div>
+                <div style="margin-bottom:6px">💡 Holding 1.5M TCB shares boosts bank interest rate</div>
+                <div>💡 Cayman returns less than City Bank — only use for excess cash beyond the $2B city cap</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ TRANSACTIONS ══ -->
       <div class="page" id="pg-transactions">
         <div class="pnl">
-          <div class="pt">Money transactions — last 100</div>
+          <div class="pt">Money transactions — from recent log</div>
+          <div class="notice" style="margin-bottom:14px" id="tx-notice">The Torn API log returns your last 100 activity entries across all actions. Money transactions only appear if they happened within your most recent 100 actions.</div>
           <table class="tbl"><thead><tr><th>Type</th><th>Description</th><th>Date / Time</th><th>Amount</th></tr></thead>
           <tbody id="tx-body"><tr><td colspan="4"><div class="empty">Loading…</div></td></tr></tbody></table>
         </div>
       </div>
 
-      <!-- CRIMES -->
+      <!-- ══ CRIMES ══ -->
       <div class="page" id="pg-crimes">
         <div class="mc4">
-          <div class="mc cb"><div class="mlbl">Total crimes</div><div class="mv b" id="cr-tot">—</div></div>
-          <div class="mc cg"><div class="mlbl">Successful</div><div class="mv g" id="cr-suc">—</div></div>
-          <div class="mc ca"><div class="mlbl">Success rate</div><div class="mv a" id="cr-rt">—</div></div>
-          <div class="mc cr"><div class="mlbl">Jailed / Failed</div><div class="mv r" id="cr-jl">—</div></div>
+          <div class="mc cb"><div class="mlbl">Total committed</div><div class="mv b" id="cr-tot">—</div><div class="ms">Lifetime successful</div></div>
+          <div class="mc cr"><div class="mlbl">Theft</div><div class="mv r" id="cr-theft">—</div></div>
+          <div class="mc ca"><div class="mlbl">Drug deals</div><div class="mv a" id="cr-drugs">—</div></div>
+          <div class="mc cg"><div class="mlbl">Fraud</div><div class="mv g" id="cr-fraud">—</div></div>
         </div>
-        <div class="pnl">
-          <div class="pt">Criminal record breakdown</div>
-          <div id="cr-notice"></div>
-          <div class="cgrid" id="cr-grid"><div class="empty" style="grid-column:1/-1">Loading…</div></div>
+        <div class="g32">
+          <div class="pnl">
+            <div class="pt">Income from crimes — log<span class="pa" id="cr-log-note" style="text-transform:none;font-weight:400;letter-spacing:0">from recent activity log</span></div>
+            <div class="hbars" id="cr-income"><div class="empty">Loading…</div></div>
+          </div>
+          <div class="pnl">
+            <div class="pt">Criminal record</div>
+            <div class="cgrid" id="cr-grid"><div class="empty" style="grid-column:1/-1">Loading…</div></div>
+          </div>
         </div>
       </div>
 
-      <!-- PROPERTIES -->
+      <!-- ══ PROPERTIES ══ -->
       <div class="page" id="pg-properties">
         <div class="mc4">
-          <div class="mc cg"><div class="mlbl">Total properties</div><div class="mv g" id="pr-tot">—</div></div>
+          <div class="mc cg"><div class="mlbl">Total owned</div><div class="mv g" id="pr-tot">—</div></div>
           <div class="mc ca"><div class="mlbl">Rented out</div><div class="mv a" id="pr-rnt">—</div></div>
           <div class="mc cb"><div class="mlbl">Daily rental income</div><div class="mv b" id="pr-inc">—</div></div>
-          <div class="mc cr"><div class="mlbl">Daily upkeep (yours)</div><div class="mv r" id="pr-upk">—</div></div>
+          <div class="mc cr"><div class="mlbl">Your daily upkeep</div><div class="mv r" id="pr-upk">—</div><div class="ms" id="pr-upk-note">Properties you live in</div></div>
         </div>
         <div class="pnl">
-          <div class="pt">Your properties <span class="pa" id="pr-loading" style="color:var(--am)"></span></div>
+          <div class="pt">Your properties <span class="pa" id="pr-loading" style="color:var(--am);text-transform:none;font-weight:400;letter-spacing:0"></span></div>
           <div class="pgrid" id="pr-grid"><div class="empty" style="grid-column:1/-1">Loading property data…</div></div>
         </div>
       </div>
@@ -345,15 +462,16 @@ html,body{height:100%;background:var(--bg);color:var(--t1);font-family:var(--san
 <script>
 'use strict';
 const B='https://api.torn.com';
-let K='',pD={},mD={},crD={},lgD=[],prD={},bD={};
-let timer=null,renterNames={};
+let K='',pD={},mD={},crD={},lgD=[],prD={},bD={},stD={};
+let timer=null,rNames={};
 
-// utils
+// ── UTILS ──
 const fmt=n=>{if(n==null||isNaN(n))return'—';const a=Math.abs(n);if(a>=1e9)return'$'+(n/1e9).toFixed(2)+'B';if(a>=1e6)return'$'+(n/1e6).toFixed(2)+'M';if(a>=1e3)return'$'+(n/1e3).toFixed(1)+'K';return'$'+n.toLocaleString()};
 const fmtN=n=>n?Number(n).toLocaleString():'0';
 const ago=ts=>{const d=Math.floor(Date.now()/1000)-ts;if(d<60)return d+'s ago';if(d<3600)return Math.floor(d/60)+'m ago';if(d<86400)return Math.floor(d/3600)+'h ago';return Math.floor(d/86400)+'d ago'};
 const dtfmt=ts=>new Date(ts*1000).toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
 const pct=(a,b)=>b?Math.min(100,Math.round(a/b*100)):0;
+const secs=(s)=>{const d=Math.floor(s/86400),h=Math.floor((s%86400)/3600),m=Math.floor((s%3600)/60);return d>0?`${d}d ${h}h`:h>0?`${h}h ${m}m`:`${m}m`};
 
 async function api(sec,sel,extra=''){
   const r=await fetch(`${B}/${sec}/?selections=${sel}&key=${K}${extra}`);
@@ -364,10 +482,7 @@ async function api(sec,sel,extra=''){
 }
 
 async function apiUser(id){
-  const r=await fetch(`${B}/user/${id}?selections=basic&key=${K}`);
-  if(!r.ok)return null;
-  const d=await r.json();
-  return d.error?null:d;
+  try{const r=await fetch(`${B}/user/${id}?selections=basic&key=${K}`);if(!r.ok)return null;const d=await r.json();return d.error?null:d}catch{return null}
 }
 
 const showV=id=>{document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active')};
@@ -377,7 +492,7 @@ function go(id,el){
   document.getElementById('pg-'+id).classList.add('active');
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));
   if(el)el.classList.add('on');
-  const t={overview:'Overview',transactions:'Transactions',crimes:'Crimes',properties:'Properties'};
+  const t={overview:'Overview',cashflow:'Cash Flow',bank:'Bank',transactions:'Transactions',crimes:'Crimes',properties:'Properties'};
   document.getElementById('pgt').textContent=t[id]||id;
 }
 
@@ -395,7 +510,7 @@ async function doLogin(){
 function showErr(m){const e=document.getElementById('lerr');e.textContent=m;e.style.display='block';document.getElementById('bgo').disabled=false}
 
 function signOut(){
-  localStorage.removeItem('tfk');K='';pD={};mD={};crD={};lgD=[];prD={};bD={};renterNames={};
+  localStorage.removeItem('tfk');K='';pD={};mD={};crD={};lgD=[];prD={};bD={};stD={};rNames={};
   if(timer)clearInterval(timer);
   document.getElementById('ikey').value='';
   document.getElementById('bgo').disabled=false;
@@ -408,7 +523,7 @@ function ld(t,p){document.getElementById('ltxt').textContent=t;document.getEleme
 async function loadAll(){
   try{
     ld('Fetching profile…',10);
-    pD=await api('user','basic,profile');
+    pD=await api('user','basic,profile,personalstats,perks');
 
     ld('Loading status bars…',22);
     bD=await api('user','bars');
@@ -416,37 +531,29 @@ async function loadAll(){
     ld('Loading money & net worth…',35);
     mD=await api('user','money,networth');
 
-    ld('Loading criminal record…',50);
-    // Use criminalrecord for both crimes 1.0 and 2.0 players
-    // Also try crimes selection but handle error 19 gracefully
-    try{ crD=await api('user','criminalrecord'); }
-    catch(e){ crD={}; }
+    ld('Loading criminal record…',48);
+    try{crD=await api('user','criminalrecord')}catch(e){crD={}}
 
-    ld('Loading transaction log…',65);
-    // Fetch last 100 money-related log entries by fetching without category filter
-    // The log returns mixed entries — we filter by money field client-side
-    const now=Math.floor(Date.now()/1000);
-    const from=now-(120*86400); // last 120 days
+    ld('Loading transaction log…',62);
     try{
+      const now=Math.floor(Date.now()/1000),from=now-(120*86400);
       const raw=await api('user','log',`&from=${from}&to=${now}`);
       lgD=raw.log?Object.values(raw.log):[];
     }catch(e){lgD=[]}
 
-    ld('Loading properties…',82);
-    try{
-      const pr=await api('user','properties');
-      prD=pr.properties||{};
-    }catch(e){prD={}}
+    ld('Loading properties…',78);
+    try{const pr=await api('user','properties');prD=pr.properties||{}}catch(e){prD={}}
 
-    ld('Building dashboard…',96);
+    ld('Loading stocks…',90);
+    try{const s=await api('user','stocks');stD=s.stocks||{}}catch(e){stD={}}
+
+    ld('Building dashboard…',97);
     await new Promise(r=>setTimeout(r,200));
     populate();
     ld('Done',100);
     await new Promise(r=>setTimeout(r,150));
     showV('vd');startClock();
     timer=setInterval(refresh,180000);
-
-    // After showing dashboard, fetch renter names in background
     fetchRenterNames();
   }catch(err){
     console.error(err);
@@ -456,23 +563,14 @@ async function loadAll(){
 }
 
 async function fetchRenterNames(){
-  const ids=[];
-  Object.values(prD).forEach(p=>{
-    const uid=p.rented?.user_id;
-    if(uid&&!renterNames[uid])ids.push(uid);
-  });
+  const myId=pD.player_id;
+  const ids=[...new Set(Object.values(prD).map(p=>p.rented?.user_id).filter(id=>id&&id!=myId&&!rNames[id]))].slice(0,10);
   if(!ids.length)return;
-  // fetch up to 5 renter names concurrently
   const lbl=document.getElementById('pr-loading');
-  if(lbl)lbl.textContent='(loading renter names…)';
-  const batch=ids.slice(0,10);
-  await Promise.all(batch.map(async id=>{
-    const d=await apiUser(id);
-    if(d?.name)renterNames[id]=d.name;
-  }));
+  if(lbl)lbl.textContent='Fetching renter names…';
+  await Promise.all(ids.map(async id=>{const d=await apiUser(id);if(d?.name)rNames[id]=d.name}));
   if(lbl)lbl.textContent='';
-  // re-render properties with names
-  renderProperties();
+  renderProps();
 }
 
 async function refresh(){
@@ -490,7 +588,9 @@ async function refresh(){
   }catch(e){dot.className='dot err';txt.textContent='Error — retry'}
 }
 
-function populate(){popSB();popOverview();popTransactions();popCrimes();renderProperties()}
+function populate(){
+  popSB();popOverview();popCashflow();popBank();popTransactions();popCrimes();renderProps();
+}
 
 function popSB(){
   document.getElementById('sbn').textContent=pD.name||'—';
@@ -500,12 +600,12 @@ function popSB(){
 }
 
 function popOverview(){
-  document.getElementById('ov-nw').textContent=fmt(mD.networth?.total||0);
+  const nw=mD.networth||{};
+  document.getElementById('ov-nw').textContent=fmt(nw.total||0);
   document.getElementById('ov-cash').textContent=fmt(mD.money_onhand||0);
   document.getElementById('ov-bank').textContent=fmt(mD.money_bank||0);
-  document.getElementById('ov-bs').textContent='Invested: '+fmt(mD.cayman_bank||0);
-  document.getElementById('ov-pts').textContent=fmtN(mD.points||0)+' pts';
-  buildDonut(mD.networth||{});
+  document.getElementById('ov-cay').textContent=fmt(mD.cayman_bank||0);
+  buildDonut(nw);
   buildBars();
   buildIncome();
   buildRecentTx(8);
@@ -520,51 +620,47 @@ function buildBars(){
     {l:'Nerve', c:b.nerve?.current||0, m:b.nerve?.maximum||100, cl:'a'},
     {l:'Happy', c:b.happy?.current||0, m:b.happy?.maximum||100, cl:'b'},
   ];
-  document.getElementById('ov-bars').innerHTML=bars.map(b=>`
-    <div class="sbar">
-      <div class="sbl">${b.l}</div>
-      <div class="sbt2"><div class="sbf ${b.cl}" style="width:${pct(b.c,b.m)}%"></div></div>
-      <div class="sbv">${b.c} / ${b.m}</div>
-    </div>`).join('');
+  document.getElementById('ov-bars').innerHTML=bars.map(b=>`<div class="sbar">
+    <div class="sbl2">${b.l}</div>
+    <div class="sbt2"><div class="sbf ${b.cl}" style="width:${pct(b.c,b.m)}%"></div></div>
+    <div class="sbv">${b.c} / ${b.m}</div>
+  </div>`).join('');
 }
 
 function buildDonut(nw){
   const segs=[
-    {l:'Cash',   v:(nw.wallet||0)+(nw.bank||0),col:'#6aaef5'},
-    {l:'Props',  v:nw.properties||0,           col:'#f0b96b'},
-    {l:'Stocks', v:nw.stockmarket||0,          col:'#52c27a'},
-    {l:'Items',  v:nw.items||0,                col:'#f07070'},
-    {l:'Other',  v:(nw.displaycase||0)+(nw.bazaar||0)+(nw.piggybank||0),col:'#555878'},
+    {l:'Cash',   v:(nw.wallet||0)+(nw.bank||0)+(nw.cayman||0),col:'#6aaef5'},
+    {l:'Props',  v:nw.properties||0,                          col:'#f0b96b'},
+    {l:'Stocks', v:nw.stockmarket||0,                         col:'#52c27a'},
+    {l:'Items',  v:nw.items||0,                               col:'#f07070'},
+    {l:'Other',  v:(nw.displaycase||0)+(nw.bazaar||0)+(nw.piggybank||0)+(nw.vault||0),col:'#555878'},
   ].filter(s=>s.v>0);
   const tot=segs.reduce((s,x)=>s+x.v,0);if(!tot)return;
   const svg=document.getElementById('dsvg'),leg=document.getElementById('dleg');
   const cx=45,cy=45,r=32,sw=12,circ=2*Math.PI*r;
   let h='',off=0;
   segs.forEach(s=>{const d=s.v/tot*circ,g=circ-d;h+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${s.col}" stroke-width="${sw}" stroke-dasharray="${d.toFixed(2)} ${g.toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}" transform="rotate(-90 ${cx} ${cy})"/>`;off+=d});
-  h+=`<text x="${cx}" y="${cy-3}" text-anchor="middle" font-family="'DM Mono'" font-size="9" fill="#dde0f5">${fmt(tot)}</text>
-      <text x="${cx}" y="${cy+9}" text-anchor="middle" font-family="'DM Mono'" font-size="7" fill="#555878">NET WORTH</text>`;
+  h+=`<text x="${cx}" y="${cy-3}" text-anchor="middle" font-family="'DM Mono'" font-size="9" fill="#dde0f5">${fmt(tot)}</text><text x="${cx}" y="${cy+9}" text-anchor="middle" font-family="'DM Mono'" font-size="7" fill="#555878">NET WORTH</text>`;
   svg.innerHTML=h;
   leg.innerHTML=segs.map(s=>`<div class="drow"><div class="dsw" style="background:${s.col}"></div>${s.l}<span class="dpct">${Math.round(s.v/tot*100)}%</span></div>`).join('');
 }
 
-// Transaction log categorisation — using title keywords + category field
+// ── LOG CATEGORISATION ──
 function catLog(e){
   const t=(e.title||'').toLowerCase(),c=(e.category||'').toLowerCase();
-  if(c==='crime'||/\bcrime\b|theft|shoplifting|burglary|pickpocket|search for cash|hustling|graffiti|card skim|cracking|forgery|scam/.test(t))return'crime';
-  if(c==='casino'||/casino|slot|blackjack|poker|roulette|craps|wheel of fortune/.test(t))return'casino';
-  if(c==='trade'||/bazaar|item market|sold.*item|bought.*item|trade/.test(t))return'trade';
-  if(/attack|mugg|hospital/.test(t))return'mug';
+  if(c==='crime'||/\bcrime\b|theft|shoplifting|burglary|pickpocket|search for cash|hustling|graffiti|card skim|cracking|forgery|scam|arson|hack|fraud/.test(t))return'crime';
+  if(c==='casino'||/casino|slot|blackjack|poker|roulette|craps|wheel/.test(t))return'casino';
+  if(c==='trade'||/bazaar|item market|sold.*item|bought.*item|\btrade\b/.test(t))return'trade';
+  if(/attack|mugg/.test(t))return'mug';
   if(/bank|deposit|withdraw|investment|interest|cayman/.test(t))return'bank';
   if(/rent|property|upkeep/.test(t))return'prop';
   if(/stock|dividend|share/.test(t))return'stock';
   return'other';
 }
+const catCol={crime:'r',casino:'a',trade:'b',mug:'c',bank:'gr',prop:'g',stock:'p',other:'gr'};
 
-const catColor={crime:'r',casino:'a',trade:'b',mug:'c',bank:'gr',prop:'g',stock:'p',other:'gr'};
-
-function buildIncome(){
+function incomeTotals(){
   const tot={Crime:0,Casino:0,Trading:0,Mugging:0,Bank:0,Property:0,Stocks:0,Other:0};
-  const cm={Crime:'r',Casino:'a',Trading:'b',Mugging:'c',Bank:'gr',Property:'g',Stocks:'p',Other:'gr'};
   lgD.forEach(e=>{
     const a=e.money||0;if(a<=0)return;
     const c=catLog(e);
@@ -577,176 +673,388 @@ function buildIncome(){
     else if(c==='stock')tot.Stocks+=a;
     else tot.Other+=a;
   });
+  return tot;
+}
+
+function buildIncome(){
+  const tot=incomeTotals();
+  const cm={Crime:'r',Casino:'a',Trading:'b',Mugging:'c',Bank:'gr',Property:'g',Stocks:'p',Other:'gr'};
   const ents=Object.entries(tot).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]);
   const mx=ents[0]?.[1]||1;
-  document.getElementById('ov-inc').innerHTML=ents.length
-    ?ents.map(([l,v])=>`<div class="hbr"><div class="hbl">${l}</div><div class="hbt"><div class="hbf ${cm[l]}" style="width:${Math.round(v/mx*100)}%"></div></div><div class="hbv">${fmt(v)}</div></div>`).join('')
-    :'<div class="empty">No income found. Log may be empty for this period.</div>';
+  if(!ents.length){
+    document.getElementById('ov-inc').innerHTML=`<div class="empty">No money transactions found in your recent log.<small>The API log only returns your last 100 actions. If you haven't done money-generating activities recently, this will be empty.</small></div>`;
+    return;
+  }
+  document.getElementById('ov-inc').innerHTML=ents.map(([l,v])=>`<div class="hbr"><div class="hbl">${l}</div><div class="hbt"><div class="hbf ${cm[l]}" style="width:${Math.round(v/mx*100)}%"></div></div><div class="hbv">${fmt(v)}</div></div>`).join('');
 }
 
 function buildRecentTx(lim){
   const rows=[...lgD].filter(e=>e.money).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)).slice(0,lim);
   document.getElementById('ov-tx').innerHTML=rows.length
-    ?rows.map(e=>{const cat=catLog(e),a=e.money||0;return`<tr>
-      <td><span class="tag ${cat}">${cat.toUpperCase()}</span></td>
-      <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.title||'—'}</td>
-      <td>${ago(e.timestamp)}</td>
-      <td class="${a>=0?'pos':'neg'}">${a>=0?'+':''}${fmt(Math.abs(a))}</td>
-    </tr>`}).join('')
-    :'<tr><td colspan="4"><div class="empty">No money transactions found in log.<br><small style="color:var(--t3)">The API log only returns the last 100 entries. If you have low activity this may appear empty.</small></div></td></tr>';
+    ?rows.map(e=>{const cat=catLog(e),a=e.money||0;return`<tr><td><span class="tag ${cat}">${cat.toUpperCase()}</span></td><td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.title||'—'}</td><td>${ago(e.timestamp)}</td><td class="${a>=0?'pos':'neg'}">${a>=0?'+':''}${fmt(Math.abs(a))}</td></tr>`}).join('')
+    :`<tr><td colspan="4"><div class="empty">No transactions in log.<small>The Torn API log returns your last 100 actions. Money events only appear if they're in the most recent 100.</small></div></td></tr>`;
 }
 
 function buildCrimeMini(){
-  const cr=crD.criminalrecord||crD||{};
-  // Sum all criminal record fields
-  const fields=['theft','auto_theft','drug_deals','fraud_crimes','vandalism','selling_illegal_products','arson','kidnapping','murder','computer_crimes','extortion','other_crimes'];
-  let tot=0;
-  fields.forEach(f=>{if(cr[f])tot+=cr[f]});
-  const jailed=pD.personalstats?.jailed||0;
+  const cr=crD.criminalrecord||{};
+  const tot=cr.total||Object.values(cr).reduce((s,v)=>s+(typeof v==='number'?v:0),0);
+  const ps=pD.personalstats||{};
   document.getElementById('ov-cr').innerHTML=`
-    <div class="sr"><span class="sk">Lifetime crimes committed</span><span class="sv">${fmtN(tot)}</span></div>
-    <div class="sr"><span class="sk">Times jailed</span><span class="sv r">${fmtN(jailed)}</span></div>
-    <div class="sr"><span class="sk">Theft</span><span class="sv">${fmtN(cr.theft||0)}</span></div>
-    <div class="sr"><span class="sk">Drug deals</span><span class="sv">${fmtN(cr.drug_deals||0)}</span></div>`;
+    <div class="sr"><span class="sk">Lifetime crimes (record)</span><span class="sv">${fmtN(tot)}</span></div>
+    <div class="sr"><span class="sk">Money mugged (lifetime)</span><span class="sv">${fmt(ps.moneymugged||0)}</span></div>
+    <div class="sr"><span class="sk">Bazaar lifetime profit</span><span class="sv g">${fmt(ps.bazaarprofit||0)}</span></div>`;
 }
 
+// ── CASH FLOW ──
+function popCashflow(){
+  const myId=pD.player_id;
+  // Calculate passive income
+  let rentalDaily=0,upkeepDaily=0;
+
+  Object.values(prD).forEach(p=>{
+    if(p.owner_id&&p.owner_id!=myId)return; // skip non-owned
+    const rented=!!(p.rented?.user_id);
+    const cpd=parseInt(p.rented?.cost_per_day||0);
+    if(rented){rentalDaily+=cpd}
+    else{
+      // Only pay upkeep if you're living there and no upkeep waiver
+      const hasWaiver=checkUpkeepWaiver();
+      if(!hasWaiver)upkeepDaily+=parseInt(p.upkeep||0);
+    }
+  });
+
+  // City bank estimated interest (use 3-month APR as estimate if invested)
+  const bankBal=mD.money_bank||0;
+  const bankMonthlyEst=bankBal*0.0185; // ~1.85% base for 1 month as conservative estimate
+
+  // Cayman monthly interest
+  const cayBal=mD.cayman_bank||0;
+  const cayMonthly=cayBal*0.005;
+
+  // Active income from log — calculate daily average over the log window
+  const tot=incomeTotals();
+  const logSpan=calcLogSpan(); // days covered by log
+  const activeDailyEst=logSpan>0
+    ?(Object.values(tot).reduce((s,v)=>s+v,0)/logSpan)
+    :0;
+
+  // Stock passive (very rough — list held stocks with known dividend values)
+  const stockPassive=estStockDividends();
+
+  const passiveMonthly=(rentalDaily*30)+(bankMonthlyEst)+(cayMonthly)+(stockPassive*30);
+  const activeMonthly=activeDailyEst*30;
+  const totalInMonthly=passiveMonthly+activeMonthly;
+  const totalOutMonthly=upkeepDaily*30;
+  const netMonthly=totalInMonthly-totalOutMonthly;
+
+  document.getElementById('cf-in').textContent=fmt(totalInMonthly);
+  document.getElementById('cf-out').textContent=fmt(totalOutMonthly);
+  document.getElementById('cf-net').textContent=fmt(netMonthly);
+  document.getElementById('cf-net').className='mv '+(netMonthly>=0?'b':'r');
+  document.getElementById('cf-total-in').textContent=fmt(totalInMonthly);
+  document.getElementById('cf-total-out').textContent='-'+fmt(totalOutMonthly);
+
+  // Passive income breakdown
+  const passiveRows=[
+    {l:'Property rental',v:rentalDaily*30,col:'#52c27a'},
+    {l:'City bank interest (est.)',v:bankMonthlyEst,col:'#6aaef5'},
+    {l:'Cayman interest',v:cayMonthly,col:'#f0956b'},
+    {l:'Stock dividends (est.)',v:stockPassive*30,col:'#7c8cf8'},
+  ].filter(x=>x.v>0);
+
+  document.getElementById('cf-passive').innerHTML=passiveRows.length
+    ?passiveRows.map(x=>`<div class="cfrow"><div class="cflbl"><div class="dot2" style="background:${x.col}"></div>${x.l}</div><div class="cfval pos">${fmt(x.v)}</div></div>`).join('')
+    :`<div style="font-size:12px;color:var(--t3);padding:8px 0">No passive income sources detected</div>`;
+
+  // Active income breakdown
+  const activeRows=Object.entries(tot).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]);
+  const colMap={Crime:'#f07070',Casino:'#f0b96b',Trading:'#6aaef5',Mugging:'#f0956b',Bank:'#8b90b8',Property:'#52c27a',Stocks:'#7c8cf8',Other:'#555878'};
+  const scaledActive=activeRows.map(([l,v])=>({l,v:logSpan>0?v/logSpan*30:0}));
+
+  document.getElementById('cf-active').innerHTML=scaledActive.length
+    ?scaledActive.map(x=>`<div class="cfrow"><div class="cflbl"><div class="dot2" style="background:${colMap[x.l]||'#555'}"></div>${x.l} (log avg)</div><div class="cfval pos">${fmt(x.v)}</div></div>`).join('')
+    :`<div style="font-size:12px;color:var(--t3);padding:8px 0">No active income in log</div>`;
+
+  // Costs breakdown
+  const costRows=[
+    {l:'Property upkeep',v:upkeepDaily*30,col:'#f07070'},
+  ].filter(x=>x.v>0);
+
+  document.getElementById('cf-costs').innerHTML=costRows.length
+    ?costRows.map(x=>`<div class="cfrow"><div class="cflbl"><div class="dot2" style="background:${x.col}"></div>${x.l}</div><div class="cfval neg">-${fmt(x.v)}</div></div>`).join('')
+    :`<div style="font-size:12px;color:var(--t3);padding:8px 0">No ongoing costs detected</div>`;
+
+  // Net
+  document.getElementById('cf-net-rows').innerHTML=`
+    <div class="cfrow"><div class="cflbl">Total income</div><div class="cfval pos">${fmt(totalInMonthly)}</div></div>
+    <div class="cfrow"><div class="cflbl">Total costs</div><div class="cfval neg">-${fmt(totalOutMonthly)}</div></div>
+    <div class="cfrow total"><div class="cflbl">Monthly net</div><div class="cfval ${netMonthly>=0?'pos':'neg'}">${netMonthly>=0?'+':''}${fmt(netMonthly)}</div></div>`;
+}
+
+function calcLogSpan(){
+  if(lgD.length<2)return 1;
+  const ts=lgD.map(e=>e.timestamp||0).filter(Boolean);
+  if(!ts.length)return 1;
+  const span=(Math.max(...ts)-Math.min(...ts))/86400;
+  return Math.max(1,span);
+}
+
+function checkUpkeepWaiver(){
+  const perks=pD.job_perks||[];
+  return perks.some(p=>/upkeep|staff cost|free upkeep/i.test(p));
+}
+
+function estStockDividends(){
+  // Estimate daily dividend value from held stocks with known benefit thresholds
+  const known={
+    // stock_id: {threshold_shares, daily_value_approx}
+    2:{thresh:2000000,daily:4500/7},   // FHG: FHC ~$4500 weekly
+    9:{thresh:500000,daily:1800/7},    // SYM: drug pack ~weekly
+    22:{thresh:150000,daily:600/7},    // TCHS: med supplies weekly
+    7:{thresh:100000,daily:1000/7},    // EVL: 1000 happy weekly
+    14:{thresh:3000000,daily:800/7},   // BAG: ammo pack weekly
+    15:{thresh:5000000,daily:2200/7},  // MUN: 6pack energy drink weekly
+  };
+  let daily=0;
+  Object.entries(stD).forEach(([,s])=>{
+    const sid=s.stock_id;
+    const shares=s.shares||0;
+    const k=known[sid];
+    if(k&&shares>=k.thresh){
+      const increments=Math.floor(shares/(k.thresh));
+      daily+=increments*k.daily;
+    }
+  });
+  return daily;
+}
+
+// ── BANK ──
+function popBank(){
+  const bank=mD.money_bank||0;
+  const cay=mD.cayman_bank||0;
+  const vault=mD.vault_amount||0;
+
+  document.getElementById('bk-city').textContent=fmt(bank);
+  document.getElementById('bk-city-s').textContent=bank>0?'Currently invested':'Not invested';
+  document.getElementById('bk-cay').textContent=fmt(cay);
+  document.getElementById('bk-vault').textContent=fmt(vault);
+  document.getElementById('bk-total').textContent=fmt(bank+cay);
+  document.getElementById('bk2-cay').textContent=fmt(cay);
+  document.getElementById('bk2-cay-int').textContent=fmt(cay*0.005);
+  document.getElementById('bk2-cay-ann').textContent=fmt(cay*0.06);
+
+  // Bank investment card — look for a recent bank investment log event to get timing
+  const bankEvents=lgD.filter(e=>/bank.*invest|invest.*bank|city bank/i.test(e.title||'')).sort((a,b)=>b.timestamp-a.timestamp);
+  const lastInvest=bankEvents[0];
+
+  let cardHTML='';
+  if(bank>0){
+    // Try to figure out maturity from log
+    const investTs=lastInvest?.timestamp;
+    const now=Math.floor(Date.now()/1000);
+
+    // APR estimates by period
+    const periods=[
+      {name:'1 Week',days:7,apr:0.0037},
+      {name:'2 Weeks',days:14,apr:0.0085},
+      {name:'1 Month',days:30,apr:0.0185},
+      {name:'2 Months',days:60,apr:0.0407},
+      {name:'3 Months',days:90,apr:0.0592},
+    ];
+
+    // If we have a log timestamp, try to guess the period
+    let guessedPeriod=null;
+    if(investTs){
+      const elapsed=(now-investTs)/86400;
+      for(const p of periods){
+        if(elapsed<=p.days+2){guessedPeriod={...p,elapsed,secsLeft:Math.max(0,(investTs+p.days*86400)-now)};break}
+      }
+    }
+
+    if(guessedPeriod){
+      const interest=Math.round(bank*guessedPeriod.apr);
+      const progPct=Math.min(100,Math.round(guessedPeriod.elapsed/guessedPeriod.days*100));
+      const ready=guessedPeriod.secsLeft<=0;
+      cardHTML=`<div class="bank-card">
+        <div class="bc-head">
+          <div class="bc-name">City Bank — ${guessedPeriod.name} Investment</div>
+          <div class="bc-badge ${ready?'ready':'active'}">${ready?'READY TO COLLECT':'ACTIVE'}</div>
+        </div>
+        <div class="bc-row">Invested amount <span>${fmt(bank)}</span></div>
+        <div class="bc-row">Estimated interest (${(guessedPeriod.apr*100).toFixed(2)}% base) <span class="pos">+${fmt(interest)}</span></div>
+        <div class="bc-row">Total on maturity <span>${fmt(bank+interest)}</span></div>
+        ${ready?`<div class="bc-row" style="color:var(--am)">Status <span style="color:var(--am)">Ready — collect now!</span></div>`
+               :`<div class="bc-row">Est. time remaining <span>${secs(guessedPeriod.secsLeft)}</span></div>`}
+        <div class="bc-row">Progress <span>${progPct}%</span></div>
+        <div class="bc-progress"><div class="bc-bar" style="width:${progPct}%"></div></div>
+      </div>`;
+    } else {
+      // Can't determine period from log — show what we know
+      const estInterest3m=Math.round(bank*0.0592);
+      cardHTML=`<div class="bank-card">
+        <div class="bc-head"><div class="bc-name">City Bank</div><div class="bc-badge active">ACTIVE</div></div>
+        <div class="bc-row">Invested amount <span>${fmt(bank)}</span></div>
+        <div class="bc-row">If 3-month (5.92%) <span class="pos">+${fmt(estInterest3m)}</span></div>
+        <div class="bc-row">Max at maturity (3m) <span>${fmt(bank+estInterest3m)}</span></div>
+        <div class="notice" style="margin-top:10px">Investment period could not be determined from your log. Check in-game for exact maturity date.</div>
+      </div>`;
+    }
+  } else {
+    cardHTML=`<div class="bank-card"><div class="empty">No active city bank investment.<br><small>Invest at City → Bank for interest income.</small></div></div>`;
+  }
+
+  document.getElementById('bk-cards').innerHTML=cardHTML;
+}
+
+// ── TRANSACTIONS ──
 function popTransactions(){
   const rows=[...lgD].filter(e=>e.money).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)).slice(0,100);
+  if(rows.length){document.getElementById('tx-notice').style.display='none'}
   document.getElementById('tx-body').innerHTML=rows.length
-    ?rows.map(e=>{const cat=catLog(e),a=e.money||0;return`<tr>
-      <td><span class="tag ${cat}">${cat.toUpperCase()}</span></td>
-      <td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.title||'—'}</td>
-      <td>${dtfmt(e.timestamp)}</td>
-      <td class="${a>=0?'pos':'neg'}">${a>=0?'+':''}${fmt(Math.abs(a))}</td>
-    </tr>`}).join('')
-    :'<tr><td colspan="4"><div class="empty">No transactions found.<br><small style="color:var(--t3)">The Torn API log returns only your last 100 activity entries regardless of date. Money transactions only appear if they occurred in your most recent 100 actions.</small></div></td></tr>';
+    ?rows.map(e=>{const cat=catLog(e),a=e.money||0;return`<tr><td><span class="tag ${cat}">${cat.toUpperCase()}</span></td><td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.title||'—'}</td><td>${dtfmt(e.timestamp)}</td><td class="${a>=0?'pos':'neg'}">${a>=0?'+':''}${fmt(Math.abs(a))}</td></tr>`}).join('')
+    :`<tr><td colspan="4"><div class="empty">No money transactions found.<small>The Torn API log only returns your last 100 actions. Money events appear here only if they fall within your most recent 100 activities.</small></div></td></tr>`;
 }
 
+// ── CRIMES ──
 function popCrimes(){
   const cr=crD.criminalrecord||{};
 
-  // Criminal record fields and display names
+  // Crime income from log
+  const crimeInc=lgD.filter(e=>catLog(e)==='crime'&&(e.money||0)>0);
+  const crimeTotal=crimeInc.reduce((s,e)=>s+(e.money||0),0);
+
+  // Group log crime income by title keyword
+  const byType={};
+  crimeInc.forEach(e=>{
+    const t=e.title||'Other';
+    const key=t.length>30?t.slice(0,30)+'…':t;
+    byType[key]=(byType[key]||0)+(e.money||0);
+  });
+  const crimeRows=Object.entries(byType).sort((a,b)=>b[1]-a[1]).slice(0,12);
+  const mx=crimeRows[0]?.[1]||1;
+
+  document.getElementById('cr-tot').textContent=fmtN(cr.total||0);
+  document.getElementById('cr-theft').textContent=fmtN(cr.theft||0);
+  document.getElementById('cr-drugs').textContent=fmtN(cr.drug_deals||0);
+  document.getElementById('cr-fraud').textContent=fmtN(cr.fraud_crimes||0);
+
+  document.getElementById('cr-income').innerHTML=crimeRows.length
+    ?crimeRows.map(([l,v])=>`<div class="hbr"><div class="hbl" style="font-size:11px;width:130px">${l}</div><div class="hbt"><div class="hbf r" style="width:${Math.round(v/mx*100)}%"></div></div><div class="hbv">${fmt(v)}</div></div>`).join('')
+    :`<div class="empty">No crime income in log.<small>Crime income appears here when crime money events are in your recent 100 actions.</small></div>`;
+
+  // Criminal record cards
   const fields=[
-    {k:'theft',             l:'Theft',              col:'#f07070'},
-    {k:'auto_theft',        l:'Auto theft',         col:'#f0956b'},
-    {k:'drug_deals',        l:'Drug deals',         col:'#f0b96b'},
-    {k:'fraud_crimes',      l:'Fraud',              col:'#6aaef5'},
-    {k:'vandalism',         l:'Vandalism',          col:'#8b90b8'},
-    {k:'selling_illegal_products',l:'Illegal sales',col:'#52c27a'},
-    {k:'arson',             l:'Arson',              col:'#f07070'},
-    {k:'kidnapping',        l:'Kidnapping',         col:'#c27a52'},
-    {k:'murder',            l:'Murder',             col:'#c25252'},
-    {k:'computer_crimes',   l:'Computer crimes',    col:'#7c8cf8'},
-    {k:'extortion',         l:'Extortion',          col:'#a87cf8'},
-    {k:'other_crimes',      l:'Other crimes',       col:'#555878'},
-  ];
+    {k:'theft',l:'Theft',col:'#f07070'},
+    {k:'auto_theft',l:'Auto Theft',col:'#f0956b'},
+    {k:'drug_deals',l:'Drug Deals',col:'#f0b96b'},
+    {k:'fraud_crimes',l:'Fraud',col:'#6aaef5'},
+    {k:'selling_illegal_products',l:'Illegal Sales',col:'#52c27a'},
+    {k:'computer_crimes',l:'Computer Crimes',col:'#7c8cf8'},
+    {k:'murder',l:'Murder',col:'#c25252'},
+    {k:'other',l:'Other',col:'#555878'},
+  ].filter(f=>cr[f.k]>0);
 
-  const active=fields.filter(f=>cr[f.k]>0);
-  const tot=active.reduce((s,f)=>s+cr[f.k],0);
-  const mx=active[0]?.k?Math.max(...active.map(f=>cr[f.k])):1;
-
-  document.getElementById('cr-tot').textContent=fmtN(tot);
-  // For success/jailed use personalstats
-  const ps=pD.personalstats||{};
-  const jailed=ps.jailed||0;
-  document.getElementById('cr-suc').textContent=fmtN(tot); // criminalrecord only tracks successes
-  document.getElementById('cr-rt').textContent=tot>0?'100%':'—'; // criminal record = successful crimes only
-  document.getElementById('cr-jl').textContent=fmtN(jailed);
-
-  // Notice explaining what's shown
-  document.getElementById('cr-notice').innerHTML=`<div class="notice">
-    ⚡ The Torn API's <code>criminalrecord</code> tracks <strong>successful crimes only</strong> — these are your lifetime totals. Crimes 2.0 per-crime skill stats are not available via the API yet.
-  </div>`;
-
-  document.getElementById('cr-grid').innerHTML=active.length
-    ?active.map(f=>{const v=cr[f.k],bp=pct(v,Math.max(...active.map(x=>cr[x.k])));return`
-      <div class="ccard">
-        <div class="ccn">${f.l}</div>
-        <div class="ccs">Committed: <span>${fmtN(v)}</span></div>
-        <div class="cbar"><div class="cbarfill" style="width:${bp}%;background:${f.col}"></div></div>
-      </div>`}).join('')
-    :`<div class="empty" style="grid-column:1/-1">No criminal record data found.<br><small style="color:var(--t3)">This may be a new account or the criminalrecord API selection returned no data.</small></div>`;
+  const maxCr=fields.length?Math.max(...fields.map(f=>cr[f.k])):1;
+  document.getElementById('cr-grid').innerHTML=fields.length
+    ?fields.map(f=>`<div class="ccard"><div class="ccn">${f.l}</div><div class="ccs">Committed: <span>${fmtN(cr[f.k])}</span></div><div class="cbar"><div class="cbarfill" style="width:${pct(cr[f.k],maxCr)}%;background:${f.col}"></div></div></div>`).join('')
+    :`<div class="empty" style="grid-column:1/-1">No criminal record data.<small>criminalrecord only counts successful crimes.</small></div>`;
 }
 
-function renderProperties(){
-  const props=Object.entries(prD);
-  if(!props.length){
+// ── PROPERTIES ──
+function renderProps(){
+  const myId=pD.player_id||pD.player_id;
+  const spouseId=pD.married?.spouse_id;
+  const hasWaiver=checkUpkeepWaiver();
+
+  // Filter: only properties owned by the main user (not spouse)
+  const myProps=Object.entries(prD).filter(([,p])=>{
+    if(p.owner_id&&p.owner_id!=myId)return false;
+    return true;
+  });
+
+  if(!myProps.length){
     document.getElementById('pr-grid').innerHTML='<div class="empty" style="grid-column:1/-1">No properties found on your account.</div>';
+    document.getElementById('pr-tot').textContent='0';
     return;
   }
 
-  let rentedCount=0,dailyIncome=0,dailyUpkeep=0;
-  let maxCPD=0;
-  props.forEach(([,p])=>{const cpd=parseInt(p.rented?.cost_per_day||0);if(cpd>maxCPD)maxCPD=cpd});
+  let rentedCount=0,dailyIncome=0,dailyUpkeep=0,maxCPD=0;
+  myProps.forEach(([,p])=>{const cpd=parseInt(p.rented?.cost_per_day||0);if(cpd>maxCPD)maxCPD=cpd});
 
-  const cards=props.map(([id,p])=>{
-    const rented=!!(p.rented&&p.rented.user_id);
-    const living=parseInt(p.users_living||0)>0;
+  const cards=myProps.map(([id,p])=>{
+    const rented=!!(p.rented?.user_id);
+    const isMyHome=!rented&&(parseInt(p.users_living||0)>0);
     const upkeep=parseInt(p.upkeep||0);
+    const staffCost=parseInt(p.staff_cost||0);
     const cpd=rented?parseInt(p.rented.cost_per_day||0):0;
     const totalContract=rented?parseInt(p.rented.total_cost||0):0;
     const daysLeft=rented?parseInt(p.rented.days_left||0):0;
     const uid=rented?p.rented.user_id:null;
-    const renterName=uid?renterNames[uid]:null;
+    const renterName=uid?rNames[uid]:null;
 
-    // Upkeep only counts if YOU are living there — if rented out, tenant pays
     if(rented){rentedCount++;dailyIncome+=cpd}
-    else if(!rented){dailyUpkeep+=upkeep} // only add upkeep if not rented out
+    // Only count upkeep if you're living there and no waiver
+    if(!rented&&!hasWaiver){dailyUpkeep+=upkeep+staffCost}
+
+    const propName=p.property||String(p.property_type||id).replace(/_/g,' ');
+    const barPct=maxCPD&&cpd?Math.round(cpd/maxCPD*100):0;
+    const netDaily=cpd-(hasWaiver&&rented?0:upkeep+staffCost);
 
     let badge,bclass;
     if(rented){badge='Rented Out';bclass='rented'}
-    else if(living){badge='Occupied';bclass='occupied'}
+    else if(isMyHome){badge='You Live Here';bclass='mine'}
     else{badge='Vacant';bclass='vacant'}
 
-    const barPct=maxCPD&&cpd?Math.round(cpd/maxCPD*100):0;
-    const typeName=String(p.property_type||id).replace(/_/g,' ');
-    const netDaily=cpd-upkeep;
+    // Upgrades
+    const mods=p.modifications||{};
+    const modLabels={interior:'Interior',hot_tub:'Hot Tub',sauna:'Sauna',pool:'Pool',open_bar:'Open Bar',shooting_range:'Shooting Range',vault:'Vault',medical_facility:'Medical',airstrip:'Airstrip',yacht:'Yacht'};
+    const hasUpgrades=Object.entries(mods).filter(([,v])=>v>0);
 
-    const renterDisplay=rented
-      ?`<div class="pst">Tenant
-          <span>
-            ${renterName
-              ?`<a href="https://www.torn.com/profiles.php?XID=${uid}" target="_blank">${renterName} [#${uid}]</a>`
-              :`<a href="https://www.torn.com/profiles.php?XID=${uid}" target="_blank">#${uid}</a>`}
-          </span>
-        </div>
+    // Staff
+    const staff=p.staff||{};
+    const staffLabels={maid:'Maid',guard:'Guard',pilot:'Pilot',butler:'Butler',doctor:'Doctor'};
+    const hasStaff=Object.entries(staff).filter(([,v])=>v>0);
+
+    const upkeepNote=hasWaiver&&!rented?'<span style="color:var(--gn)">Waived (company perk)</span>':null;
+
+    return`<div class="pcard ${bclass}">
+      <div class="ptop"><div class="ptyp">${propName}</div><span class="pbadge ${bclass}">${badge}</span></div>
+      ${rented?`
+        <div class="pst">Tenant <a href="https://www.torn.com/profiles.php?XID=${uid}" target="_blank">${renterName?renterName+' [#'+uid+']':'#'+uid}</a></div>
         <div class="pst">Daily rate <span>${fmt(cpd)}</span></div>
         <div class="pst">Days remaining <span>${daysLeft}d</span></div>
         <div class="pst">Contract value <span>${fmt(totalContract)}</span></div>
-        <div class="pbar">
-          <div style="font-size:11px;color:var(--t3);margin-bottom:3px">Income vs best property</div>
-          <div class="pbtrack"><div class="pbfill" style="width:${barPct}%"></div></div>
-        </div>
+        <div class="pbar"><div style="font-size:11px;color:var(--t3);margin-bottom:3px">Income vs best property</div><div class="pbtrack"><div class="pbfill" style="width:${barPct}%"></div></div></div>
         <div class="pdiv">
-          <div class="pst">Upkeep (paid by tenant) <span style="color:var(--t3)">—</span></div>
-          <div class="pst">Net daily <span style="color:var(--gn)">${fmt(cpd)}</span></div>
+          <div class="pst">Upkeep (tenant pays) <span style="color:var(--t3)">—</span></div>
+          <div class="pst">Net daily <span class="pos">${fmt(cpd)}</span></div>
         </div>`
-      :living
-        ?`<div class="pst">Occupied by <span>${fmtN(p.users_living)} user(s)</span></div>
-           <div class="pdiv">
-             <div class="pst">Daily upkeep <span style="color:var(--rd)">${fmt(upkeep)}</span></div>
-           </div>`
-        :`<div class="pst" style="color:var(--t3);font-style:italic;font-size:12px">No tenant — available to rent</div>
-          <div class="pdiv">
-            <div class="pst">Daily upkeep <span style="color:var(--rd)">${fmt(upkeep)}</span></div>
-          </div>`;
-
-    return`<div class="pcard ${bclass}">
-      <div class="ptop"><div class="ptyp">${typeName}</div><span class="pbadge ${bclass}">${badge}</span></div>
-      ${renterDisplay}
+      :isMyHome?`
+        <div class="pst">Happy bonus <span>${fmtN(p.happy||0)}</span></div>
+        <div class="pdiv">
+          <div class="pst">Daily upkeep <span class="${upkeepNote?'':'neg'}">${upkeepNote||fmt(upkeep)}</span></div>
+          ${staffCost>0?`<div class="pst">Staff cost/day <span class="neg">${fmt(staffCost)}</span></div>`:''}
+        </div>`
+      :`
+        <div class="pst" style="color:var(--t3);font-style:italic;font-size:12px">Vacant — available to rent</div>
+        <div class="pst">Happy bonus <span>${fmtN(p.happy||0)}</span></div>
+        <div class="pdiv">
+          <div class="pst">Daily upkeep (if you move in) <span class="neg">${fmt(upkeep)}</span></div>
+        </div>`}
+      ${hasUpgrades.length?`<div class="pupg">${hasUpgrades.map(([k])=>`<span class="upgpill">${modLabels[k]||k}</span>`).join('')}</div>`:''}
+      ${hasStaff.length?`<div class="pupg">${hasStaff.map(([k,v])=>`<span class="upgpill">${v}× ${staffLabels[k]||k}</span>`).join('')}</div>`:''}
     </div>`;
   }).join('');
 
-  document.getElementById('pr-tot').textContent=fmtN(props.length);
+  document.getElementById('pr-tot').textContent=fmtN(myProps.length);
   document.getElementById('pr-rnt').textContent=fmtN(rentedCount);
   document.getElementById('pr-inc').textContent=fmt(dailyIncome);
   document.getElementById('pr-upk').textContent=fmt(dailyUpkeep);
-  document.getElementById('pr-grid').innerHTML=cards;
+  document.getElementById('pr-upk-note').textContent=hasWaiver?'Waived by company perk':'Properties you live in';
+  document.getElementById('pr-grid').innerHTML=cards||'<div class="empty" style="grid-column:1/-1">No properties to display.</div>';
 }
 
-// popProperties just calls renderProperties
-function popProperties(){}
-
+// ── BOOT ──
 window.addEventListener('DOMContentLoaded',()=>{
   const s=localStorage.getItem('tfk');
   if(s){K=s;document.getElementById('ikey').value=s;showV('vld');loadAll()}
